@@ -42,9 +42,9 @@ if __name__ == "__main__":
     #     algorithm='businjection_VI',
     # )
     # elements_to_plot = ['bus_1033']
-    # elements_to_plot += ["bus_1027|bus_1029|bus_1031|bus_1019|bus_1030|bus_1199|bus_1015|bus_1014|bus_1016|bus_1032|bus_1053|bus_1037|bus_1017|bus_1020|bus_1038|bus_1033-I"]
     elements_to_plot = ['bus_1033', 'bus_1034', 'bus_1118', 'bus_1082', 'bus_1097', 'bus_1106', 'bus_1069']
     elements_to_plot += ["bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bus_1053|bus_1199-I", "bus_1118|bus_1119|bus_1120|bus_1127-I", "bus_1082|bus_1083|bus_1084-I", "bus_1097|bus_1098|bus_1099-I", "bus_1106|bus_1107|bus_1108-I", "bus_1069|bus_1070|bus_1071|bus_1078-I"]
+    elements_to_plot += ["bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bus_1053|bus_1199-I"]
     outdir = 'temp/state_estimation_plots/results_BIM'
     datetimespan = ('2024-11-14T16:00:00', '2024-11-14T16:05:00')
     compute_error(output_data_dir, datetimespan)

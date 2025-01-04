@@ -142,7 +142,7 @@ src/test_parsing.py
 
 # @yxie20
 *Zone.Identifier
-/temp/
+temp/
 **_plots/
 /src/tests/testdata/**_output**
 **.lprof
