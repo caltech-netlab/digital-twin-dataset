@@ -200,7 +200,7 @@ class StateEstimator:
                     I_metered.append(np.zeros((3, len(time_col)), dtype=np.csingle))
                     I_metered_nominal.append(np.ones(3))
                     I_metered_nodes.append(node)
-                    # Option 2: Hard constraint (todo)
+                    # Option 2: Hard constraint
                     # constraints.append()
                     continue
                 for d in measured_injections.pop(node):
@@ -1115,6 +1115,41 @@ def plot_results(
         else:
             plt.close()
         
+
+def compute_error(data_dir, datetimespan, zero_threshold=1e-2):
+    """
+    """
+    files = os.listdir(data_dir)
+    pairs = {}
+    for f in files:
+        if f.endswith('-measurement'):
+            pairs[f[:-12]] = f
+        elif f + '-measurement' in files:
+            pairs[f] = f + '-measurement'
+        else:
+            pairs[f] = None
+    errors = {}
+    for name, metered_name in pairs.items():
+        if metered_name is None: continue
+        df, err = utils.read_ts(os.path.join(data_dir, name), datetimespan)
+        df_metered, err = utils.read_ts(os.path.join(data_dir, metered_name), datetimespan)
+        errors[name] = {}
+        over_under = []
+        for p in 'abc':
+            if np.mean(np.abs(df_metered[p])) < zero_threshold:
+                errors[name][p] = np.mean(np.abs(df[p] - df_metered[p]))
+                over_under.append(np.mean(np.abs(df[p]) - np.abs(df_metered[p])))
+                zero = True
+            else:
+                errors[name][p] = np.mean(np.abs(df[p] - df_metered[p])) / np.mean(np.abs(df_metered[p]))
+                over_under.append(np.mean(np.abs(df[p]) - np.abs(df_metered[p])) / np.mean(np.abs(df_metered[p])))
+                zero=False
+        over_under = np.mean(over_under)
+        errors[name]['mean'] = np.mean([errors[name][p] for p in 'abc'])
+        print(name + (' (zero)' if zero else ''))
+        print(f"mean: {'+' if over_under >= 0 else '-'}{errors[name]['mean']:.2f}, a: {errors[name]['a']:.2f}, b: {errors[name]['b']:.2f}, c: {errors[name]['c']:.2f}")
+    print(f"Mean error: {np.mean([errors[name]['mean'] for name in errors])}")            
+
 
 if __name__ == "__main__":
     """State estimation (bus injection model: V-I)"""

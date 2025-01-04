@@ -536,7 +536,7 @@ def net2graph(
         - an edge is created for each tbus
         - each edge is a copy of the element, with the following modification:
         - only one tbus is kept, which is the one corresponding to that edge
-            i.e. element['tbus'] = [{'name': '<bus_name>', 'status': '<status'}]
+            i.e. element['tbus'] = [{'name': '<bus_name>', 'status': '<status>'}]
         - the name of the edge is: element['name'] + DIR_CHAR + element['target']
     :param net_data: dict, output of load_net_files
     :param element_parents: str or path, from element_inheritance.json file
@@ -1286,9 +1286,6 @@ def network_Y_matrix(edges, node_list, net_data):
             zero_impedance = False
             if edge['element_type'] == 'Line':
                 component_Y, zero_impedance = line_Y_matrix(get_element(edge, net_data), returned_matrix='Y', zero_shunt=False, flip_tbus_current_direction=False)
-                # todo: remove
-                # component_Y = np.real(component_Y)
-                # component_Y *= 1e2
                 if zero_impedance:
                     raise RuntimeError("Electrical graph should not contain any zero impedance line.")
             else:

@@ -1,5 +1,5 @@
-# (NAME) Dataset
-The (name) dataset contains data collected from our partner distribution system operators in the U.S. The data has been anonymized to remove all geographical identifiers.
+# Dataset
+The dataset contains data collected from our partner distribution system operators in the U.S. The data has been anonymized to remove all geographical identifiers.
 
 ## Sample dataset
 Download sample dataset from [here](https://caltech.box.com/s/5baxy2ogbalqohpidh1lyxgnnxmv5tuc) and place into sample_dataset folder. 
