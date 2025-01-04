@@ -1,0 +1,5813 @@
+{
+  "cb_120": {
+    "file": "line_379-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_121": {
+    "file": "line_381-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_122": {
+    "file": "line_383-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_123": {
+    "file": "line_382-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_124": {
+    "file": "line_407-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_125": {
+    "file": "cb_125-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "cb_126": {
+    "file": "line_408-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_127": {
+    "file": "line_409-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_128": {
+    "fbus": {
+      "file": "cb_128-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "cb_128-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "cb_129": {
+    "file": "line_410-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_130": {
+    "file": "line_411-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_131": {
+    "file": "line_426-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_132": {
+    "file": "line_412-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_133": {
+    "file": "line_384-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_134": {
+    "file": "line_385-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_135": {
+    "fbus": {
+      "file": "cb_135-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "cb_135-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "cb_136": {
+    "file": "line_386-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_137": {
+    "file": "line_388-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_138": {
+    "fbus": {
+      "file": "cb_138-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "cb_138-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "cb_139": {
+    "file": "line_389-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_140": {
+    "file": "line_390-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_141": {
+    "file": "line_391-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_142": {
+    "fbus": {
+      "file": "cb_142-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "cb_142-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "cb_143": {
+    "file": "line_392-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_144": {
+    "fbus": {
+      "file": "cb_144-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "cb_144-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "cb_145": {
+    "file": "line_393-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_146": {
+    "file": "line_394-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_147": {
+    "fbus": {
+      "file": "cb_147-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "cb_147-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "cb_148": {
+    "file": "line_395-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_149": {
+    "file": "cb_149-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_150": {
+    "file": "line_400-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_151": {
+    "fbus": {
+      "file": "cb_151-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "cb_151-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "cb_152": {
+    "file": "cb_152-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "cb_153": {
+    "file": "cb_153-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "cb_154": {
+    "file": "cb_154-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "cb_155": {
+    "file": "tr_130-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_156": {
+    "file": "line_403-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_157": {
+    "file": "line_428-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_158": {
+    "file": "line_427-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_159": {
+    "file": "line_402-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_160": {
+    "file": "cb_160-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_161": {
+    "file": "cb_161-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_162": {
+    "file": "cb_162-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_163": {
+    "file": "cb_163-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_164": {
+    "file": "cb_164-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_165": {
+    "file": "line_429-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_166": {
+    "file": "cb_166-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_167": {
+    "file": "cb_167-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_168": {
+    "file": "cb_168-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_169": {
+    "file": "cb_169-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_170": {
+    "file": "cb_170-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_171": {
+    "file": "line_430-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_172": {
+    "file": "cb_172-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_173": {
+    "file": "cb_173-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_174": {
+    "file": "cb_174-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_175": {
+    "file": "cb_175-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "cb_176": {
+    "file": "line_431-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "fu_122": {
+    "file": "tr_119-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "fu_123": {
+    "file": "tr_120-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "fu_124": {
+    "file": "tr_121-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "fu_125": {
+    "file": "tr_122-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "fu_126": {
+    "file": "tr_123-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "fu_127": {
+    "file": "tr_124-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "fu_128": {
+    "file": "tr_125-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "fu_129": {
+    "file": "tr_126-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "fu_130": {
+    "file": "tr_127-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "fu_131": {
+    "file": "tr_128-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "fu_132": {
+    "file": "tr_129-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "fu_133": {
+    "file": "tr_130-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "gen_32": {
+    "file": "gen_32",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "gen_33": {
+    "file": "gen_33",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "gen_34": {
+    "file": "gen_34",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "gen_35": {
+    "file": "gen_35",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "gen_36": {
+    "file": "gen_36",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "gp_1": {
+    "file": "line_379-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "gp_2": {
+    "file": "line_433-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_10": {
+    "file": "cb_164-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_11": {
+    "file": "cb_166-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_12": {
+    "file": "cb_167-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_13": {
+    "file": "cb_168-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_14": {
+    "file": "cb_169-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_15": {
+    "file": "cb_170-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_16": {
+    "file": "line_403-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_17": {
+    "file": "line_428-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_2": {
+    "file": "cb_172-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_3": {
+    "file": "cb_173-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_4": {
+    "file": "cb_174-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_5": {
+    "file": "cb_175-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_6": {
+    "file": "cb_160-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_7": {
+    "file": "cb_161-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_8": {
+    "file": "cb_162-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "inv_9": {
+    "file": "cb_163-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_376": {
+    "file": "line_376-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_377": {
+    "file": "line_379-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_378": {
+    "file": "line_378-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "line_379": {
+    "file": "line_379-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_380": {
+    "file": "line_381-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_381": {
+    "file": "line_381-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_382": {
+    "file": "line_382-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_383": {
+    "file": "line_383-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_384": {
+    "file": "line_384-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_385": {
+    "file": "line_385-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_386": {
+    "file": "line_386-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_387": {
+    "file": "line_387-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_388": {
+    "file": "line_388-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_389": {
+    "file": "line_389-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_390": {
+    "file": "line_390-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_391": {
+    "file": "line_391-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_392": {
+    "file": "line_392-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_393": {
+    "file": "line_393-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_394": {
+    "file": "line_394-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_395": {
+    "file": "line_395-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_396": {
+    "file": "line_396-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "line_397": {
+    "file": "tr_130-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_398": {
+    "file": "tr_129-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_399": {
+    "file": "line_399-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_400": {
+    "file": "line_400-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_401": {
+    "file": "line_401-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "line_402": {
+    "file": "line_402-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_403": {
+    "file": "line_403-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_404": {
+    "file": "line_376-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_405": {
+    "file": "line_383-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_406": {
+    "file": "line_379-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_407": {
+    "fbus": {
+      "file": "line_407-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_407-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_408": {
+    "fbus": {
+      "file": "line_408-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_408-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_409": {
+    "fbus": {
+      "file": "line_409-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "tr_127-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_410": {
+    "fbus": {
+      "file": "line_410-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "tr_128-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_411": {
+    "fbus": {
+      "file": "line_411-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_411-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_412": {
+    "fbus": {
+      "file": "line_412-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_412-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_413": {
+    "file": "line_413-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "line_414": {
+    "file": "tr_121-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_415": {
+    "fbus": {
+      "file": "line_415-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "tr_119-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_416": {
+    "fbus": {
+      "file": "line_416-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "tr_125-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_417": {
+    "fbus": {
+      "file": "line_417-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "tr_123-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_418": {
+    "file": "tr_122-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_419": {
+    "fbus": {
+      "file": "line_419-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "tr_120-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_420": {
+    "fbus": {
+      "file": "line_420-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "tr_126-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_421": {
+    "fbus": {
+      "file": "line_421-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "tr_124-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_422": {
+    "fbus": {
+      "file": "tr_129-fbus",
+      "phases": "abcn",
+      "sign": -1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "tr_133-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_423": {
+    "fbus": {
+      "file": "line_423-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_423-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_424": {
+    "file": "tr_131-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_425": {
+    "file": "line_425-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "line_426": {
+    "fbus": {
+      "file": "line_426-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "tr_131-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "line_427": {
+    "file": "line_427-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_428": {
+    "file": "line_428-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_429": {
+    "file": "line_429-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_430": {
+    "file": "line_430-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_431": {
+    "file": "line_431-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_432": {
+    "file": "line_379-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "line_433": {
+    "file": "line_433-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "load_100": {
+    "file": "load_100",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "load_101": {
+    "file": "load_101",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "load_102": {
+    "file": "load_102",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "load_85": {
+    "file": "line_376-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "load_86": {
+    "file": "load_86",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "load_87": {
+    "file": "line_386-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "load_88": {
+    "file": "line_387-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "load_89": {
+    "file": "load_89",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "load_90": {
+    "file": "line_389-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "load_91": {
+    "file": "line_390-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "load_92": {
+    "file": "load_92",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "load_93": {
+    "file": "load_93",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "load_94": {
+    "file": "line_395-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "load_95": {
+    "file": "line_399-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "load_96": {
+    "file": "line_400-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "load_97": {
+    "file": "load_97",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "load_98": {
+    "file": "line_393-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "load_99": {
+    "file": "line_427-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_276": {
+    "file": "line_379-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_277": {
+    "file": "line_378-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "sw_278": {
+    "fbus": {
+      "file": "sw_278-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "sw_278-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "sw_279": {
+    "file": "line_379-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_280": {
+    "file": "line_379-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_281": {
+    "file": "line_408-tbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_282": {
+    "file": "tr_121-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_283": {
+    "file": "line_415-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_284": {
+    "file": "line_416-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_285": {
+    "file": "line_417-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_286": {
+    "file": "line_411-tbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_287": {
+    "file": "tr_122-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_288": {
+    "file": "line_419-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_289": {
+    "file": "line_420-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_290": {
+    "file": "line_421-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_291": {
+    "file": "tr_119-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_292": {
+    "file": "tr_120-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_293": {
+    "file": "tr_121-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_294": {
+    "file": "tr_122-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_295": {
+    "file": "tr_123-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_296": {
+    "file": "tr_124-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_297": {
+    "file": "tr_125-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_298": {
+    "file": "tr_126-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_299": {
+    "file": "tr_127-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_300": {
+    "file": "tr_128-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_301": {
+    "fbus": {
+      "file": "sw_301-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "sw_301-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "sw_302": {
+    "file": "tr_129-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_303": {
+    "fbus": {
+      "file": "sw_303-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "sw_303-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "sw_304": {
+    "file": "tr_130-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_305": {
+    "fbus": {
+      "file": "sw_305-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "sw_305-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "sw_306": {
+    "file": "line_407-tbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_307": {
+    "fbus": {
+      "file": "sw_307-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "sw_307-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "sw_308": {
+    "file": "line_423-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_309": {
+    "file": "line_412-tbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "sw_310": {
+    "fbus": {
+      "file": "sw_310-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "sw_310-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "sw_311": {
+    "fbus": {
+      "file": "sw_311-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "sw_311-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "sw_312": {
+    "file": "line_401-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "sw_313": {
+    "file": "line_401-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "swmp_16->bus_1014": {
+    "file": "line_379-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "swmp_16->bus_1016": {
+    "fbus": {
+      "file": "swmp_16->bus_1016-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "swmp_16->bus_1016-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "swmp_17->bus_1014": {
+    "fbus": {
+      "file": "swmp_17->bus_1014-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "swmp_17->bus_1014-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "swmp_17->bus_1017": {
+    "file": "line_376-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "swmp_18->bus_1014": {
+    "fbus": {
+      "file": "swmp_18->bus_1014-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "swmp_18->bus_1014-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "swmp_18->bus_1018": {
+    "fbus": {
+      "file": "swmp_18->bus_1018-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "swmp_18->bus_1018-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "swmp_19->bus_1014": {
+    "fbus": {
+      "file": "swmp_19->bus_1014-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "swmp_19->bus_1014-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "swmp_19->bus_1019": {
+    "fbus": {
+      "file": "swmp_19->bus_1019-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "swmp_19->bus_1019-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "swmp_20->bus_1021": {
+    "file": "line_433-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "swmp_20->bus_1023": {
+    "fbus": {
+      "file": "swmp_20->bus_1023-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "swmp_20->bus_1023-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "swmp_21->bus_1021": {
+    "file": "line_383-fbus",
+    "phases": "abcn",
+    "sign": -1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "swmp_21->bus_1024": {
+    "fbus": {
+      "file": "swmp_21->bus_1024-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "swmp_21->bus_1024-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "swmp_22->bus_1021": {
+    "fbus": {
+      "file": "swmp_22->bus_1021-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "swmp_22->bus_1021-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "swmp_22->bus_1025": {
+    "fbus": {
+      "file": "swmp_22->bus_1025-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "swmp_22->bus_1025-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "swmp_23->bus_1021": {
+    "fbus": {
+      "file": "swmp_23->bus_1021-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "swmp_23->bus_1021-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "swmp_23->bus_1026": {
+    "fbus": {
+      "file": "swmp_23->bus_1026-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "swmp_23->bus_1026-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "tr_117": {
+    "fbus": {
+      "file": "line_381-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_382-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_118": {
+    "fbus": {
+      "file": "line_383-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_384-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_119": {
+    "fbus": {
+      "file": "tr_119-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_385-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_120": {
+    "fbus": {
+      "file": "tr_120-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_386-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_121": {
+    "fbus": {
+      "file": "tr_121-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_388-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_122": {
+    "fbus": {
+      "file": "tr_122-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_389-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_123": {
+    "fbus": {
+      "file": "tr_123-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_390-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_124": {
+    "fbus": {
+      "file": "tr_124-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_391-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_125": {
+    "fbus": {
+      "file": "tr_125-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_392-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_126": {
+    "fbus": {
+      "file": "tr_126-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_393-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_127": {
+    "fbus": {
+      "file": "tr_127-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_394-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_128": {
+    "fbus": {
+      "file": "tr_128-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_395-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_129": {
+    "fbus": {
+      "file": "tr_129-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "cb_149-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_130": {
+    "fbus": {
+      "file": "tr_130-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "tr_130-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    }
+  },
+  "tr_131": {
+    "fbus": {
+      "file": "tr_131-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_402-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_132": {
+    "fbus": {
+      "file": "tr_132-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_431-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_133": {
+    "fbus": {
+      "file": "tr_133-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_430-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "tr_134": {
+    "fbus": {
+      "file": "line_423-tbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": false,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    },
+    "tbus": {
+      "file": "line_429-fbus",
+      "phases": "abcn",
+      "sign": 1,
+      "metered": true,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "n": true
+      }
+    }
+  },
+  "vfi_4": {
+    "file": "tr_131-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "vfi_5": {
+    "file": "vfi_5-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": true,
+      "b": true,
+      "c": true,
+      "n": true
+    }
+  },
+  "vfi_6": {
+    "file": "line_423-tbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "vfi_7": {
+    "file": "tr_133-fbus",
+    "phases": "abcn",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": true
+    }
+  },
+  "bus_1014": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1015": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1016": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1017": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1018": {
+    "file": "bus_1018",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1019": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1020": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1021": {
+    "file": "bus_1026",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1022": {
+    "file": "bus_1026",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1023": {
+    "file": "bus_1026",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1024": {
+    "file": "bus_1024",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1025": {
+    "file": "bus_1025",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1026": {
+    "file": "bus_1026",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1027": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1028": {
+    "file": "bus_1026",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1029": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1030": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1031": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1032": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1033": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1034": {
+    "file": "bus_1034",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1035": {
+    "file": "bus_1026",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1036": {
+    "file": "bus_1036",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1037": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1038": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1039": {
+    "file": "bus_1026",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1040": {
+    "file": "bus_1026",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1041": {
+    "file": "bus_1034",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1042": {
+    "file": "bus_1034",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1043": {
+    "file": "bus_1034",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1044": {
+    "file": "bus_1034",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1045": {
+    "file": "bus_1034",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1046": {
+    "file": "bus_1034",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1047": {
+    "file": "bus_1036",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1048": {
+    "file": "bus_1036",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1049": {
+    "file": "bus_1036",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1050": {
+    "file": "bus_1036",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1051": {
+    "file": "bus_1036",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1052": {
+    "file": "bus_1036",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1053": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1054": {
+    "file": "bus_1054",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1055": {
+    "file": "bus_1054",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1056": {
+    "file": "bus_1054",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1057": {
+    "file": "bus_1054",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1058": {
+    "file": "bus_1054",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1059": {
+    "file": "bus_1054",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1060": {
+    "file": "bus_1060",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1061": {
+    "file": "bus_1060",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1062": {
+    "file": "bus_1060",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1063": {
+    "file": "bus_1060",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1064": {
+    "file": "bus_1060",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1065": {
+    "file": "bus_1060",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1066": {
+    "file": "bus_1066",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1067": {
+    "file": "bus_1066",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1068": {
+    "file": "bus_1066",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1069": {
+    "file": "bus_1069",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1070": {
+    "file": "bus_1069",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1071": {
+    "file": "bus_1069",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1072": {
+    "file": "bus_1072",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1073": {
+    "file": "bus_1072",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1074": {
+    "file": "bus_1072",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1075": {
+    "file": "bus_1075",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1076": {
+    "file": "bus_1075",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1077": {
+    "file": "bus_1075",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1078": {
+    "file": "bus_1069",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1079": {
+    "file": "bus_1054",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1080": {
+    "file": "bus_1054",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1081": {
+    "file": "bus_1054",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1082": {
+    "file": "bus_1082",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1083": {
+    "file": "bus_1082",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1084": {
+    "file": "bus_1082",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1085": {
+    "file": "bus_1060",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1086": {
+    "file": "bus_1060",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1087": {
+    "file": "bus_1060",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1088": {
+    "file": "bus_1088",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1089": {
+    "file": "bus_1088",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1090": {
+    "file": "bus_1088",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1091": {
+    "file": "bus_1091",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1092": {
+    "file": "bus_1091",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1093": {
+    "file": "bus_1091",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1094": {
+    "file": "bus_1094",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1095": {
+    "file": "bus_1094",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1096": {
+    "file": "bus_1094",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1097": {
+    "file": "bus_1097",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1098": {
+    "file": "bus_1097",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1099": {
+    "file": "bus_1097",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1100": {
+    "file": "bus_1100",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1101": {
+    "file": "bus_1100",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1102": {
+    "file": "bus_1100",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1103": {
+    "file": "bus_1103",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1104": {
+    "file": "bus_1103",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1105": {
+    "file": "bus_1103",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1106": {
+    "file": "bus_1106",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1107": {
+    "file": "bus_1106",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1108": {
+    "file": "bus_1106",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1109": {
+    "file": "bus_1109",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1110": {
+    "file": "bus_1109",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1111": {
+    "file": "bus_1109",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1112": {
+    "file": "bus_1112",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1113": {
+    "file": "bus_1112",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1114": {
+    "file": "bus_1112",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1115": {
+    "file": "bus_1115",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1116": {
+    "file": "bus_1115",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1117": {
+    "file": "bus_1115",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1118": {
+    "file": "bus_1118",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1119": {
+    "file": "bus_1118",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1120": {
+    "file": "bus_1118",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1121": {
+    "file": "bus_1121",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1122": {
+    "file": "bus_1121",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1123": {
+    "file": "bus_1121",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1124": {
+    "file": "bus_1124",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1125": {
+    "file": "bus_1124",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1126": {
+    "file": "bus_1124",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1127": {
+    "file": "bus_1118",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1128": {
+    "file": "bus_1128",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1129": {
+    "file": "bus_1128",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1130": {
+    "file": "bus_1142",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1131": {
+    "file": "bus_1128",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1132": {
+    "file": "bus_1128",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1133": {
+    "file": "bus_1133",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1134": {
+    "file": "bus_1133",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1135": {
+    "file": "bus_1133",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1136": {
+    "file": "bus_1148",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1137": {
+    "file": "bus_1148",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1138": {
+    "file": "bus_1148",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1139": {
+    "file": "bus_1139",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1140": {
+    "file": "bus_1133",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1141": {
+    "file": "bus_1133",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1142": {
+    "file": "bus_1142",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1143": {
+    "file": "bus_1143",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1144": {
+    "file": "bus_1142",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1145": {
+    "file": "bus_1145",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1146": {
+    "file": "bus_1142",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1147": {
+    "file": "bus_1142",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1148": {
+    "file": "bus_1148",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1149": {
+    "file": "bus_1148",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1150": {
+    "file": "bus_1148",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1151": {
+    "file": "bus_1151",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1152": {
+    "file": "bus_1148",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1153": {
+    "file": "bus_1148",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1154": {
+    "file": "bus_1154",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1155": {
+    "file": "bus_1171",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1156": {
+    "file": "bus_1154",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1157": {
+    "file": "bus_1154",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1158": {
+    "file": "bus_1171",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1159": {
+    "file": "bus_1171",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1160": {
+    "file": "bus_1175",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1161": {
+    "file": "bus_1175",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1162": {
+    "file": "bus_1175",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1163": {
+    "file": "bus_1175",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1164": {
+    "file": "bus_1175",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1165": {
+    "file": "bus_1154",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1166": {
+    "file": "bus_1154",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1167": {
+    "file": "bus_1167",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1168": {
+    "file": "bus_1169",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1169": {
+    "file": "bus_1169",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1170": {
+    "file": "bus_1167",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1171": {
+    "file": "bus_1171",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1172": {
+    "file": "bus_1175",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1173": {
+    "file": "bus_1175",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1174": {
+    "file": "bus_1175",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1175": {
+    "file": "bus_1175",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1176": {
+    "file": "bus_1183",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1177": {
+    "file": "bus_1183",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1178": {
+    "file": "bus_1183",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1179": {
+    "file": "bus_1183",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1180": {
+    "file": "bus_1183",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1181": {
+    "file": "bus_1183",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1182": {
+    "file": "bus_1183",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1183": {
+    "file": "bus_1183",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1184": {
+    "file": "bus_1191",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1185": {
+    "file": "bus_1191",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1186": {
+    "file": "bus_1191",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1187": {
+    "file": "bus_1191",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1188": {
+    "file": "bus_1191",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1189": {
+    "file": "bus_1191",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1190": {
+    "file": "bus_1191",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1191": {
+    "file": "bus_1191",
+    "phases": "abcn",
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1192": {
+    "file": "bus_1198",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1193": {
+    "file": "bus_1198",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1194": {
+    "file": "bus_1198",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1195": {
+    "file": "bus_1198",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1196": {
+    "file": "bus_1198",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1197": {
+    "file": "bus_1198",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1198": {
+    "file": "bus_1198",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1199": {
+    "file": "bus_1027",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  },
+  "bus_1200": {
+    "file": "bus_1026",
+    "phases": "abcn",
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false,
+      "n": false
+    }
+  }
+}

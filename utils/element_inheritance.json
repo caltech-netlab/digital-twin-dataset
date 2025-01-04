@@ -1,0 +1,72 @@
+{
+  "Bus": {},
+  "PowerTransfer": {
+    "Transformer": {},
+    "Line": {},
+    "OpenClose": {
+      "Fuse": {},
+      "Switch": {},
+      "FusedSwitch": {},
+      "SwitchMultiPosition": {},
+      "Contactor": {},
+      "VFI": {},
+      "NF": {},
+      "CB": {}
+    }
+  },
+  "PowerInjection": {
+    "ACInjection": {
+      "Generator": {},
+      "Cogen": {},
+      "Diesel": {},
+      "Wind": {},
+      "Load": {},
+      "Motor": {},
+      "Pump": {},
+      "GridPower": {},
+      "Capacitor": {},
+      "Inverter": {}
+    },
+    "DCInjection": {
+      "PV": {},
+      "Battery": {},
+      "FuelCell": {}
+    }
+  },
+  "Measurement": {
+    "Meter": {
+      "BMSMeter": {},
+      "EgaugeMeter": {}
+    },
+    "Register": {},
+    "CT": {},
+    "PT": {}
+  },
+  "Communication": {
+    "Jace": {},
+    "EthernetPort": {}
+  },
+  "Computation": {
+    "Server": {}
+  },
+  "Control": {
+    "Relay": {},
+    "ATS": {},
+    "VFD": {}
+  },
+  "PhysicalGrouping": {
+    "Building": {},
+    "BuildingAggregation": {},
+    "Substation": {},
+    "Vault": {},
+    "Pad": {},
+    "Room": {},
+    "Switchgear": {},
+    "Switchboard": {},
+    "SwitchArray": {},
+    "Plant": {},
+    "MCC": {},
+    "Panel": {},
+    "Circuit": {}
+  }
+}

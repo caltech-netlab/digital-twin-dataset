@@ -1,0 +1,13 @@
+numpy
+pandas
+scipy
+pyarrow
+cvxpy
+networkx
+shapely
+tqdm
+ntplib
+control
+ipykernel
+matplotlib
+graphviz    # Optional, for graph layout

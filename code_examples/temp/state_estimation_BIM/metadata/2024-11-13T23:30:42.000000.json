@@ -1,0 +1,1069 @@
+{
+  "bus_1014": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1015": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1016": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1017": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1019": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1020": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1027": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1029": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1030": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1031": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1032": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1033": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1037": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1038": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1053": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1199": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bus_1053|bus_1199-I": {
+    "file": "bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bu-I",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1069": {
+    "file": "bus_1069|bus_1070|bus_1071|bus_1078",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1070": {
+    "file": "bus_1069|bus_1070|bus_1071|bus_1078",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1071": {
+    "file": "bus_1069|bus_1070|bus_1071|bus_1078",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1078": {
+    "file": "bus_1069|bus_1070|bus_1071|bus_1078",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1069|bus_1070|bus_1071|bus_1078-I": {
+    "file": "bus_1069|bus_1070|bus_1071|bus_1078-I",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1082": {
+    "file": "bus_1082|bus_1083|bus_1084",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1083": {
+    "file": "bus_1082|bus_1083|bus_1084",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1084": {
+    "file": "bus_1082|bus_1083|bus_1084",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1082|bus_1083|bus_1084-I": {
+    "file": "bus_1082|bus_1083|bus_1084-I",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1097": {
+    "file": "bus_1097|bus_1098|bus_1099",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1098": {
+    "file": "bus_1097|bus_1098|bus_1099",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1099": {
+    "file": "bus_1097|bus_1098|bus_1099",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1097|bus_1098|bus_1099-I": {
+    "file": "bus_1097|bus_1098|bus_1099-I",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1106": {
+    "file": "bus_1106|bus_1107|bus_1108",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1107": {
+    "file": "bus_1106|bus_1107|bus_1108",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1108": {
+    "file": "bus_1106|bus_1107|bus_1108",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1106|bus_1107|bus_1108-I": {
+    "file": "bus_1106|bus_1107|bus_1108-I",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1118": {
+    "file": "bus_1118|bus_1119|bus_1120|bus_1127",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1119": {
+    "file": "bus_1118|bus_1119|bus_1120|bus_1127",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1120": {
+    "file": "bus_1118|bus_1119|bus_1120|bus_1127",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1127": {
+    "file": "bus_1118|bus_1119|bus_1120|bus_1127",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1118|bus_1119|bus_1120|bus_1127-I": {
+    "file": "bus_1118|bus_1119|bus_1120|bus_1127-I",
+    "phases": "abc",
+    "sign": 1,
+    "metered": true,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1034": {
+    "file": "bus_1034|bus_1041|bus_1042|bus_1043|bus_1044|bus_1045|bus_1046",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1041": {
+    "file": "bus_1034|bus_1041|bus_1042|bus_1043|bus_1044|bus_1045|bus_1046",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1042": {
+    "file": "bus_1034|bus_1041|bus_1042|bus_1043|bus_1044|bus_1045|bus_1046",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1043": {
+    "file": "bus_1034|bus_1041|bus_1042|bus_1043|bus_1044|bus_1045|bus_1046",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1044": {
+    "file": "bus_1034|bus_1041|bus_1042|bus_1043|bus_1044|bus_1045|bus_1046",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1045": {
+    "file": "bus_1034|bus_1041|bus_1042|bus_1043|bus_1044|bus_1045|bus_1046",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1046": {
+    "file": "bus_1034|bus_1041|bus_1042|bus_1043|bus_1044|bus_1045|bus_1046",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1034|bus_1041|bus_1042|bus_1043|bus_1044|bus_1045|bus_1046-I": {
+    "file": "bus_1034|bus_1041|bus_1042|bus_1043|bus_1044|bus_1045|bus_1046-I",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1066": {
+    "file": "bus_1066|bus_1067|bus_1068",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1067": {
+    "file": "bus_1066|bus_1067|bus_1068",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1068": {
+    "file": "bus_1066|bus_1067|bus_1068",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1066|bus_1067|bus_1068-I": {
+    "file": "bus_1066|bus_1067|bus_1068-I",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1054": {
+    "file": "bus_1054|bus_1055|bus_1056|bus_1057|bus_1058|bus_1059|bus_1079|bus_1080|bus_1081",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1055": {
+    "file": "bus_1054|bus_1055|bus_1056|bus_1057|bus_1058|bus_1059|bus_1079|bus_1080|bus_1081",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1056": {
+    "file": "bus_1054|bus_1055|bus_1056|bus_1057|bus_1058|bus_1059|bus_1079|bus_1080|bus_1081",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1057": {
+    "file": "bus_1054|bus_1055|bus_1056|bus_1057|bus_1058|bus_1059|bus_1079|bus_1080|bus_1081",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1058": {
+    "file": "bus_1054|bus_1055|bus_1056|bus_1057|bus_1058|bus_1059|bus_1079|bus_1080|bus_1081",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1059": {
+    "file": "bus_1054|bus_1055|bus_1056|bus_1057|bus_1058|bus_1059|bus_1079|bus_1080|bus_1081",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1079": {
+    "file": "bus_1054|bus_1055|bus_1056|bus_1057|bus_1058|bus_1059|bus_1079|bus_1080|bus_1081",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1080": {
+    "file": "bus_1054|bus_1055|bus_1056|bus_1057|bus_1058|bus_1059|bus_1079|bus_1080|bus_1081",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1081": {
+    "file": "bus_1054|bus_1055|bus_1056|bus_1057|bus_1058|bus_1059|bus_1079|bus_1080|bus_1081",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1054|bus_1055|bus_1056|bus_1057|bus_1058|bus_1059|bus_1079|bus_1080|bus_1081-I": {
+    "file": "bus_1054|bus_1055|bus_1056|bus_1057|bus_1058|bus_1059|bus_1079|bus_1080|bus_1081-I",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1091": {
+    "file": "bus_1091|bus_1092|bus_1093",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1092": {
+    "file": "bus_1091|bus_1092|bus_1093",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1093": {
+    "file": "bus_1091|bus_1092|bus_1093",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1091|bus_1092|bus_1093-I": {
+    "file": "bus_1091|bus_1092|bus_1093-I",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1103": {
+    "file": "bus_1103|bus_1104|bus_1105",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1104": {
+    "file": "bus_1103|bus_1104|bus_1105",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1105": {
+    "file": "bus_1103|bus_1104|bus_1105",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1103|bus_1104|bus_1105-I": {
+    "file": "bus_1103|bus_1104|bus_1105-I",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1115": {
+    "file": "bus_1115|bus_1116|bus_1117",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1116": {
+    "file": "bus_1115|bus_1116|bus_1117",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1117": {
+    "file": "bus_1115|bus_1116|bus_1117",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "bus_1115|bus_1116|bus_1117-I": {
+    "file": "bus_1115|bus_1116|bus_1117-I",
+    "phases": "abc",
+    "sign": 1,
+    "metered": false,
+    "zero": {
+      "a": false,
+      "b": false,
+      "c": false
+    }
+  },
+  "line_408": {
+    "fbus": {
+      "file": "line_408-fbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    },
+    "tbus": {
+      "file": "line_408-tbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    }
+  },
+  "line_409": {
+    "fbus": {
+      "file": "line_409-fbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    },
+    "tbus": {
+      "file": "line_409-tbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    }
+  },
+  "line_415": {
+    "fbus": {
+      "file": "line_415-fbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    },
+    "tbus": {
+      "file": "line_415-tbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    }
+  },
+  "line_416": {
+    "fbus": {
+      "file": "line_416-fbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    },
+    "tbus": {
+      "file": "line_416-tbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    }
+  },
+  "line_417": {
+    "fbus": {
+      "file": "line_417-fbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    },
+    "tbus": {
+      "file": "line_417-tbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    }
+  },
+  "tr_117": {
+    "fbus": {
+      "file": "tr_117-fbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    },
+    "tbus": {
+      "file": "tr_117-tbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    }
+  },
+  "tr_119": {
+    "fbus": {
+      "file": "tr_119-fbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    },
+    "tbus": {
+      "file": "tr_119-tbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    }
+  },
+  "tr_121": {
+    "fbus": {
+      "file": "tr_121-fbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    },
+    "tbus": {
+      "file": "tr_121-tbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    }
+  },
+  "tr_123": {
+    "fbus": {
+      "file": "tr_123-fbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    },
+    "tbus": {
+      "file": "tr_123-tbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    }
+  },
+  "tr_125": {
+    "fbus": {
+      "file": "tr_125-fbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    },
+    "tbus": {
+      "file": "tr_125-tbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    }
+  },
+  "tr_127": {
+    "fbus": {
+      "file": "tr_127-fbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    },
+    "tbus": {
+      "file": "tr_127-tbus",
+      "phases": "abc",
+      "sign": 1,
+      "metered": null,
+      "zero": {
+        "a": false,
+        "b": false,
+        "c": false
+      }
+    }
+  }
+}
