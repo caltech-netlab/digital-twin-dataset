@@ -1209,19 +1209,19 @@ if __name__ == "__main__":
     plot_results(output_data_dir, datetimespan, '2024-11-13T23:30:42.000000.json', elements_to_plot, outdir=outdir, ext='png', combine_3_phase=True, show=False)
     print_results(output_data_dir, datetimespan)
 
-    """State estimation (branch flow model: V-I)"""
-    output_data_dir = 'temp/state_estimation_BFM'
-    datetimespan = ('2024-11-14T07:00:00', '2024-11-14T07:05:00')
-    state_estimator = StateEstimator(
-        network_files=[os.path.join(FILE_PATHS['net_files'], 'circuit3')], 
-        input_data_dir=FILE_PATHS['phasors'],
-        output_data_dir=output_data_dir,
-        phase_ref='bus_1038.ag',
-        delta_t_threshold=1.0,
-    )
-    state_estimator.state_estimation(datetimespan, print_info=False)
-    elements_to_plot = ['bus_1033', 'bus_1034', 'bus_1118', 'bus_1082', 'bus_1097', 'bus_1106', 'bus_1069']
-    elements_to_plot += ['line_381', "cb_146", "cb_137", "cb_140", "cb_143", "cb_134"]
-    outdir = 'temp/state_estimation_plots/results_BFM'
-    plot_results(output_data_dir, datetimespan, '2024-11-13T23:30:42.000000.json', elements_to_plot, outdir=outdir, ext='png', combine_3_phase=True, show=False)
-    print_results(output_data_dir, datetimespan)
+    # """State estimation (branch flow model: V-I)"""
+    # output_data_dir = 'temp/state_estimation_BFM'
+    # datetimespan = ('2024-11-14T07:00:00', '2024-11-14T07:05:00')
+    # state_estimator = StateEstimator(
+    #     network_files=[os.path.join(FILE_PATHS['net_files'], 'circuit3')], 
+    #     input_data_dir=FILE_PATHS['phasors'],
+    #     output_data_dir=output_data_dir,
+    #     phase_ref='bus_1038.ag',
+    #     delta_t_threshold=1.0,
+    # )
+    # state_estimator.state_estimation(datetimespan, print_info=False)
+    # elements_to_plot = ['bus_1033', 'bus_1034', 'bus_1118', 'bus_1082', 'bus_1097', 'bus_1106', 'bus_1069']
+    # elements_to_plot += ['line_381', "cb_146", "cb_137", "cb_140", "cb_143", "cb_134"]
+    # outdir = 'temp/state_estimation_plots/results_BFM'
+    # plot_results(output_data_dir, datetimespan, '2024-11-13T23:30:42.000000.json', elements_to_plot, outdir=outdir, ext='png', combine_3_phase=True, show=False)
+    # print_results(output_data_dir, datetimespan)
