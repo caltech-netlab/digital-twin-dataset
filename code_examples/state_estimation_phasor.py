@@ -433,7 +433,12 @@ class StateEstimator:
             if edge['element_type'] in ('Line', 'Transformer'):
                 zero_impedance = False
                 if edge['element_type'] == 'Line':
-                    T_matrix, zero_impedance = topology.line_Y_matrix(topology.get_element(edge, net_data), returned_matrix='T', print_info=print_info)
+                    T_matrix, zero_impedance = topology.line_Y_matrix(
+                        topology.get_element(edge, net_data), 
+                        returned_matrix='T', 
+                        print_info=print_info,
+                        flip_tbus_current_direction=True,
+                    )
                     if zero_impedance:
                         # Source and target node voltages equal
                         merge_variables(V_names, V_var_names, edge['source'], edge['target'])
@@ -445,7 +450,11 @@ class StateEstimator:
                     transformer_element = topology.get_element(edge, net_data)
                     if transformer_element['transformer_type'] not in ('3PDYG', '3PDY', '3PYYG', '3PYY'):
                         raise RuntimeError(f"Unknown transformer type: {transformer_element['transformer_type']}")
-                    Y_matrix = topology.transformer_Y_matrix(transformer_element, returned_matrix='Y')
+                    Y_matrix = topology.transformer_Y_matrix(
+                        transformer_element, 
+                        returned_matrix='Y',
+                        flip_tbus_current_direction=True,
+                    )
                     constraints["transformer"].append((edge['source'], edge['target'], f"{name}-fbus", f"{name}-tbus", Y_matrix))
             elif 'OpenClose' in self.element_parents[edge['element_type']]:
                 edge_element = topology.get_element(edge, net_data)
