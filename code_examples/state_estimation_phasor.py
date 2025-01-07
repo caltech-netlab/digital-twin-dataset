@@ -243,7 +243,11 @@ class StateEstimator:
             obj_fxn = cp.sum(I_residual / I_metered_nominal) + cp.sum(V_residual / V_metered_nominal)
             obj = cp.Minimize(obj_fxn)
             prob = cp.Problem(obj, constraints)
-            prob.solve(solver=cp.ECOS)
+            try:
+                prob.solve(solver=cp.ECOS)
+            except Exception as e:
+                print(f"Error at {time_col[t]}: {e}")
+                continue
             V_hat[:,t] = np.array(V_hat_t.value).flatten()
             I_hat[:,t] = np.array((Y @ V_hat_t).value).flatten()
 
