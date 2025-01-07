@@ -243,7 +243,7 @@ class StateEstimator:
             obj_fxn = cp.sum(I_residual / I_metered_nominal) + cp.sum(V_residual / V_metered_nominal)
             obj = cp.Minimize(obj_fxn)
             prob = cp.Problem(obj, constraints)
-            prob.solve()
+            prob.solve(solver=cp.ECOS)
             V_hat[:,t] = np.array(V_hat_t.value).flatten()
             I_hat[:,t] = np.array((Y @ V_hat_t).value).flatten()
 
@@ -675,7 +675,7 @@ class StateEstimator:
             obj = cp.Minimize(obj_fxn)
             prob = cp.Problem(obj, optim_constraints)
             try:
-                prob.solve()
+                prob.solve(solver=cp.ECOS)
             except Exception as e:
                 print(f"Error at {time_col[t]}: {e}")
                 continue
@@ -863,7 +863,7 @@ def get_last_timestamp(data_dir):
     return utils.strptime_np(utils.load_json(os.path.join(data_dir, 'metadata', 't.json'))['last_timestamp'])
 
 
-def get_timeseries(element, datetimespan, df_cache, metadata_cache, data_dir):
+def get_timeseries(element, datetimespan, df_cache, metadata_cache, data_dir, return_metadata=False):
     """
     To reduce the number of files on the disk, elements that are connected
     by zero-impedance elements share the same source data file, up to +/-
@@ -941,7 +941,7 @@ def get_timeseries(element, datetimespan, df_cache, metadata_cache, data_dir):
         soln_lookup = metadata_cache['soln_lookup'][t_idx]
         # For non-existent element, return None
         if element not in soln_lookup:
-            return None
+            return (None, None) if return_metadata else None
         df_list = []
         # For edge elements with different fbus and tbus currents
         if ('fbus' in soln_lookup[element]) and ('tbus' in soln_lookup[element]):
@@ -973,7 +973,7 @@ def get_timeseries(element, datetimespan, df_cache, metadata_cache, data_dir):
             df_list.append(df)
     df_list = (utils.concatenate_df(df_list[0]), utils.concatenate_df(df_list[1])) \
         if type(df_list) is tuple else utils.concatenate_df(df_list)
-    return df_list
+    return (df_list, soln_lookup[element])if return_metadata else df_list
 
 
 def print_results(output_data_dir, datetimespan, unique=True, network_files=None):
@@ -1018,7 +1018,6 @@ def print_results(output_data_dir, datetimespan, unique=True, network_files=None
 def plot_results(
     data_dir, 
     datetimespan, 
-    metadata_file, 
     elements, 
     outdir=None, 
     plot_metered=True, 
@@ -1042,12 +1041,18 @@ def plot_results(
     colors = [[1.00, 0.43, 0.12], [0.19, 0.63, 0.29], [0.14, 0.48, 0.72]]
 
     df_cache, metadata_cache= {}, {}
-    metadata = utils.load_json(os.path.join(data_dir, 'metadata', metadata_file), raise_err=True)
     if outdir: utils.mkdir(outdir)
-    for name in elements:
-        df = get_timeseries(name, datetimespan, df_cache, metadata_cache, data_dir=data_dir)
+    for name_full in elements:
+        name, terminal = name_full, None
+        if name_full.endswith('-fbus') or name_full.endswith('-tbus'):
+            name, terminal = name_full[:-5], name_full[-4:]
+        df, metadata = get_timeseries(name, datetimespan, df_cache, metadata_cache, data_dir=data_dir, return_metadata=True)
+        if type(df) is tuple:
+            assert terminal, f"Terminal (-fbus/-tbus) must be specified in elements for {name}."
+            df = df[0] if terminal == 'fbus' else df[1]
+            metadata = metadata[terminal]
         if df is None:
-            print(f"[Warning] No data found for {name}")
+            print(f"[Warning] No data found for {name_full}")
             continue
         if combine_3_phase:
             fig, axs = plt.subplots(2, sharex='col', figsize=(base_figsize[0], 2*base_figsize[1]))
@@ -1059,11 +1064,11 @@ def plot_results(
                 fig.suptitle(name)
             else:
                 fig.suptitle(name if len(name) < 256 else name[:256] + '...', fontsize=base_figsize[0] * 128/len(name))
-        vi = 'Current' if name.endswith('-I') else 'Voltage'
-        VI = 'I' if name.endswith('-I') else 'V'
-        unit = 'A' if name.endswith('-I') else 'V'
-        mean_mag, mean_phase = [], []
-        plot_handles = []
+        if name.endswith('-I') or (not name.startswith('bus')):
+            vi, VI, unit = 'Current', 'I', 'A'
+        else:
+            vi, VI, unit = 'Voltage', 'V', 'V'
+        mean_mag, mean_phase, plot_handles = [], [], []
         for i, p in enumerate('abc'):
             mag, angle = np.abs(df[p]), np.angle(df[p]) / np.pi * 180
             angle = phasor_utils.smooth_phase_180_oscillation(angle, buffer=30)
@@ -1078,8 +1083,8 @@ def plot_results(
             mean_mag.append(mag.mean())
             mean_phase.append(angle.mean())
         plot_handles_metered = []
-        if metadata[name]["metered"] and plot_metered:
-            metered_name = os.path.join(data_dir, metadata[name]['file'])
+        if metadata["metered"] and plot_metered:
+            metered_name = os.path.join(data_dir, metadata['file'])
             df_metered, err = utils.read_ts(metered_name + '-measurement', datetimespan)
             if (err not in (1, 2)) and all([p in df_metered for p in 'abc']):    
                 for i, p in enumerate('abc'):
@@ -1090,7 +1095,7 @@ def plot_results(
                     mean_mag[i] = (mag.mean() + mean_mag[i]) / 2
                     mean_phase[i] = (angle.mean() + mean_phase[i]) / 2
             else:
-                print(f"[Warning] No ground truth measurement data for {name}.")
+                print(f"[Warning] No ground truth measurement data for {name_full}.")
         mag_delta = 0.10 * utils.list_mean(mean_mag)
         if combine_3_phase:
             if utils.list_mean(mean_mag) < 0.1:
@@ -1098,9 +1103,9 @@ def plot_results(
             axs[1].set_ylim(-180, 180)
             axs[1].set_xlabel(f"Time (minute:second)")
             axs[1].xaxis.set_major_formatter(timefmt)
-            axs[0].add_artist(axs[0].legend(plot_handles, [f"Phase {p}" for p in 'ABC'], framealpha=0.95, loc='lower left', labelspacing=0.3, bbox_to_anchor=(.74, 0.49), handletextpad=0.6, title='Estimation', title_fontproperties={'weight': 'bold'}))
+            axs[0].add_artist(axs[0].legend(plot_handles, [f"Phase {p}" for p in 'ABC'], framealpha=0.95, loc='lower left', labelspacing=0.3, bbox_to_anchor=(.74, 0.48), handletextpad=0.6, title='Estimation', title_fontproperties={'weight': 'bold'}))
             if plot_handles_metered:
-                axs[0].legend(plot_handles_metered, [f"Phase {p}" for p in 'ABC'], framealpha=0.95, loc='upper left', labelspacing=0.3, bbox_to_anchor=(.74, 0.51), handletextpad=0.6, title='Measurement', title_fontproperties={'weight': 'bold'})
+                axs[0].legend(plot_handles_metered, [f"Phase {p}" for p in 'ABC'], framealpha=0.95, loc='upper left', labelspacing=0.3, bbox_to_anchor=(.74, 0.52), handletextpad=0.6, title='Measurement', title_fontproperties={'weight': 'bold'})
         else:
             for i in range(len('abc')):
                 if mean_mag[i] + mag_delta < 0.1:
@@ -1113,7 +1118,7 @@ def plot_results(
             axs[2, 0].xaxis.set_major_formatter(timefmt)
             axs[2, 1].xaxis.set_major_formatter(timefmt)
             axs[0, 0].legend()
-        filename = name[:128]
+        filename = name_full[:128]
         if (len(name) > 128) and (name[-2:] == '-I'):
             filename += '-I'
         fig.tight_layout()
@@ -1142,6 +1147,7 @@ def compute_error(data_dir, datetimespan, zero_threshold=1e-2):
         if metered_name is None: continue
         df, err = utils.read_ts(os.path.join(data_dir, name), datetimespan)
         df_metered, err = utils.read_ts(os.path.join(data_dir, metered_name), datetimespan)
+        if any([p not in df_metered for p in 'abc']): continue
         errors[name] = {}
         over_under = []
         for p in 'abc':
@@ -1161,6 +1167,9 @@ def compute_error(data_dir, datetimespan, zero_threshold=1e-2):
 
 
 if __name__ == "__main__":
+    input_data_dir = "/home/netlab/sandbox/digital-twin/temp/egauge_phasor_1e-2"
+    # input_data_dir = "/home/netlab/sandbox/digital-twin/temp/egauge_phasor"
+    # input_data_dir = FILE_PATHS['phasors']
     """State estimation (bus injection model: V-I)"""
     output_data_dir = 'temp/state_estimation_BIM'
     measured_injections = {
@@ -1187,7 +1196,7 @@ if __name__ == "__main__":
     datetimespan = ('2024-11-14T07:00:00', '2024-11-14T07:05:00')
     state_estimator = StateEstimator(
         network_files=[os.path.join(FILE_PATHS['net_files'], 'circuit3')], 
-        input_data_dir=FILE_PATHS['phasors'],
+        input_data_dir=input_data_dir,
         output_data_dir=output_data_dir,
         phase_ref='bus_1038.ag',
         delta_t_threshold=1.0,
@@ -1206,22 +1215,24 @@ if __name__ == "__main__":
     elements_to_plot += ['bus_1014|bus_1015|bus_1016|bus_1017|bus_1019|bus_1020|bus_1027|bus_1029|bus_1030|bus_1031|bus_1032|bus_1033|bus_1037|bus_1038|bus_1053|bus_1199-I', 'bus_1118|bus_1119|bus_1120|bus_1127-I', 'bus_1082|bus_1083|bus_1084-I', 'bus_1097|bus_1098|bus_1099-I', 'bus_1106|bus_1107|bus_1108-I', 'bus_1069|bus_1070|bus_1071|bus_1078-I']
     elements_to_plot += ['bus_1034|bus_1041|bus_1042|bus_1043|bus_1044|bus_1045|bus_1046-I', 'bus_1066|bus_1067|bus_1068-I', 'bus_1103|bus_1104|bus_1105-I', 'bus_1091|bus_1092|bus_1093-I', 'bus_1054|bus_1055|bus_1056|bus_1057|bus_1058|bus_1059|bus_1079|bus_1080|bus_1081-I', 'bus_1115|bus_1116|bus_1117-I']
     outdir = 'temp/state_estimation_plots/results_BIM'
-    plot_results(output_data_dir, datetimespan, '2024-11-13T23:30:42.000000.json', elements_to_plot, outdir=outdir, ext='png', combine_3_phase=True, show=False)
+    plot_results(output_data_dir, datetimespan, elements_to_plot, outdir=outdir, ext='png', combine_3_phase=True, show=False)
     print_results(output_data_dir, datetimespan)
+    compute_error(output_data_dir, datetimespan)
 
-    # """State estimation (branch flow model: V-I)"""
-    # output_data_dir = 'temp/state_estimation_BFM'
-    # datetimespan = ('2024-11-14T07:00:00', '2024-11-14T07:05:00')
-    # state_estimator = StateEstimator(
-    #     network_files=[os.path.join(FILE_PATHS['net_files'], 'circuit3')], 
-    #     input_data_dir=FILE_PATHS['phasors'],
-    #     output_data_dir=output_data_dir,
-    #     phase_ref='bus_1038.ag',
-    #     delta_t_threshold=1.0,
-    # )
-    # state_estimator.state_estimation(datetimespan, print_info=False)
-    # elements_to_plot = ['bus_1033', 'bus_1034', 'bus_1118', 'bus_1082', 'bus_1097', 'bus_1106', 'bus_1069']
-    # elements_to_plot += ['line_381', "cb_146", "cb_137", "cb_140", "cb_143", "cb_134"]
-    # outdir = 'temp/state_estimation_plots/results_BFM'
-    # plot_results(output_data_dir, datetimespan, '2024-11-13T23:30:42.000000.json', elements_to_plot, outdir=outdir, ext='png', combine_3_phase=True, show=False)
-    # print_results(output_data_dir, datetimespan)
+    """State estimation (branch flow model: V-I)"""
+    output_data_dir = 'temp/state_estimation_BFM'
+    datetimespan = ('2024-11-14T07:00:00', '2024-11-14T07:05:00')
+    state_estimator = StateEstimator(
+        network_files=[os.path.join(FILE_PATHS['net_files'], 'circuit3')], 
+        input_data_dir=input_data_dir,
+        output_data_dir=output_data_dir,
+        phase_ref='bus_1038.ag',
+        delta_t_threshold=1.0,
+    )
+    state_estimator.state_estimation(datetimespan, print_info=False)
+    elements_to_plot = ['bus_1033', 'bus_1034', 'bus_1118', 'bus_1082', 'bus_1097', 'bus_1106', 'bus_1069']
+    elements_to_plot += ['line_381', 'line_383', "line_431", "cb_134", "cb_151-fbus"]
+    outdir = 'temp/state_estimation_plots/results_BFM'
+    plot_results(output_data_dir, datetimespan, elements_to_plot, outdir=outdir, ext='png', combine_3_phase=True, show=False)
+    print_results(output_data_dir, datetimespan)
+    compute_error(output_data_dir, datetimespan)
