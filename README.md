@@ -1,5 +1,5 @@
 # A Real-World Dataset
-The dataset contains data collected from microgrids/distribution systems in California. The data has been anonymized to remove all geographical identifiers. Our [conference poster can be found here](assets/Poster.pdf). Our paper will be available on arXiv soon.
+The dataset contains data collected from microgrids/distribution systems in California. The data has been anonymized to remove all geographical identifiers. Our [conference poster](assets/Poster.pdf) is available. Our paper will be available on arXiv soon.
 
 ## Sample dataset
 Download sample dataset from [here](https://caltech.box.com/s/5baxy2ogbalqohpidh1lyxgnnxmv5tuc) and place into sample_dataset folder. 
