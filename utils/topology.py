@@ -457,7 +457,6 @@ def traverse_dict_list_populate(data, t, timeseries_dir):
     return data
 
 
-# Updated (minor)
 def load_net_files(
     net_files, t=None, timeseries_dir=FILE_PATHS["net_params"], name_as_keys=True
 ):
@@ -704,7 +703,6 @@ def net2graph(
     return nodes, edges, decorators
 
 
-# This is updated
 def graph2electrical_graph(
     nodes, edges, decorators, net_data, element_parents, prune_nodes=False
 ):
@@ -798,7 +796,6 @@ def get_transformer_parameters(element):
     return V_primary, V_secondary, VA_rating, percent_z, connection, conn_type, y_shunt
 
 
-# Updated
 def _transformer_Y_matrix(
     V_primary, V_secondary, VA_rating, percent_z, connection, conn_type, 
     y_shunt=1e-7, returned_matrix='Y', flip_tbus_current_direction=True
@@ -936,7 +933,6 @@ def _transformer_Y_matrix(
         raise ValueError(f"Invalid argument for returned_matrix: {returned_matrix}")
 
 
-# Updated
 def transformer_Y_matrix(element, returned_matrix='Y', flip_tbus_current_direction=True):
     V_primary, V_secondary, VA_rating, percent_z, connection, conn_type, y_shunt = \
         get_transformer_parameters(element)
@@ -1151,7 +1147,6 @@ def get_line_parameters(element, cable_info=utils.CSVMapper(FILE_PATHS["cable_in
     return length, cable_locs, gmr, resistance
 
 
-# Updated
 def _line_Y_matrix(length, cable_locs, gmr, resistance, f=F, zero_shunt=False, returned_matrix='Y', flip_tbus_current_direction=True):
     """
     Given line parameters, generate its admittance matrix or transmission matrix.
@@ -1255,7 +1250,6 @@ def _line_Y_matrix(length, cable_locs, gmr, resistance, f=F, zero_shunt=False, r
         raise ValueError(f"Invalid argument for returned_matrix: {returned_matrix}")
 
 
-# Updated
 def line_Y_matrix(element, cable_info=utils.CSVMapper(FILE_PATHS['cable_info']), zero_shunt=True, returned_matrix='Y', flip_tbus_current_direction=True, print_info=True):
     # If line rating is missing or it is not in our dictionary format, assume zero-impedance.
     if (
@@ -1271,7 +1265,6 @@ def line_Y_matrix(element, cable_info=utils.CSVMapper(FILE_PATHS['cable_info']),
     return _line_Y_matrix(length, cable_locs, gmr, resistance, f=F, zero_shunt=zero_shunt, returned_matrix=returned_matrix, flip_tbus_current_direction=flip_tbus_current_direction), False
     
 
-# Updated
 def network_Y_matrix(edges, node_list, net_data):
     """
     Given an electrical network graph, return its admittance matrix Y.
@@ -1310,7 +1303,6 @@ def network_Y_matrix(edges, node_list, net_data):
 """Plotting"""
 
 
-# This is updated
 def plot_graph(
     nodes,
     edges,
@@ -1419,7 +1411,6 @@ def plot_graph(
             plot_nx_graph(H, os.path.join(os.path.dirname(out_path), f"connected_component_{i}.png"), edge_info=edge_info, figsize=figsize)
 
 
-# This is updated
 def plot_nx_graph(G, outpath=None, show=True, edge_info=None, figsize=(12,12)):
     try:
         pos = nx.nx_agraph.graphviz_layout(G, prog="dot", args="")

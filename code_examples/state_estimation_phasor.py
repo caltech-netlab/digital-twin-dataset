@@ -92,7 +92,6 @@ class StateEstimator:
                 unit_lookup[reg['element']] = reg['unit']
         return net_data, nodes, edges, decorators, input_files, unit_lookup, nominal_values
     
-    # Updated
     def _state_estimation_BIM(
         self, net_data, nodes, edges, decorators, time_col, topology_timestamp,
         metered_df, unit_lookup, nominal_values, output_data_dir, print_info, write_mode, 
