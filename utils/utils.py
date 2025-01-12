@@ -3565,7 +3565,7 @@ class CSVMapper:
         return pd.DataFrame(df) if type == "pd" else df
 
 
-def load_waveforms(path_waveforms, timestamp, meter_dirs, return_pandas=True):
+def load_waveforms(path_waveforms, timestamp, meter_dirs, return_pandas=True, internal_call=False):
     """
     Load waveforms captured at the same time (raw data)
     :param path_waveforms: string, the path to sample_dataset/waveforms
@@ -3630,30 +3630,33 @@ def load_waveforms(path_waveforms, timestamp, meter_dirs, return_pandas=True):
 
     for meter_dir in meter_dirs:
         base_path = os.path.join(path_waveforms, meter_dir)
-        folder_dates = parse_folder_dates(base_path)
-        if not folder_dates:
-            raise ValueError(f"No date folders found in {base_path}")
+        if not internal_call:
+            folder_dates = parse_folder_dates(base_path)
+            if not folder_dates:
+                raise ValueError(f"No date folders found in {base_path}")
 
-        if input_date < folder_dates[0]:
-            target_folders = [folder_dates[0]]
-        elif input_date > folder_dates[-1]:
-            target_folders = [folder_dates[-1]]
+            if input_date < folder_dates[0]:
+                target_folders = [folder_dates[0]]
+            elif input_date > folder_dates[-1]:
+                target_folders = [folder_dates[-1]]
+            else:
+                date_diffs = [(abs((datetime.datetime.strptime(folder_date, "%Y-%m-%d") - datetime.datetime.combine(input_time.date(), datetime.datetime.min.time())).days), folder_date)
+                            for folder_date in folder_dates]
+                date_diffs.sort(key=lambda x: x[0])
+                closest_date = date_diffs[0][1]
+                target_folders = [closest_date]
+                idx = folder_dates.index(closest_date)
+
+                files_in_current = get_parquet_files(os.path.join(base_path, closest_date))
+                if files_in_current:
+                    min_time = files_in_current[0][0]
+                    max_time = files_in_current[-1][0]
+                    if input_time < min_time and idx > 0:
+                        target_folders.insert(0, folder_dates[idx - 1])
+                    if input_time > max_time and idx < len(folder_dates) - 1:
+                        target_folders.append(folder_dates[idx + 1])
         else:
-            date_diffs = [(abs((datetime.datetime.strptime(folder_date, "%Y-%m-%d") - datetime.datetime.combine(input_time.date(), datetime.datetime.min.time())).days), folder_date)
-                          for folder_date in folder_dates]
-            date_diffs.sort(key=lambda x: x[0])
-            closest_date = date_diffs[0][1]
-            target_folders = [closest_date]
-            idx = folder_dates.index(closest_date)
-
-            files_in_current = get_parquet_files(os.path.join(base_path, closest_date))
-            if files_in_current:
-                min_time = files_in_current[0][0]
-                max_time = files_in_current[-1][0]
-                if input_time < min_time and idx > 0:
-                    target_folders.insert(0, folder_dates[idx - 1])
-                if input_time > max_time and idx < len(folder_dates) - 1:
-                    target_folders.append(folder_dates[idx + 1])
+            target_folders = [input_date]
 
         all_files = []
         for folder in target_folders:
@@ -3674,8 +3677,10 @@ def load_waveforms(path_waveforms, timestamp, meter_dirs, return_pandas=True):
     base_first_timestamp = pd.to_datetime(base_df.iloc[0]['t']).strftime('%Y-%m-%dT%H:%M:%S')
     result[base_first_timestamp] = {}
 
+    file_cache = {}
     for meter_dir, (_, _, file_path) in nearest_files.items():
         candidate_df = pd.read_parquet(file_path)
+        file_cache[file_path] = candidate_df
         candidate_min_time, candidate_max_time = pd.to_datetime(candidate_df['t']).agg(['min', 'max'])
         while not (candidate_max_time >= base_min_time and candidate_min_time <= base_max_time):
             if meter_dir not in nearest2_files:
@@ -3683,11 +3688,12 @@ def load_waveforms(path_waveforms, timestamp, meter_dirs, return_pandas=True):
                 return {}
             _, _, next_file_path = nearest2_files.pop(meter_dir)
             candidate_df = pd.read_parquet(next_file_path)
+            file_cache[next_file_path] = candidate_df
             candidate_min_time, candidate_max_time = pd.to_datetime(candidate_df['t']).agg(['min', 'max'])
             nearest_files[meter_dir] = (_, _, next_file_path)
 
     for meter_dir, (_, _, file_path) in nearest_files.items():
-        result[base_first_timestamp][meter_dir] = pd.read_parquet(file_path)
+        result[base_first_timestamp][meter_dir] = file_cache[file_path]
     
     if not return_pandas:
         result = {base_first_timestamp: {meter_dir: \
@@ -3725,10 +3731,22 @@ def load_waveforms_timerange(path_waveforms, timestamp_range, meter_dirs, return
 
     # set the first meter as reference
     base_meter_dir = meter_dirs[0] # reference meter (can be replaced with others)
-    base_files = []
+    base_path = os.path.join(path_waveforms, base_meter_dir)
 
-    for root, _, files in os.walk(os.path.join(path_waveforms, base_meter_dir)):
-        base_files.extend([os.path.join(root, f) for f in files if f.endswith(".parquet")])
+    current_date = start_time
+    all_dates = []
+    while current_date <= end_time:
+        all_dates.append(current_date.strftime("%Y-%m-%d"))
+        current_date += datetime.timedelta(days=1)
+
+    base_files = []
+    for date_str in all_dates:
+        date_folder = os.path.join(base_path, date_str)
+        if os.path.exists(date_folder) and os.path.isdir(date_folder):
+            for root, _, files in os.walk(date_folder):
+                base_files.extend([os.path.join(root, f) for f in files if f.endswith(".parquet")])
+        else:
+            print(f"Skipping {date_str}: No data")
     if not base_files:
         raise ValueError(f"No parquet files found in {base_meter_dir}")
 
@@ -3755,7 +3773,7 @@ def load_waveforms_timerange(path_waveforms, timestamp_range, meter_dirs, return
     for timestamp in base_timestamps:
         timestamp_str = timestamp.strftime("%Y-%m-%dT%H:%M:%S")
         try:
-            timestamp_data = load_waveforms(path_waveforms, timestamp_str, meter_dirs, return_pandas=return_pandas)
+            timestamp_data = load_waveforms(path_waveforms, timestamp_str, meter_dirs, return_pandas=return_pandas, internal_call=True)
             if not timestamp_data:
                 print(f"Skipping empty data for timestamp {timestamp_str}")
                 continue
