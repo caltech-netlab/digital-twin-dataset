@@ -1151,28 +1151,32 @@ def compute_error(data_dir, datetimespan, zero_threshold=1e-2):
         df, err = utils.read_ts(os.path.join(data_dir, name), datetimespan)
         df_metered, err = utils.read_ts(os.path.join(data_dir, metered_name), datetimespan)
         if any([p not in df_metered for p in 'abc']): continue
-        errors[name] = {}
+        errors[name] = {'mean': {}, 'var': {}}
         over_under = []
         for p in 'abc':
             if np.mean(np.abs(df_metered[p])) < zero_threshold:
-                errors[name][p] = np.mean(np.abs(df[p] - df_metered[p]))
+                errors[name]['mean'][p] = np.mean(np.abs(df[p] - df_metered[p]))
+                errors[name]['var'][p] = np.var(np.abs(df[p] - df_metered[p]))
                 over_under.append(np.mean(np.abs(df[p]) - np.abs(df_metered[p])))
                 zero = True
             else:
-                errors[name][p] = np.mean(np.abs(df[p] - df_metered[p])) / np.mean(np.abs(df_metered[p]))
+                errors[name]['mean'][p] = np.mean(np.abs(df[p] - df_metered[p])) / np.mean(np.abs(df_metered[p]))
+                errors[name]['var'][p] = np.var(np.abs(df[p] - df_metered[p]) / np.mean(np.abs(df_metered[p])))
                 over_under.append(np.mean(np.abs(df[p]) - np.abs(df_metered[p])) / np.mean(np.abs(df_metered[p])))
-                zero=False
+                zero = False
         over_under = np.mean(over_under)
-        errors[name]['mean'] = np.mean([errors[name][p] for p in 'abc'])
+        errors[name]['mean']['mean'] = np.mean([errors[name]['mean'][p] for p in 'abc'])
+        errors[name]['var']['mean'] = np.mean([errors[name]['var'][p] for p in 'abc'])
+        errors[name]['zero'] = zero
         print(name + (' (zero)' if zero else ''))
-        print(f"mean: {'+' if over_under >= 0 else '-'}{errors[name]['mean']:.2f}, a: {errors[name]['a']:.2f}, b: {errors[name]['b']:.2f}, c: {errors[name]['c']:.2f}")
-    print(f"Mean error: {np.mean([errors[name]['mean'] for name in errors])}")            
+        print(f"mean: {'+' if over_under >= 0 else '-'}{errors[name]['mean']['mean']:.2f}, a: {errors[name]['mean']['a']:.2f}, b: {errors[name]['mean']['b']:.2f}, c: {errors[name]['mean']['c']:.2f}")
+        print(f"variance: {'+' if over_under >= 0 else '-'}{errors[name]['var']['mean']:.2f}, a: {errors[name]['var']['a']:.2f}, b: {errors[name]['var']['b']:.2f}, c: {errors[name]['var']['c']:.2f}")
+    print(f"Mean error (%): {np.mean([d['mean']['mean'] for d in errors.values() if not d['zero']]) * 100}")
+    print(f"Mean variance (%): {np.mean([d['var']['mean'] for d in errors.values() if not d['zero']]) * 100}")            
 
 
 if __name__ == "__main__":
-    input_data_dir = "/home/netlab/sandbox/digital-twin/temp/egauge_phasor_1e-2"
-    # input_data_dir = "/home/netlab/sandbox/digital-twin/temp/egauge_phasor"
-    # input_data_dir = FILE_PATHS['phasors']
+    input_data_dir = FILE_PATHS['phasors']
     """State estimation (bus injection model: V-I)"""
     output_data_dir = 'temp/state_estimation_BIM'
     measured_injections = {
@@ -1223,19 +1227,19 @@ if __name__ == "__main__":
     compute_error(output_data_dir, datetimespan)
 
     """State estimation (branch flow model: V-I)"""
-    output_data_dir = 'temp/state_estimation_BFM'
-    datetimespan = ('2024-11-14T07:00:00', '2024-11-14T07:05:00')
-    state_estimator = StateEstimator(
-        network_files=[os.path.join(FILE_PATHS['net_files'], 'circuit3')], 
-        input_data_dir=input_data_dir,
-        output_data_dir=output_data_dir,
-        phase_ref='bus_1038.ag',
-        delta_t_threshold=1.0,
-    )
-    state_estimator.state_estimation(datetimespan, print_info=False)
-    elements_to_plot = ['bus_1033', 'bus_1034', 'bus_1118', 'bus_1082', 'bus_1097', 'bus_1106', 'bus_1069']
-    elements_to_plot += ['line_381', 'line_383', "line_431", "cb_134", "cb_151-fbus"]
-    outdir = 'temp/state_estimation_plots/results_BFM'
-    plot_results(output_data_dir, datetimespan, elements_to_plot, outdir=outdir, ext='png', combine_3_phase=True, show=False)
-    print_results(output_data_dir, datetimespan)
-    compute_error(output_data_dir, datetimespan)
+    # output_data_dir = 'temp/state_estimation_BFM'
+    # datetimespan = ('2024-11-14T07:00:00', '2024-11-14T07:05:00')
+    # state_estimator = StateEstimator(
+    #     network_files=[os.path.join(FILE_PATHS['net_files'], 'circuit3')], 
+    #     input_data_dir=input_data_dir,
+    #     output_data_dir=output_data_dir,
+    #     phase_ref='bus_1038.ag',
+    #     delta_t_threshold=1.0,
+    # )
+    # state_estimator.state_estimation(datetimespan, print_info=False)
+    # elements_to_plot = ['bus_1033', 'bus_1034', 'bus_1118', 'bus_1082', 'bus_1097', 'bus_1106', 'bus_1069']
+    # elements_to_plot += ['line_381', 'line_383', "line_431", "cb_134", "cb_151-fbus"]
+    # outdir = 'temp/state_estimation_plots/results_BFM'
+    # plot_results(output_data_dir, datetimespan, elements_to_plot, outdir=outdir, ext='png', combine_3_phase=True, show=False)
+    # print_results(output_data_dir, datetimespan)
+    # compute_error(output_data_dir, datetimespan)
