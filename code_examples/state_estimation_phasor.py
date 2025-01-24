@@ -929,10 +929,6 @@ def get_timeseries(element, datetimespan, df_cache, metadata_cache, data_dir, re
         metadata_cache['timestamps'] = np.array(metadata_cache['timestamps']).astype('datetime64[us]')
 
     # Check that requested datetimespan is within the range of available data
-    if (dt0 is not None) and (dt0 < metadata_cache['timestamps'][0]):
-        raise RuntimeError(f"No data available for time {datetimespan[0]}")
-    if (dt1 is not None) and (dt1 > get_last_timestamp(data_dir)):
-        raise RuntimeError(f"No data available for time {datetimespan[1]}")
     i0 = utils.np_searchsorted(metadata_cache['timestamps'], dt0, mode='nearest_before')
     i1 = utils.np_searchsorted(metadata_cache['timestamps'], dt1, mode='nearest_after') \
         if datetimespan[1] else len(metadata_cache['timestamps'])
@@ -1030,6 +1026,7 @@ def plot_results(
     fontsize=16,
     title=True,
     show=True,
+    plot_every=1,
 ):
     """
     This is for the BIM implementation only.
@@ -1050,6 +1047,7 @@ def plot_results(
         if name_full.endswith('-fbus') or name_full.endswith('-tbus'):
             name, terminal = name_full[:-5], name_full[-4:]
         df, metadata = get_timeseries(name, datetimespan, df_cache, metadata_cache, data_dir=data_dir, return_metadata=True)
+        if plot_every > 1: df = {k: v[::plot_every] for k, v in df.items()}
         if type(df) is tuple:
             assert terminal, f"Terminal (-fbus/-tbus) must be specified in elements for {name}."
             df = df[0] if terminal == 'fbus' else df[1]
@@ -1089,6 +1087,7 @@ def plot_results(
         if metadata["metered"] and plot_metered:
             metered_name = os.path.join(data_dir, metadata['file'])
             df_metered, err = utils.read_ts(metered_name + '-measurement', datetimespan)
+            if plot_every > 1: df_metered = {k: v[::plot_every] for k, v in df_metered.items()}
             if (err not in (1, 2)) and all([p in df_metered for p in 'abc']):    
                 for i, p in enumerate('abc'):
                     mag, angle = np.abs(df_metered[p]), np.angle(df_metered[p]) / np.pi * 180
@@ -1145,24 +1144,30 @@ def compute_error(data_dir, datetimespan, zero_threshold=1e-2):
             pairs[f] = f + '-measurement'
         else:
             pairs[f] = None
-    errors = {}
+    errors, samples = {}, []
     for name, metered_name in pairs.items():
         if metered_name is None: continue
         df, err = utils.read_ts(os.path.join(data_dir, name), datetimespan)
         df_metered, err = utils.read_ts(os.path.join(data_dir, metered_name), datetimespan)
+        not_nan = ~np.isnan(df['a']) & ~np.isnan(df['b']) & ~np.isnan(df['c'])
+        not_large = (np.abs(df['a']) < 1e10) & (np.abs(df['b']) < 1e10) & (np.abs(df['c']) < 1e10)
+        valid = not_nan & not_large
+        samples.append(valid.sum())
+        if valid.mean() < 0.9:
+            print(f"[Warning] Too many NaN or large values for {name}: {(1-valid.mean()) * 100}%.")
         if any([p not in df_metered for p in 'abc']): continue
         errors[name] = {'mean': {}, 'var': {}}
         over_under = []
         for p in 'abc':
             if np.mean(np.abs(df_metered[p])) < zero_threshold:
-                errors[name]['mean'][p] = np.mean(np.abs(df[p] - df_metered[p]))
-                errors[name]['var'][p] = np.var(np.abs(df[p] - df_metered[p]))
-                over_under.append(np.mean(np.abs(df[p]) - np.abs(df_metered[p])))
+                errors[name]['mean'][p] = np.mean(np.abs(df[p][valid] - df_metered[p][valid]))
+                errors[name]['var'][p] = np.var(np.abs(df[p][valid] - df_metered[p][valid]))
+                over_under.append(np.mean(np.abs(df[p][valid]) - np.abs(df_metered[p][valid])))
                 zero = True
             else:
-                errors[name]['mean'][p] = np.mean(np.abs(df[p] - df_metered[p])) / np.mean(np.abs(df_metered[p]))
-                errors[name]['var'][p] = np.var(np.abs(df[p] - df_metered[p]) / np.mean(np.abs(df_metered[p])))
-                over_under.append(np.mean(np.abs(df[p]) - np.abs(df_metered[p])) / np.mean(np.abs(df_metered[p])))
+                errors[name]['mean'][p] = np.mean(np.abs(df[p][valid] - df_metered[p][valid])) / np.mean(np.abs(df_metered[p][valid]))
+                errors[name]['var'][p] = np.var(np.abs(df[p][valid] - df_metered[p][valid]) / np.mean(np.abs(df_metered[p][valid])))
+                over_under.append(np.mean(np.abs(df[p][valid]) - np.abs(df_metered[p][valid])) / np.mean(np.abs(df_metered[p][valid])))
                 zero = False
         over_under = np.mean(over_under)
         errors[name]['mean']['mean'] = np.mean([errors[name]['mean'][p] for p in 'abc'])
@@ -1172,7 +1177,8 @@ def compute_error(data_dir, datetimespan, zero_threshold=1e-2):
         print(f"mean: {'+' if over_under >= 0 else '-'}{errors[name]['mean']['mean']:.2f}, a: {errors[name]['mean']['a']:.2f}, b: {errors[name]['mean']['b']:.2f}, c: {errors[name]['mean']['c']:.2f}")
         print(f"variance: {'+' if over_under >= 0 else '-'}{errors[name]['var']['mean']:.2f}, a: {errors[name]['var']['a']:.2f}, b: {errors[name]['var']['b']:.2f}, c: {errors[name]['var']['c']:.2f}")
     print(f"Mean error (%): {np.mean([d['mean']['mean'] for d in errors.values() if not d['zero']]) * 100}")
-    print(f"Mean variance (%): {np.mean([d['var']['mean'] for d in errors.values() if not d['zero']]) * 100}")            
+    print(f"Mean variance (%): {np.mean([d['var']['mean'] for d in errors.values() if not d['zero']]) * 100}")
+    print(f"Samples: {np.mean(samples)}")
 
 
 if __name__ == "__main__":
