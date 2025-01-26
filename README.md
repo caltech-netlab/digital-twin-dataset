@@ -10,16 +10,16 @@ To access the full dataset, please submit a ticket [here](https://forms.office.c
 
 ## Data types
 
-In the following, we explain the 3 types of time-series data as well as circuit topology data in `sample_data`:
+In the following, we explain the 3 types of time-series data as well as circuit topology data in [`sample_data`](sample_data) folder:
 
 ### Magnitude
-`sample_data/magnitude` includes the root mean squared current and voltage magnitudes. These data do not contain phase angle information. The data is available at 1-second intervals.
+[`magnitude`](sample_data/magnitude) includes the root mean squared current and voltage magnitudes. These data do not contain phase angle information. The data is available at 1-second intervals.
 
 ### Synchro-phasor
-`sample_data/phasor` includes synchro-phasor measurements, which are presented as complex numbers. The data is available at 10-second intervals.
+[`phasor`](sample_data/phasor) includes synchro-phasor measurements, which are presented as complex numbers. The data is available at 10-second intervals.
 
 ### Synchro-waveform
-`sample_data/waveform` includes the raw point-on-wave measurements sampled at 2.5kHz. Each waveform is roughly 1-second in length. One waveform is available every 10 seconds. The capture start times may differ by around 0.01 to 0.1 seconds. The sampling intervals are approximately 400 $\pm$ 4 microseconds.
+[`waveform`](sample_data/waveform) includes the raw point-on-wave measurements sampled at 2.5kHz. Each waveform is roughly 1-second in length. One waveform is available every 10 seconds. The capture start times may differ by around 0.01 to 0.1 seconds. The sampling intervals are approximately 400 $\pm$ 4 microseconds.
 
 Notice that the 3 types of data above are increasing in granularity. That is, given waveforms, one can compute phasors using Fast Fourier Transform (FFT). Given phasors, one can compute the magnitudes by taking the magnitude of the complex phasor values.
 
@@ -32,17 +32,21 @@ The system model varies depending on your application. Examples include bus inje
 
 ## Quickstart & code examples
 ### Loading data
-See example code in `data_IO.ipynb`.
+See example code in [`data_IO.ipynb`](code_examples/data_IO.ipynb).
 
 ### State estimation (synchro-phasor)
-
-### Voltage control
-Linear DistFLow (LinDistFlow) model with measured slackbus voltage, real and reactive power injections.
+Given phasor measurements on a subset of nodes, we can recover the phasors for all network elements. This is described in paper Sections V (a) and VI (a). See example implementation in [`state_estimation_phasor.ipynb`](code_examples/state_estimation_phasor.ipynb).
 
 ### State estimation (synchro-waveform)
-Given point on wave measurements and circuit parameters, we can simulate the time-domain circuit power flow. The formulation is described in paper Sections V (b) and VI (b). See example implementation in `code_examples/state_estimation_waveform.ipynb`.
+Given point on wave measurements and circuit parameters, we can simulate the time-domain circuit power flow. The formulation is described in paper Sections V (b) and VI (b). See example implementation in [`state_estimation_waveform.ipynb`](code_examples/state_estimation_waveform.ipynb).
 
-If you think another example may be helpful here, [contact us](#contacts) and consider contributing to this project.
+### Voltage control
+An example implementation of Linear DistFLow (LinDistFlow) model with measured slackbus voltage, real and reactive power injections along with a voltage control example is provided in [`voltage_control.ipynb`](code_examples/voltage_control.ipynb).
+
+### MATPOWER Test Case
+A test case based on the A side sub-circuit in [MATPOWER format](https://matpower.org/docs/ref/matpower5.0/caseformat.html) is provided in [`case12dt.m`](code_examples/case12dt.m)
+
+If you think another example may be helpful here, consider contributing to this project via a pull request or [contact us](#contacts).
 
 
 ## Data quality
@@ -73,13 +77,13 @@ In practice, it is rare that distribution system operators maintain an error-fre
 - Phase labels: In metered elements, `L1`, `L2`, `L3`, refer to phase voltages, `CT1`, `CT2`, `CT3` refer to current transformers, `S1`, `S2`, `S3` refer to meter current measurement channels. In general the numbers 1, 2, 3 correspond to phases A, B and C. Several exceptions are in `egauge_13`, `egauge_14`, `egauge_15`, `egauge_20`. When matching phases to measurements, use the information in `sample_dataset/topology/network_files/<path_to_file>.json` and `EgaugeMeter->registers->element`.
 
 ## Citation
-todo  
-IEEE:
-```
-```
 BibTex:
 ```
+(Coming soon)  
 ```
+<!-- IEEE:
+```
+``` -->
 
 ## Contacts
 We welcome your comments and suggestions at `digitaltwin@caltech.edu`. For discussions and improvements specific to code and data release, you may also use [GitHub Issues](https://github.com/caltech-netlab/digital-twin-dataset/issues) or [Pull requests](https://github.com/caltech-netlab/digital-twin-dataset/pulls).

@@ -1047,7 +1047,12 @@ def plot_results(
         if name_full.endswith('-fbus') or name_full.endswith('-tbus'):
             name, terminal = name_full[:-5], name_full[-4:]
         df, metadata = get_timeseries(name, datetimespan, df_cache, metadata_cache, data_dir=data_dir, return_metadata=True)
-        if plot_every > 1: df = {k: v[::plot_every] for k, v in df.items()}
+        if plot_every > 1: 
+            interval_size = utils.determine_interval_size(df["t"])[0]
+            interval_size = utils.round_time_np(interval_size, 's') * plot_every
+            t0, t1 = utils.round_time_np(df['t'][0], 's'), utils.round_time_np(df['t'][-1], 's')
+            new_t_col = np.arange(t0, t1, interval_size)
+            df = utils.select_sample(df, new_t_col)
         if type(df) is tuple:
             assert terminal, f"Terminal (-fbus/-tbus) must be specified in elements for {name}."
             df = df[0] if terminal == 'fbus' else df[1]
@@ -1087,8 +1092,9 @@ def plot_results(
         if metadata["metered"] and plot_metered:
             metered_name = os.path.join(data_dir, metadata['file'])
             df_metered, err = utils.read_ts(metered_name + '-measurement', datetimespan)
-            if plot_every > 1: df_metered = {k: v[::plot_every] for k, v in df_metered.items()}
-            if (err not in (1, 2)) and all([p in df_metered for p in 'abc']):    
+            if plot_every > 1:
+                df_metered = utils.select_sample(df_metered, new_t_col)
+            if (err not in (1, 2)) and all([p in df_metered for p in 'abc']):
                 for i, p in enumerate('abc'):
                     mag, angle = np.abs(df_metered[p]), np.angle(df_metered[p]) / np.pi * 180
                     s = rms_ax.scatter(df_metered['t'], mag, marker='x', s=base_figsize[1]*12, facecolors=colors[i] if combine_3_phase else None, label=(f"Phase {p}" if combine_3_phase else "measurement"))
@@ -1105,9 +1111,10 @@ def plot_results(
             axs[1].set_ylim(-180, 180)
             axs[1].set_xlabel(f"Time (minute:second)")
             axs[1].xaxis.set_major_formatter(timefmt)
-            axs[0].add_artist(axs[0].legend(plot_handles, [f"Phase {p}" for p in 'ABC'], framealpha=0.95, loc='lower left', labelspacing=0.3, bbox_to_anchor=(.74, 0.48), handletextpad=0.6, title='Estimation', title_fontproperties={'weight': 'bold'}))
+            axs[0].add_artist(axs[0].legend(plot_handles, [f"Phase {p}" for p in 'ABC'], framealpha=0.95, loc='lower right', labelspacing=0.42, handletextpad=0.6, title='Estimation', title_fontproperties={'weight': 'bold'}))
             if plot_handles_metered:
-                axs[0].legend(plot_handles_metered, [f"Phase {p}" for p in 'ABC'], framealpha=0.95, loc='upper left', labelspacing=0.3, bbox_to_anchor=(.74, 0.52), handletextpad=0.6, title='Measurement', title_fontproperties={'weight': 'bold'})
+                axs[0].legend(plot_handles_metered, [f"Phase {p}" for p in 'ABC'], framealpha=0.95, loc='upper right', labelspacing=0.42, handletextpad=0.6, title='Measurement', title_fontproperties={'weight': 'bold'})
+            axs[0].tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
         else:
             for i in range(len('abc')):
                 if mean_mag[i] + mag_delta < 0.1:
@@ -1115,6 +1122,9 @@ def plot_results(
                 else:
                     axs[i, 0].set_ylim(mean_mag[i] - mag_delta, mean_mag[i] + mag_delta)
                 axs[i, 1].set_ylim(mean_phase[i] - 15, mean_phase[i] + 15)
+                if i < 2:
+                    axs[i, 0].tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
+                    axs[i, 1].tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
             axs[2, 0].set_xlabel(f"Time (minute:second)")
             axs[2, 1].set_xlabel(f"Time (minute:second)")
             axs[2, 0].xaxis.set_major_formatter(timefmt)
@@ -1156,27 +1166,28 @@ def compute_error(data_dir, datetimespan, zero_threshold=1e-2):
         if valid.mean() < 0.9:
             print(f"[Warning] Too many NaN or large values for {name}: {(1-valid.mean()) * 100}%.")
         if any([p not in df_metered for p in 'abc']): continue
-        errors[name] = {'mean': {}, 'var': {}}
+        errors[name] = {'mean': {}, 'var': {}, 'measured': {}}
         over_under = []
         for p in 'abc':
+            errors[name]['mean'][p] = np.mean(np.abs(df[p][valid] - df_metered[p][valid]))
+            errors[name]['var'][p] = np.var(np.abs(df[p][valid] - df_metered[p][valid]))
+            over_under.append(np.mean(np.abs(df[p][valid]) - np.abs(df_metered[p][valid])))
             if np.mean(np.abs(df_metered[p])) < zero_threshold:
-                errors[name]['mean'][p] = np.mean(np.abs(df[p][valid] - df_metered[p][valid]))
-                errors[name]['var'][p] = np.var(np.abs(df[p][valid] - df_metered[p][valid]))
-                over_under.append(np.mean(np.abs(df[p][valid]) - np.abs(df_metered[p][valid])))
                 zero = True
             else:
-                errors[name]['mean'][p] = np.mean(np.abs(df[p][valid] - df_metered[p][valid])) / np.mean(np.abs(df_metered[p][valid]))
-                errors[name]['var'][p] = np.var(np.abs(df[p][valid] - df_metered[p][valid]) / np.mean(np.abs(df_metered[p][valid])))
-                over_under.append(np.mean(np.abs(df[p][valid]) - np.abs(df_metered[p][valid])) / np.mean(np.abs(df_metered[p][valid])))
+                errors[name]['measured'][p] = np.mean(np.abs(df_metered[p][valid]))
                 zero = False
         over_under = np.mean(over_under)
         errors[name]['mean']['mean'] = np.mean([errors[name]['mean'][p] for p in 'abc'])
         errors[name]['var']['mean'] = np.mean([errors[name]['var'][p] for p in 'abc'])
+        if not zero:
+            errors[name]['measured']['mean'] = np.mean([errors[name]['measured'][p] for p in 'abc'])
         errors[name]['zero'] = zero
         print(name + (' (zero)' if zero else ''))
         print(f"mean: {'+' if over_under >= 0 else '-'}{errors[name]['mean']['mean']:.2f}, a: {errors[name]['mean']['a']:.2f}, b: {errors[name]['mean']['b']:.2f}, c: {errors[name]['mean']['c']:.2f}")
         print(f"variance: {'+' if over_under >= 0 else '-'}{errors[name]['var']['mean']:.2f}, a: {errors[name]['var']['a']:.2f}, b: {errors[name]['var']['b']:.2f}, c: {errors[name]['var']['c']:.2f}")
-    print(f"Mean error (%): {np.mean([d['mean']['mean'] for d in errors.values() if not d['zero']]) * 100}")
+    print(f"Mean absolute error (%): {np.sum([d['mean']['mean'] for d in errors.values()]) / np.sum([d['measured']['mean'] for d in errors.values() if not d['zero']]) * 100}")
+    print(f"Mean rms error (%): {np.sqrt(np.sum([d['mean']['mean']**2 for d in errors.values()])) / np.sqrt(np.sum([d['measured']['mean']**2 for d in errors.values() if not d['zero']])) * 100}")
     print(f"Mean variance (%): {np.mean([d['var']['mean'] for d in errors.values() if not d['zero']]) * 100}")
     print(f"Samples: {np.mean(samples)}")
 
