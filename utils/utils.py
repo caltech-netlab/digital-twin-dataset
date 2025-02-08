@@ -2181,7 +2181,7 @@ def select_sample(df, time_column):
     right_idx = np.searchsorted(df['t'], time_column, side="left")
     left_diff = np.abs(df['t'][left_idx] - time_column)
     right_diff = np.abs(df['t'][right_idx] - time_column)
-    idx = np.where(left_diff < right_diff, left_idx, right_idx)
+    idx = np.unique(np.where(left_diff < right_diff, left_idx, right_idx))
     return {k: df[k][idx] for k in df}
     
 

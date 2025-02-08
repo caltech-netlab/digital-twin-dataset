@@ -3,23 +3,23 @@ The dataset contains data collected from microgrids/distribution systems in Cali
 
 ## Sample dataset
 Download sample dataset from [here](https://caltech.box.com/s/5baxy2ogbalqohpidh1lyxgnnxmv5tuc) and place into sample_dataset folder. 
-Here, the data contains the same *types* of data in the complete dataset, but covering a very small time range of all availble data. This allows you to experiment with this dataset without dealing with the colossal full dataset (>10TB and growing). 
+Here, the data contains the same *types* of data in the complete dataset, but covering a very small time range of all availble data. This allows you to start developing your code for this dataset without dealing with the colossal full dataset (>10TB and growing). 
 
 ## Full dataset
 To access the full dataset, please submit a ticket [here](https://forms.office.com/r/Ds6rKEtyTV). We are finalizing the data server for the full dataset. Access will be available in Febuary 2025. Meanwhile, we recommend using the sample dataset here to build your code. The full dataset will be in the same data format.
 
 ## Data types
 
-In the following, we explain the 3 types of time-series data as well as circuit topology data in [`sample_data`](sample_data) folder:
+In the following, we explain the 3 types of time-series data as well as circuit topology data in [`sample_dataset`](sample_dataset) folder:
 
 ### Magnitude
-[`magnitude`](sample_data/magnitude) includes the root mean squared current and voltage magnitudes. These data do not contain phase angle information. The data is available at 1-second intervals.
+`magnitude` includes the root mean squared current and voltage magnitudes. These data do not contain phase angle information. The data is available at 1-second intervals.
 
 ### Synchro-phasor
-[`phasor`](sample_data/phasor) includes synchro-phasor measurements, which are presented as complex numbers. The data is available at 10-second intervals.
+`phasor` includes synchro-phasor measurements, which are presented as complex numbers. The data is available at 10-second intervals.
 
 ### Synchro-waveform
-[`waveform`](sample_data/waveform) includes the raw point-on-wave measurements sampled at 2.5kHz. Each waveform is roughly 1-second in length. One waveform is available every 10 seconds. The capture start times may differ by around 0.01 to 0.1 seconds. The sampling intervals are approximately 400 $\pm$ 4 microseconds.
+`waveform` includes the raw point-on-wave measurements sampled at 2.5kHz. Each waveform is roughly 1-second in length. One waveform is available every 10 seconds. The capture start times may differ by around 0.01 to 0.1 seconds. The sampling intervals are approximately 400 $\pm$ 4 microseconds.
 
 Notice that the 3 types of data above are increasing in granularity. That is, given waveforms, one can compute phasors using Fast Fourier Transform (FFT). Given phasors, one can compute the magnitudes by taking the magnitude of the complex phasor values.
 

@@ -1037,7 +1037,6 @@ def plot_results(
     plt.rcParams['font.family'] = 'Times New Roman'
     plt.rcParams['font.size'] = fontsize
     plt.rcParams["mathtext.fontset"] = 'cm'
-    timefmt = mdates.DateFormatter('%M:%S')
     colors = [[1.00, 0.43, 0.12], [0.19, 0.63, 0.29], [0.14, 0.48, 0.72]]
 
     df_cache, metadata_cache= {}, {}
@@ -1104,12 +1103,18 @@ def plot_results(
                     mean_phase[i] = (angle.mean() + mean_phase[i]) / 2
             else:
                 print(f"[Warning] No ground truth measurement data for {name_full}.")
+        if df['t'][-1] - df['t'][0] < np.timedelta64(50, 'm'):
+            timefmt = mdates.DateFormatter('%M:%S')
+            t_unit = 'minute:second'
+        else:
+            timefmt = mdates.DateFormatter('%H:%M')
+            t_unit = 'hour:minute'
         mag_delta = 0.10 * utils.list_mean(mean_mag)
         if combine_3_phase:
             if utils.list_mean(mean_mag) < 0.1:
                 axs[0].set_ylim(-0.2, 1)
             axs[1].set_ylim(-180, 180)
-            axs[1].set_xlabel(f"Time (minute:second)")
+            axs[1].set_xlabel(f"Time ({t_unit})")
             axs[1].xaxis.set_major_formatter(timefmt)
             axs[0].add_artist(axs[0].legend(plot_handles, [f"Phase {p}" for p in 'ABC'], framealpha=0.95, loc='lower right', labelspacing=0.42, handletextpad=0.6, title='Estimation', title_fontproperties={'weight': 'bold'}))
             if plot_handles_metered:
@@ -1125,8 +1130,8 @@ def plot_results(
                 if i < 2:
                     axs[i, 0].tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
                     axs[i, 1].tick_params(axis='x', which='both', bottom=False, top=False, labelbottom=False)
-            axs[2, 0].set_xlabel(f"Time (minute:second)")
-            axs[2, 1].set_xlabel(f"Time (minute:second)")
+            axs[2, 0].set_xlabel(f"Time ({t_unit})")
+            axs[2, 1].set_xlabel(f"Time ({t_unit})")
             axs[2, 0].xaxis.set_major_formatter(timefmt)
             axs[2, 1].xaxis.set_major_formatter(timefmt)
             axs[0, 0].legend()
