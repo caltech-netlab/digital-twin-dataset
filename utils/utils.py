@@ -2170,6 +2170,21 @@ def resample(
     return out_df, 0
 
 
+def select_sample(df, time_column):
+    """
+    Given a new time column, find the rows that are closest in time to the new time column.
+    :param df: dict, custom dataframe
+    :param time_column: numpy.ndarray, new time column
+    :return: df, dict, custom dataframe
+    """
+    left_idx = np.searchsorted(df['t'], time_column, side="left")
+    right_idx = np.searchsorted(df['t'], time_column, side="left")
+    left_diff = np.abs(df['t'][left_idx] - time_column)
+    right_diff = np.abs(df['t'][right_idx] - time_column)
+    idx = np.unique(np.where(left_diff < right_diff, left_idx, right_idx))
+    return {k: df[k][idx] for k in df}
+    
+
 def downsample(
     in_df,
     interval_size,
