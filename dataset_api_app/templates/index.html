@@ -10,12 +10,30 @@
       }
     </style>
   </head>
-  <body>
+  <body style="padding: 0 1rem 0">
     <header>
       <h1>Digital Twin Dataset API</h1>
     </header>
     <main>
-      <p>Please access the API by making requests to {{api_url}}.</p>
+      <p>Access the API by making requests to {{api_url}}.</p>
+      <p>
+        For example, after cloning
+        <a href="https://github.com/caltech-netlab/digital-twin-dataset"
+          >github.com/caltech-netlab/digital-twin-dataset</a
+        >, run the following:
+      </p>
+      <pre style="margin-left: 1rem">
+from dataset_api_client import DatasetApiClient
+
+DatasetApiClient.download_data(
+  magnitudes_for=[&lt;element names>],
+  phasors_for=[&lt;element names>],
+  waveforms_for=[&lt;element names>],
+  time_range=(&lt;start>, &lt;end>),
+  resolution=&lt;duration>,
+)
+</pre
+      >
       <p>
         See
         <a href="https://github.com/caltech-netlab/digital-twin-dataset"
