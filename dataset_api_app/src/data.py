@@ -30,8 +30,8 @@ FILE_MODE = stat.S_IFREG | stat.S_IRUSR | stat.S_IWUSR
 """
 File mode to use when generating ZIP files.
 
-Corresponds to a regular file (S_IFREG) with owner read (S_IRUSR) and write (S_IWUSR)
-permissions.
+Corresponds to a regular file (``S_IFREG``) with owner read (``S_IRUSR``) and write
+(``S_IWUSR``) permissions.
 """
 
 WAVEFORM_DATE_FORMAT = "%Y-%m-%dT%H-%M-%S.%f"
@@ -165,8 +165,12 @@ def select_dataframes(
     dataframes: Iterable[pd.DataFrame], time_range: tuple[datetime, datetime]
 ) -> Iterator[pd.DataFrame]:
     """
-    Select data from the given `DataFrame`s within `time_range`, assuming each
-    `DataFrame` has a column `t` of times increasing across all `DataFrame`s.
+    Select data within the given time range.
+
+    :param dataframes: An iterable of DataFrames with a column ``t`` of times increasing
+        across all DataFrames.
+    :param time_range: The time range to select data within.
+    :returns: An iterable of DataFrames within ``time_range``.
     """
     start_time, end_time = time_range
     for df in dataframes:
@@ -183,7 +187,12 @@ def select_dataframes(
 def dataframes_to_dict(
     dataframes: Iterable[pd.DataFrame],
 ) -> dict[str, np.typing.NDArray]:
-    """Load all of the given dataframes into memory and turn them into a dictionary."""
+    """
+    Load the given DataFrames into memory and turn them into a dictionary.
+
+    :param dataframes: An iterable of DataFrames.
+    :returns: A dictionary made from concatenating the DataFrames.
+    """
     df_all = pd.concat(dataframes)
     return {column: df_all[column].to_numpy() for column in df_all.columns}
 
@@ -191,7 +200,13 @@ def dataframes_to_dict(
 def rechunk_dataframe(
     df: pd.DataFrame, chunk_size: int = 65536
 ) -> Iterator[pd.DataFrame]:
-    """Turn DataFrame back into chunks for further stream processing."""
+    """
+    Turn DataFrame back into chunks for further stream processing.
+
+    :param df: A DataFrame.
+    :param chunk_size: Optional, output DataFrames will contain at most this many rows.
+    :returns: An iterable of DataFrames.
+    """
     i = 0
     while i < len(df):
         yield df.iloc[i : i + chunk_size]
@@ -206,9 +221,15 @@ def generate_magnitudes_files(
     resolution: timedelta | None = None,
 ) -> Iterator[MemberFile]:
     """
-    Return files (one per month) of magnitude data for the given `real_elements` within
-    the given `time_range`. The `anon_elements` are assumed to correspond to each
-    real element and will be used in the output file names.
+    Return files (one per month) of magnitude data.
+
+    :param zip_root_dir: Name of the root directory of the ZIP.
+    :param real_elements: List of real element names. These will be used to read data.
+    :param anon_elements: List of anonymized element names corresponding to each of
+        ``real_elements`` in order. These will be used in the output file names.
+    :param time_range: Time range to retrieve data for.
+    :param resolution: Interval to sample data by.
+    :returns: An iterable of ``MemberFiles`` to return in a streamed ZIP.
     """
     resolution_np: np.timedelta64 | None = None
     if resolution is not None:
@@ -246,9 +267,15 @@ def generate_phasors_files(
     resolution: timedelta | None,
 ) -> Iterator[MemberFile]:
     """
-    Return files (one per month) of phasor data for the given `real_elements` within
-    the given `time_range`. The `anon_elements` are assumed to correspond to each
-    real element and will be used in the output file names.
+    Return files (one per month) of phasor data.
+
+    :param zip_root_dir: Name of the root directory of the ZIP.
+    :param real_elements: List of real element names. These will be used to read data.
+    :param anon_elements: List of anonymized element names corresponding to each of
+        ``real_elements`` in order. These will be used in the output file names.
+    :param time_range: Time range to retrieve data for.
+    :param resolution: Interval to sample data by.
+    :returns: An iterable of ``MemberFiles`` to return in a streamed ZIP.
     """
     delta_t_threshold: float | None = None
     time_column: np.typing.NDArray[np.datetime64] | None = None
@@ -296,9 +323,15 @@ def generate_waveforms_files(
     resolution: timedelta | None,
 ) -> Iterator[MemberFile]:
     """
-    Return directories (one per day) of waveform data for the given `real_elements`
-    within the given `time_range`. The `anon_elements` are assumed to correspond to
-    each real element and will be used in the output directory names.
+    Return directories (one per day) of waveform data.
+
+    :param zip_root_dir: Name of the root directory of the ZIP.
+    :param real_elements: List of real element names. These will be used to read data.
+    :param anon_elements: List of anonymized element names corresponding to each of
+        ``real_elements`` in order. These will be used in the output directory names.
+    :param time_range: Time range to retrieve data for.
+    :param resolution: Interval to sample data by.
+    :returns: An iterable of ``MemberFiles`` to return in a streamed ZIP.
     """
     desired_timestamps: pd.DatetimeIndex | None = None
     delta_t_threshold: float | None = None
@@ -353,11 +386,14 @@ def generate_files(
     zip_root_dir: str, data_request: DataRequest
 ) -> Iterator[MemberFile]:
     """
-    Generate `MemberFile`s for the given `DataRequest`. Use `zip_root_dir` as the root
-    directory for all file paths.
+    Generate files for the given ``DataRequest``.
+
+    :param zip_root_dir: Name of the root directory of the ZIP.
+    :param data_request: The request for data.
+    :returns: An iterable of ``MemberFiles`` to return in a streamed ZIP.
     """
-    # We use `itertools.chain()` rather than `yield`s so the body of this function is
-    # evaluated when called, properly raising an `HTTPError` if `deanonymize_elements()`
+    # We use itertools.chain() rather than yields so the body of this function is
+    # evaluated when called, properly raising an HTTPException if deanonymize_elements()
     # raises one. Otherwise the error will be raised after data is already streaming to
     # the client.
     return itertools.chain(
