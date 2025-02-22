@@ -4,7 +4,7 @@ from __future__ import annotations
 import sys
 import pathlib
 from datetime import datetime, timezone
-from sqlalchemy import create_engine, select
+from sqlalchemy import create_engine, select, delete
 from sqlalchemy.orm import (
     DeclarativeBase,
     MappedAsDataclass,
@@ -96,6 +96,22 @@ class User(Base):
         return user
 
     @staticmethod
+    def remove(github_id_or_username: int | str) -> None:
+        """
+        Remove a user from the database.
+
+        :param github_id_or_username: The user's GitHub ID or username.
+        """
+        user_property = (
+            User.github_id
+            if isinstance(github_id_or_username, int)
+            else User.github_username
+        )
+        stmt = delete(User).where(user_property == github_id_or_username)
+        with Session.begin() as session:
+            session.execute(stmt)
+
+    @staticmethod
     def get_by_github_username(github_username: str) -> list[User]:
         """
         Get the user(s) with the given ``github_username``.
@@ -124,7 +140,9 @@ class User(Base):
         """Print the names and GitHub user link of all users."""
         all_users = User.get_all()
         for user in all_users:
-            print(f"{user.name}: https://api.github.com/user/{user.github_id}")
+            print(
+                f"{user.name} ({user.github_username}): https://api.github.com/user/{user.github_id}"
+            )
 
 
 # Create all tables if they do not already exist
