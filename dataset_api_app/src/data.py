@@ -53,7 +53,7 @@ def validate_resolution(resolution: timedelta) -> timedelta:
     return resolution
 
 
-def validate_time(time: datetime) -> timedelta:
+def validate_time(time: datetime) -> datetime:
     """
     Pydantic validator for the start or end time given in ``DataRequest``.
 
