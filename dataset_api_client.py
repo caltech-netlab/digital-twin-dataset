@@ -366,7 +366,16 @@ class DatasetApiClient:
         time_range: tuple[datetime | str, datetime | str],
         resolution: timedelta | float | str | None = None,
     ) -> None:
-        """Download data files."""
+        """
+        Download data files. Any data that does not exist for the given elements within
+        the given time range will be silently omitted.
+
+        :param magnitudes_for: Network elements to download magnitude data for.
+        :param phasors_for: Network elements to download phasor data for.
+        :param waveforms_for: Network elements to download waveform data for.
+        :param time_range: Time range to retrieve data for.
+        :param resolution: Interval to sample data by.
+        """
         with requests.post(
             f"{self.base_url}/data",
             headers=self.auth_header,
