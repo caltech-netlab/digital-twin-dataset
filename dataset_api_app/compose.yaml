@@ -13,9 +13,10 @@ services:
     volumes:
       - ./users.db:/digital-twin-dataset/dataset_api_app/users.db:ro
       - ./replacement_lookup.json:/digital-twin-dataset/dataset_api_app/replacement_lookup.json:ro
-      - ${MAGNITUDES_DIR}:/data/magnitudes:ro
-      - ${PHASORS_DIR}:/data/phasors:ro
-      - ${WAVEFORMS_DIR}:/data/waveforms:ro
+      - ${MAGNITUDES_DIR:?error}:/data/magnitudes:ro
+      - ${PHASORS_DIR:?error}:/data/phasors:ro
+      - ${WAVEFORMS_DIR:?error}:/data/waveforms:ro
+      - ${WAVEFORMS_2024_10_DIR:?error}:/data/waveforms_2024_10:ro
   nginx:
     image: nginx
     restart: unless-stopped
@@ -24,4 +25,4 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx.${APP_ENV}.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.${APP_ENV:?error}.conf:/etc/nginx/nginx.conf:ro

@@ -21,7 +21,7 @@ from stream_zip import MemberFile, ZIP_64
 file = pathlib.Path(__file__).resolve()
 sys.path.append(str(file.parents[0]))
 sys.path.append(str(file.parents[2] / "utils"))
-from paths import MAGNITUDES_DIR, PHASORS_DIR, WAVEFORMS_DIR
+from paths import MAGNITUDES_DIR, PHASORS_DIR, WAVEFORMS_DIR, WAVEFORMS_2024_10_DIR
 from anonymize import deanonymize_elements
 import utils
 import phasor_utils
@@ -106,6 +106,7 @@ def get_date_paths(
     unit: str,
     directory: Path = Path(),
     extension: str = "",
+    alternative_dirs: list[tuple[Path, datetime]] | None = None,
 ) -> Iterator[Path]:
     """
     Return paths of the form ``<directory>/<date><extension>``, where dates are of the
@@ -117,13 +118,25 @@ def get_date_paths(
         https://numpy.org/doc/stable/reference/arrays.datetime.html#datetime-units).
     :param directory: Base directory for output file paths.
     :param extension: Extension for output file paths.
+    :param alternative_dirs: Optional, a list of alternative directory and cutoff time
+        pairs. If a a given time is before the cutoff time, the alternative directory
+        will be used instead. Cutoff times later in the list take priority.
     :return: The list of date file paths.
     """
+    alternative_dirs = [
+        (alternative_dir, np.datetime64(cutoff, unit))
+        for alternative_dir, cutoff in alternative_dirs
+    ]
     start_date = np.datetime64(time_range[0], unit)
     end_date = np.datetime64(time_range[1], unit)
     current_date = start_date
     while current_date <= end_date:
-        date_path = directory / f"{current_date}{extension}"
+        dir_to_use = directory
+        if alternative_dirs:
+            for alternative_dir, cutoff in alternative_dirs:
+                if current_date < cutoff:
+                    dir_to_use = alternative_dir
+        date_path = dir_to_use / f"{current_date}{extension}"
         if date_path.exists():
             yield date_path
         current_date += 1
@@ -369,7 +382,12 @@ def generate_waveforms_files(
         )
     for real_element, anon_element in zip(real_elements, anon_elements):
         for real_day_directory in get_date_paths(
-            time_range, unit="D", directory=WAVEFORMS_DIR / real_element
+            time_range,
+            unit="D",
+            directory=WAVEFORMS_DIR / real_element,
+            alternative_dirs=[
+                (WAVEFORMS_2024_10_DIR / real_element, datetime(2024, 11, 1))
+            ],
         ):
             day_directory_name = real_day_directory.parts[-1]
             timestamp_paths = os.listdir(real_day_directory)

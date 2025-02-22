@@ -24,4 +24,9 @@ PHASORS_DIR = Path(os.environ.get("PHASORS_DIR", "/data/phasors"))
 """Path to the directory containing raw phasor data."""
 
 WAVEFORMS_DIR = Path(os.environ.get("WAVEFORMS_DIR", "/data/waveforms"))
-"""Path to the directory containing raw waveform data."""
+"""Path to the directory containing raw waveform data after 11/01/2024."""
+
+WAVEFORMS_2024_10_DIR = Path(
+    os.environ.get("WAVEFORMS_2024_10_DIR", "/data/waveforms_2024_10")
+)
+"""Path to the directory containing raw waveform data before 11/01/2024."""
