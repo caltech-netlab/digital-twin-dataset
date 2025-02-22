@@ -1,0 +1,11 @@
+flask
+gunicorn
+numpy
+pandas
+pyarrow
+pydantic
+python-dotenv
+requests
+stream-zip
+sqlalchemy
+werkzeug

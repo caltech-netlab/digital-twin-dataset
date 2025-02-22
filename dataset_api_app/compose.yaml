@@ -1,0 +1,27 @@
+# Interpolated variables can be defined in a .env file or in the shell environment:
+#   APP_ENV: Either "prod" or "dev", used to select the nginx.conf file.
+#   MAGNITUDES_DIR: Path to directory of magnitude data.
+#   PHASORS_DIR: Path to directory of phasor data.
+#   WAVEFORMS_DIR: Path to directory of waveform data.
+
+services:
+  gunicorn:
+    build:
+      context: ..
+      dockerfile: dataset_api_app/Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./users.db:/digital-twin-dataset/dataset_api_app/users.db:ro
+      - ./replacement_lookup.json:/digital-twin-dataset/dataset_api_app/replacement_lookup.json:ro
+      - ${MAGNITUDES_DIR}:/data/magnitudes:ro
+      - ${PHASORS_DIR}:/data/phasors:ro
+      - ${WAVEFORMS_DIR}:/data/waveforms:ro
+  nginx:
+    image: nginx
+    restart: unless-stopped
+    depends_on:
+      - gunicorn
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.${APP_ENV}.conf:/etc/nginx/nginx.conf:ro

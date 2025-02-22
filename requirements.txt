@@ -11,3 +11,9 @@ control
 ipykernel
 matplotlib
 graphviz    # Optional, for graph layout
+
+# For dataset_api_client.py
+pyperclip
+requests
+stream-unzip
+tqdm
