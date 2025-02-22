@@ -53,6 +53,22 @@ def validate_resolution(resolution: timedelta) -> timedelta:
     return resolution
 
 
+def validate_time(time: datetime) -> timedelta:
+    """
+    Pydantic validator for the start or end time given in ``DataRequest``.
+
+    :param time: Input time.
+    :returns: Validated time.
+    """
+    requested_month = np.datetime64(time, "M")
+    current_month = np.datetime64("now", "M")
+    if requested_month >= current_month:
+        raise ValueError(
+            f"can only request data through the previous month ({current_month - 1})"
+        )
+    return time
+
+
 class DataRequest(BaseModel):
     """Request body for a ``POST`` request to ``/data``."""
 
@@ -65,7 +81,10 @@ class DataRequest(BaseModel):
     waveforms_for: list[str] = Field(default_factory=list[str])
     """Network elements to download waveform data for."""
 
-    time_range: tuple[datetime, datetime]
+    time_range: tuple[
+        Annotated[datetime, AfterValidator(validate_time)],
+        Annotated[datetime, AfterValidator(validate_time)],
+    ]
     """Time range to retrieve data for."""
 
     resolution: Annotated[timedelta, AfterValidator(validate_resolution)] | None = None
@@ -284,7 +303,10 @@ def generate_phasors_files(
         resolution_seconds = resolution // timedelta(seconds=1)
         delta_t_threshold = resolution_seconds / 2
         time_column = pd.date_range(
-            *time_range, freq=timedelta(seconds=resolution_seconds), unit="s"
+            *time_range,
+            freq=timedelta(seconds=resolution_seconds),
+            unit="s",
+            inclusive="left",
         ).to_numpy()
     for real_element, anon_element in zip(real_elements, anon_elements):
         file_paths = get_date_paths(
@@ -343,6 +365,7 @@ def generate_waveforms_files(
             *time_range,
             freq=timedelta(seconds=resolution_seconds),
             unit="s",
+            inclusive="left",
         )
     for real_element, anon_element in zip(real_elements, anon_elements):
         for real_day_directory in get_date_paths(
