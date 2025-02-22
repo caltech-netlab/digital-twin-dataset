@@ -123,10 +123,11 @@ def get_date_paths(
         will be used instead. Cutoff times later in the list take priority.
     :return: The list of date file paths.
     """
-    alternative_dirs = [
-        (alternative_dir, np.datetime64(cutoff, unit))
-        for alternative_dir, cutoff in alternative_dirs
-    ]
+    if alternative_dirs:
+        alternative_dirs = [
+            (alternative_dir, np.datetime64(cutoff, unit))
+            for alternative_dir, cutoff in alternative_dirs
+        ]
     start_date = np.datetime64(time_range[0], unit)
     end_date = np.datetime64(time_range[1], unit)
     current_date = start_date
@@ -218,14 +219,18 @@ def select_dataframes(
 
 def dataframes_to_dict(
     dataframes: Iterable[pd.DataFrame],
-) -> dict[str, np.typing.NDArray]:
+) -> dict[str, np.typing.NDArray] | None:
     """
     Load the given DataFrames into memory and turn them into a dictionary.
 
     :param dataframes: An iterable of DataFrames.
-    :returns: A dictionary made from concatenating the DataFrames.
+    :returns: A dictionary made from concatenating the DataFrames, or ``None`` if the
+        ``dataframes`` is empty.
     """
-    df_all = pd.concat(dataframes)
+    try:
+        df_all = pd.concat(dataframes)
+    except ValueError:
+        return None
     return {column: df_all[column].to_numpy() for column in df_all.columns}
 
 
@@ -281,10 +286,10 @@ def generate_magnitudes_files(
             # This step loads all the data into memory at once, which gets rid of some
             # advantages of streaming. In the future, resampling could be improved to
             # work on an iterable of DataFrame chunks to improve memory usage.
-            df_resampled = pd.DataFrame(
-                utils.downsample(dataframes_to_dict(dataframes), resolution_np)
-            )
-            dataframes = rechunk_dataframe(df_resampled)
+            df_dict = dataframes_to_dict(dataframes)
+            if df_dict is not None:
+                df_resampled = pd.DataFrame(utils.downsample(df_dict, resolution_np))
+                dataframes = rechunk_dataframe(df_resampled)
         yield make_member_file(
             f"{zip_root_dir}/magnitudes/{anon_element}.csv",
             dataframes_to_csv(dataframes),
@@ -335,15 +340,17 @@ def generate_phasors_files(
             # This step loads all the data into memory at once, which gets rid of some
             # advantages of streaming. In the future, resampling could be improved to
             # work on an iterable of DataFrame chunks to improve memory usage.
-            time_column, df_resampled_dict = phasor_utils.align_phasors(
-                {"phasors": dataframes_to_dict(dataframes)},
-                time_column_file=time_column,
-                delta_t_threshold=delta_t_threshold,
-            )
-            df_resampled_dict = df_resampled_dict["phasors"]
-            df_resampled_dict["t"] = time_column
-            df_resampled = pd.DataFrame(df_resampled_dict)
-            dataframes = rechunk_dataframe(df_resampled)
+            df_dict = dataframes_to_dict(dataframes)
+            if df_dict is not None:
+                time_column, df_resampled_dict = phasor_utils.align_phasors(
+                    {"phasors": df_dict},
+                    time_column_file=time_column,
+                    delta_t_threshold=delta_t_threshold,
+                )
+                df_resampled_dict = df_resampled_dict["phasors"]
+                df_resampled_dict["t"] = time_column
+                df_resampled = pd.DataFrame(df_resampled_dict)
+                dataframes = rechunk_dataframe(df_resampled)
         yield make_member_file(
             f"{zip_root_dir}/phasors/{anon_element}.csv",
             dataframes_to_csv(dataframes),

@@ -25,12 +25,13 @@
       <pre style="margin-left: 1rem">
 from dataset_api_client import DatasetApiClient
 
-DatasetApiClient.download_data(
-  magnitudes_for=[&lt;element names>],
-  phasors_for=[&lt;element names>],
-  waveforms_for=[&lt;element names>],
-  time_range=(&lt;start>, &lt;end>),
-  resolution=&lt;duration>,
+data_api_client = DatasetApiClient(base_url="{{api_url}}")
+data_api_client.download_data(
+    magnitudes_for=[&lt;element names>],
+    phasors_for=[&lt;element names>],
+    waveforms_for=[&lt;element names>],
+    time_range=(&lt;start>, &lt;end>),
+    resolution=&lt;duration>,
 )
 </pre
       >
