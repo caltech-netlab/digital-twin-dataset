@@ -24,5 +24,7 @@ services:
       - gunicorn
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx.${APP_ENV:?error}.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/certs:ro

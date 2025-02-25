@@ -156,6 +156,7 @@ data_*/
 
 # dataset_api_app
 replacement_lookup.json
+certs/
 .env
 *.db
 *.crt

@@ -20,7 +20,13 @@ homepage if someone visits the domain in a browser.
 
 @base.route("/")
 def index():
-    return render_template("index.html", api_url=f"{request.base_url}api")
+    x_forwarded_proto = request.headers.get("X-Forwarded-Proto")
+    base_url = (
+        f"{x_forwarded_proto}://{request.host}/"
+        if x_forwarded_proto
+        else request.base_url
+    )
+    return render_template("index.html", api_url=f"{base_url}api")
 
 
 app = DispatcherMiddleware(app=base, mounts={"/api": api})
