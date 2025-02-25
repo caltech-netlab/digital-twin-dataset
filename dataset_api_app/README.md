@@ -79,3 +79,15 @@ To confirm which users are authorized, run the following:
 ```
 venv/bin/python -c "from src.users import User; User.print_all()"
 ```
+
+## Server Maintenance
+
+If the code is updated, change in to this directory (e.g. `cd dataset_api_app`) and run
+`docker compose build`, followed by `docker compose up -d`.
+
+You can also run `docker image prune` to remove old images.
+
+To see what images are running, run `docker ps`.
+
+Run `docker logs gunicorn` to view the Gunicorn server logs and run `docker logs nginx`
+to view the nginx logs.

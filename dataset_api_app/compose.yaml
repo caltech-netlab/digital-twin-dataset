@@ -6,6 +6,7 @@
 
 services:
   gunicorn:
+    container_name: gunicorn
     build:
       context: ..
       dockerfile: dataset_api_app/Dockerfile
@@ -18,6 +19,7 @@ services:
       - ${WAVEFORMS_DIR:?error}:/data/waveforms:ro
       - ${WAVEFORMS_2024_10_DIR:?error}:/data/waveforms_2024_10:ro
   nginx:
+    container_name: nginx
     image: nginx
     restart: unless-stopped
     depends_on:
