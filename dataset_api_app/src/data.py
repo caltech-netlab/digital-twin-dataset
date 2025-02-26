@@ -236,6 +236,7 @@ def dataframes_to_dict(
     try:
         df_all = pd.concat(dataframes)
     except ValueError:
+        # If pd.concat() fails, there is no data.
         return None
     return {column: df_all[column].to_numpy() for column in df_all.columns}
 
@@ -415,7 +416,14 @@ def generate_waveforms_files(
             # (Part of the reason this was done is for the integrity of finding the
             # closest timestamp at chunk boundaries, for example between days, so future
             # solutions should be careful.)
-            timestamps: pd.Series[pd.Timestamp] = pd.concat(timestamp_dataframes)["t"]
+            try:
+                timestamps: pd.Series[pd.Timestamp] = pd.concat(timestamp_dataframes)[
+                    "t"
+                ]
+            except ValueError:
+                # If pd.concat() fails, there is no data so we can continue to the next
+                # element.
+                continue
             nearest_timestamps: list[pd.Timestamp] = []
             for desired_timestamp in desired_timestamps:
                 nearest_timestamp_index = timestamps.searchsorted(desired_timestamp)

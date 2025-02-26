@@ -85,7 +85,8 @@ venv/bin/python -c "from src.users import User; User.print_all()"
 If the code is updated, change in to this directory (e.g. `cd dataset_api_app`) and run
 `docker compose build`, followed by `docker compose up -d`.
 
-You can also run `docker image prune` to remove old images.
+You can also run `docker system prune -a` to remove all containers and images that are
+not currently in use.
 
 To see what images are running, run `docker ps`.
 
