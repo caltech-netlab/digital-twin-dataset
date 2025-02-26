@@ -402,7 +402,7 @@ class DatasetApiClient:
             for file_name, _, unzipped_chunks in stream_unzip(zipped_chunks):
                 file_path = Path(file_name.decode())
                 if first:
-                    root_dir = file_path.parts[0]
+                    root_dir = datetime.now().strftime("data_%Y-%m-%d_%H-%M-%S")
                     unique_root_dir = root_dir
                     suffix_num = 1
                     while os.path.exists(unique_root_dir):
