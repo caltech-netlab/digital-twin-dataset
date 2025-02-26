@@ -21,7 +21,13 @@ from stream_zip import MemberFile, ZIP_64
 file = pathlib.Path(__file__).resolve()
 sys.path.append(str(file.parents[0]))
 sys.path.append(str(file.parents[2] / "utils"))
-from paths import MAGNITUDES_DIR, PHASORS_DIR, WAVEFORMS_DIR, WAVEFORMS_2024_10_DIR
+from paths import (
+    MAGNITUDES_DIR,
+    PHASORS_DIR,
+    WAVEFORMS_DIR,
+    WAVEFORMS_2024_10_DIR,
+    WAVEFORMS_2024_10_CUTOFF,
+)
 from anonymize import deanonymize_elements
 import utils
 import phasor_utils
@@ -270,7 +276,6 @@ def generate_magnitudes_files(
     """
     resolution_np: np.timedelta64 | None = None
     if resolution is not None:
-        # Adapted from data.copy_subset_data()
         resolution_np = np.timedelta64(resolution // timedelta(seconds=1), "s")
     for real_element, anon_element in zip(real_elements, anon_elements):
         file_paths = get_date_paths(
@@ -317,7 +322,6 @@ def generate_phasors_files(
     delta_t_threshold: float | None = None
     time_column: np.typing.NDArray[np.datetime64] | None = None
     if resolution is not None:
-        # Adapted from data.copy_subset_align_phasors()
         resolution_seconds = resolution // timedelta(seconds=1)
         delta_t_threshold = resolution_seconds / 2
         time_column = pd.date_range(
@@ -336,7 +340,6 @@ def generate_phasors_files(
         dataframes = read_csv_dataframes(file_paths)
         dataframes = select_dataframes(dataframes, time_range)
         if time_column is not None and delta_t_threshold is not None:
-            # Adapted from data.copy_subset_align_phasors()
             # This step loads all the data into memory at once, which gets rid of some
             # advantages of streaming. In the future, resampling could be improved to
             # work on an iterable of DataFrame chunks to improve memory usage.
@@ -378,54 +381,72 @@ def generate_waveforms_files(
     desired_timestamps: pd.DatetimeIndex | None = None
     delta_t_threshold: float | None = None
     if resolution is not None:
-        # Adapted from data.list_waveform()
         resolution_seconds = resolution // timedelta(seconds=1)
-        delta_t_threshold = resolution_seconds / 2
         desired_timestamps = pd.date_range(
             *time_range,
             freq=timedelta(seconds=resolution_seconds),
             unit="s",
             inclusive="left",
         )
+        delta_t_threshold = resolution_seconds / 2
     for real_element, anon_element in zip(real_elements, anon_elements):
-        for real_day_directory in get_date_paths(
+        real_day_dirs = get_date_paths(
             time_range,
             unit="D",
             directory=WAVEFORMS_DIR / real_element,
             alternative_dirs=[
-                (WAVEFORMS_2024_10_DIR / real_element, datetime(2024, 11, 1))
+                (WAVEFORMS_2024_10_DIR / real_element, WAVEFORMS_2024_10_CUTOFF)
             ],
-        ):
-            day_directory_name = real_day_directory.parts[-1]
-            timestamp_paths = os.listdir(real_day_directory)
-            timestamps: pd.DatetimeIndex = pd.to_datetime(
-                timestamp_paths, format=f"{WAVEFORM_DATE_FORMAT}.parquet"
-            ).sort_values()
-            timestamps = timestamps[
-                timestamps.searchsorted(time_range[0]) : timestamps.searchsorted(
-                    time_range[1]
-                )
-            ]
-            if desired_timestamps is not None and delta_t_threshold is not None:
-                # Adapted from data.list_waveform()
-                nearest_timestamps: list[pd.Timestamp] = []
-                for desired_timestamp in desired_timestamps:
-                    nearest_timestamp_index = timestamps.searchsorted(desired_timestamp)
-                    if nearest_timestamp_index < len(timestamps):
-                        nearest_timestamp = timestamps[nearest_timestamp_index]
+        )
+        timestamp_dataframes: Iterator[pd.DataFrame] = (
+            pd.to_datetime(
+                os.listdir(real_day_dir), format=f"{WAVEFORM_DATE_FORMAT}.parquet"
+            )
+            .sort_values()
+            .to_frame(index=False, name="t")
+            for real_day_dir in real_day_dirs
+        )
+        timestamp_dataframes = select_dataframes(timestamp_dataframes, time_range)
+        if desired_timestamps is not None and delta_t_threshold is not None:
+            # This step loads all timestamps into memory at once, which gets rid of some
+            # advantages of streaming. In the future, resampling could be improved to
+            # work on an iterable of DataFrame chunks to improve memory usage.
+            #
+            # (Part of the reason this was done is for the integrity of finding the
+            # closest timestamp at chunk boundaries, for example between days, so future
+            # solutions should be careful.)
+            timestamps: pd.Series[pd.Timestamp] = pd.concat(timestamp_dataframes)["t"]
+            nearest_timestamps: list[pd.Timestamp] = []
+            for desired_timestamp in desired_timestamps:
+                nearest_timestamp_index = timestamps.searchsorted(desired_timestamp)
+                if nearest_timestamp_index < len(timestamps):
+                    nearest_timestamp = timestamps.iloc[nearest_timestamp_index]
                     if (
                         abs(nearest_timestamp - desired_timestamp).seconds
                         < delta_t_threshold
                     ):
                         nearest_timestamps.append(nearest_timestamp)
-                timestamps = pd.DatetimeIndex(nearest_timestamps)
+            timestamp_dataframes = rechunk_dataframe(
+                pd.to_datetime(nearest_timestamps).to_frame(index=False, name="t")
+            )
+        for timestamp_dataframe in timestamp_dataframes:
+            timestamps: pd.Series[pd.Timestamp] = timestamp_dataframe["t"]
             for timestamp in timestamps:
+                waveforms_dir = WAVEFORMS_DIR
+                if timestamp < WAVEFORMS_2024_10_CUTOFF:
+                    waveforms_dir = WAVEFORMS_2024_10_DIR
+                day_dir_name = timestamp.strftime("%Y-%m-%d")
                 timestamp_str = timestamp.strftime(WAVEFORM_DATE_FORMAT)[:-3]
-                table = pq.read_table(real_day_directory / f"{timestamp_str}.parquet")
+                table = pq.read_table(
+                    waveforms_dir
+                    / real_element
+                    / day_dir_name
+                    / f"{timestamp_str}.parquet"
+                )
                 f = io.BytesIO()
                 csv.write_csv(data=table, output_file=f)
                 yield make_member_file(
-                    f"{zip_root_dir}/waveforms/{anon_element}/{day_directory_name}/{timestamp_str}.csv",
+                    f"{zip_root_dir}/waveforms/{anon_element}/{day_dir_name}/{timestamp_str}.csv",
                     (f.getvalue(),),
                 )
 

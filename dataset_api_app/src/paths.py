@@ -1,6 +1,7 @@
 # Third-party imports
 import os
 from pathlib import Path
+from datetime import datetime
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -30,3 +31,6 @@ WAVEFORMS_2024_10_DIR = Path(
     os.environ.get("WAVEFORMS_2024_10_DIR", "/data/waveforms_2024_10")
 )
 """Path to the directory containing raw waveform data before 11/01/2024."""
+
+WAVEFORMS_2024_10_CUTOFF = datetime(11, 1, 1)
+"""Use `WAVEFORMS_2024_10_DIR` for waveforms before this date."""
