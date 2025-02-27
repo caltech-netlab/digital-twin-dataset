@@ -161,3 +161,4 @@ certs/
 *.db
 *.crt
 *.key
+*.pass
