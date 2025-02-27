@@ -6,16 +6,48 @@ Download sample dataset from [here](https://caltech.box.com/s/5baxy2ogbalqohpidh
 Here, the data contains the same *types* of data in the complete dataset, but covering a very small time range of all availble data. This allows you to start developing your code for this dataset without dealing with the colossal full dataset (>10TB and growing). 
 
 ## Full dataset
-To access the full dataset, please submit a ticket [here](https://forms.office.com/r/Ds6rKEtyTV). We are finalizing the data server for the full dataset. Access will be available in Febuary 2025. Meanwhile, we recommend using the sample dataset here to build your code. The full dataset will be in the same data format.
-
 The full dataset is hosted at https://socal28bus.caltech.edu and can be accessed via a
 REST API. Convenient access is provided by the Python class `DatasetApiClient` in
-[dataset_api_client.py](dataset_api_client.py). The following Python code downloads the
-data, where:
+[dataset_api_client.py](dataset_api_client.py). See [Downloading data](#downloading-data)
+for a code example.
 
-- Each `<element names>` should be replaced with network element names of interest.
-- `<start>` and `<end>` must be replaced by `datetime` objects, ISO 8601 strings, or Unix timestamps.
-- `<duration>` can optionally be replaced with a `timedelta` object, a number of seconds, or an ISO 8601 duration string.
+Requests are authenticated using GitHub. Please submit a ticket
+[here](https://forms.office.com/r/Ds6rKEtyTV) to have your GitHub account added to the
+list of allowed users.
+
+## Data types
+
+In the following, we explain the 3 types of time-series data as well as circuit topology data in [`sample_dataset`](sample_dataset) folder:
+
+### Magnitude
+`magnitude` includes the root mean squared current and voltage magnitudes. These data do not contain phase angle information. The data is available at 1-second intervals.
+
+### Synchro-phasor
+`phasor` includes synchro-phasor measurements, which are presented as complex numbers. The data is available at 10-second intervals.
+
+### Synchro-waveform
+`waveform` includes the raw point-on-wave measurements sampled at 2.5kHz. Each waveform is roughly 1-second in length. One waveform is available every 10 seconds. The capture start times may differ by around 0.01 to 0.1 seconds. The sampling intervals are approximately 400 $\pm$ 4 microseconds.
+
+Notice that the 3 types of data above are increasing in granularity. That is, given waveforms, one can compute phasors using Fast Fourier Transform (FFT). Given phasors, one can compute the magnitudes by taking the magnitude of the complex phasor values.
+
+### Network and parameter
+We also provide the time-varying circuit topolgy and parameters, which contain information such as line connectivity, transformer nameplate ratings, and circuit braker status. Importantly, the timeseries measurement metadata is also stored here.
+
+We provide the most granular data which models the circuit down to individual components. Power transfer elements (e.g. lines, transformers, switches) are edges of the graph, whereas buses are nodes. This is called the **physical asset network**. The **electrical network** can be derived by zero- and infinite-impedance elements (e.g. short lines, closed/open breakers). Then nodes connected by zero-impedance elements are combined into a single node. 
+
+The system model varies depending on your application. Examples include bus injection and branch flow models in the phasor domain, dynamic circuit model in the time domain, and transfer matrix models in the Laplace or z domains. See paper Section V for more detailed discussion.
+
+## Quickstart & code examples
+### Downloading data
+The following Python code downloads the data, where:
+
+- For `magnitudes_for`, `phasors_for`, and `waveforms_for`, `<element names>` should be
+  replaced with network element names of interest.
+- For `time_range`, `<start>` and `<end>` must be replaced by `datetime` objects, ISO 8601
+  strings, or Unix timestamps.
+- [Optional] For `resolution`, `<duration>` can be replaced with a `timedelta` object, a
+  number of seconds, or an ISO 8601 duration string. If included, the data may be
+  upsampled or downsampled.
 
 ```python
 from dataset_api_client import DatasetApiClient
@@ -45,33 +77,10 @@ data_api_client.download_data(
 )
 ```
 
-Note that requests must be authenticated using your GitHub account. Please submit a ticket
-[here] to have your GitHub account added to the list of allowed users. The first time you
-run this code, it will prompt you to log in with GitHub.
+The first time you run this code, it will prompt you to log in with GitHub. Please submit
+a ticket [here](https://forms.office.com/r/Ds6rKEtyTV) to have your GitHub account added
+to the list of allowed users.
 
-## Data types
-
-In the following, we explain the 3 types of time-series data as well as circuit topology data in [`sample_dataset`](sample_dataset) folder:
-
-### Magnitude
-`magnitude` includes the root mean squared current and voltage magnitudes. These data do not contain phase angle information. The data is available at 1-second intervals.
-
-### Synchro-phasor
-`phasor` includes synchro-phasor measurements, which are presented as complex numbers. The data is available at 10-second intervals.
-
-### Synchro-waveform
-`waveform` includes the raw point-on-wave measurements sampled at 2.5kHz. Each waveform is roughly 1-second in length. One waveform is available every 10 seconds. The capture start times may differ by around 0.01 to 0.1 seconds. The sampling intervals are approximately 400 $\pm$ 4 microseconds.
-
-Notice that the 3 types of data above are increasing in granularity. That is, given waveforms, one can compute phasors using Fast Fourier Transform (FFT). Given phasors, one can compute the magnitudes by taking the magnitude of the complex phasor values.
-
-### Network and parameter
-We also provide the time-varying circuit topolgy and parameters, which contain information such as line connectivity, transformer nameplate ratings, and circuit braker status. Importantly, the timeseries measurement metadata is also stored here.
-
-We provide the most granular data which models the circuit down to individual components. Power transfer elements (e.g. lines, transformers, switches) are edges of the graph, whereas buses are nodes. This is called the **physical asset network**. The **electrical network** can be derived by zero- and infinite-impedance elements (e.g. short lines, closed/open breakers). Then nodes connected by zero-impedance elements are combined into a single node. 
-
-The system model varies depending on your application. Examples include bus injection and branch flow models in the phasor domain, dynamic circuit model in the time domain, and transfer matrix models in the Laplace or z domains. See paper Section V for more detailed discussion.
-
-## Quickstart & code examples
 ### Loading data
 See example code in [`data_IO.ipynb`](code_examples/data_IO.ipynb).
 
