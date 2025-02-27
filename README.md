@@ -13,8 +13,8 @@ REST API. Convenient access is provided by the Python class `DatasetApiClient` i
 [dataset_api_client.py](dataset_api_client.py). The following Python code downloads the
 data, where:
 
-- Each `<element names>` should be replaced network element names of interest.
-- `<start>` and `<end>` must be replaced by start and end `datetime` objects, ISO 8601 strings, or Unix timestamps.
+- Each `<element names>` should be replaced with network element names of interest.
+- `<start>` and `<end>` must be replaced by `datetime` objects, ISO 8601 strings, or Unix timestamps.
 - `<duration>` can optionally be replaced with a `timedelta` object, a number of seconds, or an ISO 8601 duration string.
 
 ```python
@@ -31,23 +31,23 @@ data_api_client.download_data(
 ```
 
 Here is an example query for magnitudes of egauge_1-CT1 for every minute throughout June
-2024:
+2024, using `datetime` and `timedelta` objects:
 
 ```python
+from datetime import datetime, timedelta
 from dataset_api_client import DatasetApiClient
 
 data_api_client = DatasetApiClient()
 data_api_client.download_data(
     magnitudes_for=["egauge_1-CT1"],
-    time_range=("2024-06-01T00:00:00", "2024-07-01T00:00:00"),
-    resolution="PT1M",
+    time_range=(datetime(2024, 6, 1), datetime(2024, 7, 1)),
+    resolution=timedelta(minutes=1),
 )
 ```
 
-Note that requests must be authenticated using your GitHub account, which must be allowed
-to access the data. The first time you run this code, it will provide instructions to
-authenticate with GitHub. Please submit a ticket [here] to have your GitHub account added
-to the list of allowed users.
+Note that requests must be authenticated using your GitHub account. Please submit a ticket
+[here] to have your GitHub account added to the list of allowed users. The first time you
+run this code, it will prompt you to log in with GitHub.
 
 ## Data types
 
