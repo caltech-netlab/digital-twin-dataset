@@ -11,9 +11,8 @@ REST API. Convenient access is provided by the Python class `DatasetApiClient` i
 [dataset_api_client.py](dataset_api_client.py). See [Downloading data](#downloading-data)
 for a code example.
 
-Requests are authenticated using GitHub. Please submit a ticket
-[here](https://forms.office.com/r/Ds6rKEtyTV) to have your GitHub account added to the
-list of allowed users.
+Requests are authenticated using GitHub. Please [submit a ticket here] to have your
+GitHub account added to the list of allowed users.
 
 ## Data types
 
@@ -92,8 +91,8 @@ data_api_client.download_data(
 > credentials in a file called `dataset_api_credentials.json`. Make sure to keep this file
 > secret (e.g. do not share this file or commit it to a git repository).
 
-Please submit a ticket [here](https://forms.office.com/r/Ds6rKEtyTV) to have your GitHub
-account added to the list of allowed users.
+Please [submit a ticket here] to have your GitHub account added to the list of allowed
+users.
 
 ### Loading data
 See example code in [`data_IO.ipynb`](code_examples/data_IO.ipynb).
@@ -156,3 +155,5 @@ We welcome your comments and suggestions at `digitaltwin@caltech.edu`. For discu
 The accuracy or reliability of the data is not guaranteed or warranted in any way and the providers disclaim liability of any kind whatsoever, including, without limitation, liability for quality, performance, merchantability and fitness for a particular purpose arising out of the use, or inability to use the data.
 
 This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright owner or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.
+
+[submit a ticket here]: https://forms.office.com/r/Ds6rKEtyTV
