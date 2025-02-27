@@ -38,6 +38,12 @@ We provide the most granular data which models the circuit down to individual co
 The system model varies depending on your application. Examples include bus injection and branch flow models in the phasor domain, dynamic circuit model in the time domain, and transfer matrix models in the Laplace or z domains. See paper Section V for more detailed discussion.
 
 ## Quickstart & code examples
+### Setup
+First, clone and `cd` into this repository.
+
+Next, to run the following code examples, install the required Python packages in
+[requirements.txt](requirements.txt) (e.g. `pip install -r requirements.txt`).
+
 ### Downloading data
 The following Python code downloads the data, where:
 
@@ -77,9 +83,17 @@ data_api_client.download_data(
 )
 ```
 
-The first time you run this code, it will prompt you to log in with GitHub. Please submit
-a ticket [here](https://forms.office.com/r/Ds6rKEtyTV) to have your GitHub account added
-to the list of allowed users.
+> [!NOTE]  
+> If there is no data for the selected element and time range, the API may return an
+> empty file.
+
+> [!WARNING]  
+> The first time you run this code, it will prompt you to log in with GitHub and save the
+> credentials in a file called `dataset_api_credentials.json`. Make sure to keep this file
+> secret (e.g. do not share this file or commit it to a git repository).
+
+Please submit a ticket [here](https://forms.office.com/r/Ds6rKEtyTV) to have your GitHub
+account added to the list of allowed users.
 
 ### Loading data
 See example code in [`data_IO.ipynb`](code_examples/data_IO.ipynb).

@@ -387,7 +387,9 @@ class DatasetApiClient:
                 "time_range": [
                     d.isoformat() if isinstance(d, datetime) else d for d in time_range
                 ],
-                "resolution": resolution,
+                "resolution": resolution.total_seconds()
+                if isinstance(resolution, timedelta)
+                else resolution,
             },
             stream=True,
         ) as response:
