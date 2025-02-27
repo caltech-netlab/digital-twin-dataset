@@ -363,8 +363,8 @@ class DatasetApiClient:
         magnitudes_for: list[str] | None = None,
         phasors_for: list[str] | None = None,
         waveforms_for: list[str] | None = None,
-        time_range: tuple[datetime | str, datetime | str],
-        resolution: timedelta | float | str | None = None,
+        time_range: tuple[datetime | str | float, datetime | str | float],
+        resolution: timedelta | str | float | None = None,
     ) -> None:
         """
         Download data files. Any data that does not exist for the given elements within

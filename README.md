@@ -8,6 +8,47 @@ Here, the data contains the same *types* of data in the complete dataset, but co
 ## Full dataset
 To access the full dataset, please submit a ticket [here](https://forms.office.com/r/Ds6rKEtyTV). We are finalizing the data server for the full dataset. Access will be available in Febuary 2025. Meanwhile, we recommend using the sample dataset here to build your code. The full dataset will be in the same data format.
 
+The full dataset is hosted at https://socal28bus.caltech.edu and can be accessed via a
+REST API. Convenient access is provided by the Python class `DatasetApiClient` in
+[dataset_api_client.py](dataset_api_client.py). The following Python code downloads the
+data, where:
+
+- Each `<element names>` should be replaced network element names of interest.
+- `<start>` and `<end>` must be replaced by start and end `datetime` objects, ISO 8601 strings, or Unix timestamps.
+- `<duration>` can optionally be replaced with a `timedelta` object, a number of seconds, or an ISO 8601 duration string.
+
+```python
+from dataset_api_client import DatasetApiClient
+
+data_api_client = DatasetApiClient()
+data_api_client.download_data(
+    magnitudes_for=[<element names>],
+    phasors_for=[<element names>],
+    waveforms_for=[<element names>],
+    time_range=(<start>, <end>),
+    resolution=<duration>,
+)
+```
+
+Here is an example query for magnitudes of egauge_1-CT1 for every minute throughout June
+2024:
+
+```python
+from dataset_api_client import DatasetApiClient
+
+data_api_client = DatasetApiClient()
+data_api_client.download_data(
+    magnitudes_for=["egauge_1-CT1"],
+    time_range=("2024-06-01T00:00:00", "2024-07-01T00:00:00"),
+    resolution="PT1M",
+)
+```
+
+Note that requests must be authenticated using your GitHub account, which must be allowed
+to access the data. The first time you run this code, it will provide instructions to
+authenticate with GitHub. Please submit a ticket [here] to have your GitHub account added
+to the list of allowed users.
+
 ## Data types
 
 In the following, we explain the 3 types of time-series data as well as circuit topology data in [`sample_dataset`](sample_dataset) folder:
