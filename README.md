@@ -6,7 +6,13 @@ Download sample dataset from [here](https://caltech.box.com/s/5baxy2ogbalqohpidh
 Here, the data contains the same *types* of data in the complete dataset, but covering a very small time range of all availble data. This allows you to start developing your code for this dataset without dealing with the colossal full dataset (>10TB and growing). 
 
 ## Full dataset
-To access the full dataset, please submit a ticket [here](https://forms.office.com/r/Ds6rKEtyTV). We are finalizing the data server for the full dataset. Access will be available in Febuary 2025. Meanwhile, we recommend using the sample dataset here to build your code. The full dataset will be in the same data format.
+The full dataset is hosted at https://socal28bus.caltech.edu and can be accessed via a
+REST API. Convenient access is provided by the Python class `DatasetApiClient` in
+[dataset_api_client.py](dataset_api_client.py). See [Downloading data](#downloading-data)
+for a code example.
+
+Requests are authenticated using GitHub. Please [submit a ticket here] to have your
+GitHub account added to the list of allowed users.
 
 ## Data types
 
@@ -31,6 +37,63 @@ We provide the most granular data which models the circuit down to individual co
 The system model varies depending on your application. Examples include bus injection and branch flow models in the phasor domain, dynamic circuit model in the time domain, and transfer matrix models in the Laplace or z domains. See paper Section V for more detailed discussion.
 
 ## Quickstart & code examples
+### Setup
+First, clone and `cd` into this repository.
+
+Next, to run the following code examples, install the required Python packages in
+[requirements.txt](requirements.txt) (e.g. `pip install -r requirements.txt`).
+
+### Downloading data
+The following Python code downloads the data, where:
+
+- For `magnitudes_for`, `phasors_for`, and `waveforms_for`, `<element names>` should be
+  replaced with network element names of interest.
+- For `time_range`, `<start>` and `<end>` must be replaced by `datetime` objects, ISO 8601
+  strings, or Unix timestamps.
+- [Optional] For `resolution`, `<duration>` can be replaced with a `timedelta` object, a
+  number of seconds, or an ISO 8601 duration string. If included, the data may be
+  upsampled or downsampled.
+
+```python
+from dataset_api_client import DatasetApiClient
+
+data_api_client = DatasetApiClient()
+data_api_client.download_data(
+    magnitudes_for=[<element names>],
+    phasors_for=[<element names>],
+    waveforms_for=[<element names>],
+    time_range=(<start>, <end>),
+    resolution=<duration>,
+)
+```
+
+Here is an example query for magnitudes of egauge_1-CT1 for every minute throughout June
+2024, using `datetime` and `timedelta` objects:
+
+```python
+from datetime import datetime, timedelta
+from dataset_api_client import DatasetApiClient
+
+data_api_client = DatasetApiClient()
+data_api_client.download_data(
+    magnitudes_for=["egauge_1-CT1"],
+    time_range=(datetime(2024, 6, 1), datetime(2024, 7, 1)),
+    resolution=timedelta(minutes=1),
+)
+```
+
+> [!NOTE]  
+> If there is no data for the selected element and time range, the API may return an
+> empty file.
+
+> [!WARNING]  
+> The first time you run this code, it will prompt you to log in with GitHub and save the
+> credentials in a file called `dataset_api_credentials.json`. Make sure to keep this file
+> secret (e.g. do not share this file or commit it to a git repository).
+
+Please [submit a ticket here] to have your GitHub account added to the list of allowed
+users.
+
 ### Loading data
 See example code in [`data_IO.ipynb`](code_examples/data_IO.ipynb).
 
@@ -92,3 +155,5 @@ We welcome your comments and suggestions at `digitaltwin@caltech.edu`. For discu
 The accuracy or reliability of the data is not guaranteed or warranted in any way and the providers disclaim liability of any kind whatsoever, including, without limitation, liability for quality, performance, merchantability and fitness for a particular purpose arising out of the use, or inability to use the data.
 
 This software is provided by the copyright holders and contributors "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright owner or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.
+
+[submit a ticket here]: https://forms.office.com/r/Ds6rKEtyTV

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Digital Twin Dataset API</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body style="padding: 0 1rem 0">
+    <header>
+      <h1>Digital Twin Dataset API</h1>
+    </header>
+    <main>
+      <p>Access the API by making requests to {{api_url}}.</p>
+      <p>
+        For example, after cloning
+        <a href="https://github.com/caltech-netlab/digital-twin-dataset"
+          >github.com/caltech-netlab/digital-twin-dataset</a
+        >, run the following Python code:
+      </p>
+      <pre style="margin-left: 1rem">
+from dataset_api_client import DatasetApiClient
+
+data_api_client = DatasetApiClient(base_url="{{api_url}}")
+data_api_client.download_data(
+    magnitudes_for=[&lt;element names>],
+    phasors_for=[&lt;element names>],
+    waveforms_for=[&lt;element names>],
+    time_range=(&lt;start>, &lt;end>),
+    resolution=&lt;duration>,
+)
+</pre
+      >
+      <p>
+        See
+        <a href="https://github.com/caltech-netlab/digital-twin-dataset"
+          >github.com/caltech-netlab/digital-twin-dataset</a
+        >
+        for more details.
+      </p>
+    </main>
+  </body>
+</html>

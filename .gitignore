@@ -149,3 +149,16 @@ temp/
 
 sample_dataset/*
 !sample_dataset/.gitignore
+
+# dataset_api_client.py
+*credentials.json
+data_*/
+
+# dataset_api_app
+replacement_lookup.json
+certs/
+.env
+*.db
+*.crt
+*.key
+*.pass
