@@ -365,6 +365,7 @@ class DatasetApiClient:
         waveforms_for: list[str] | None = None,
         time_range: tuple[datetime | str | float, datetime | str | float],
         resolution: timedelta | str | float | None = None,
+        output_dir=None
     ) -> None:
         """
         Download data files. Any data that does not exist for the given elements within
@@ -376,6 +377,7 @@ class DatasetApiClient:
         :param waveforms_for: Optional, network elements to download waveform data for.
         :param time_range: Time range to retrieve data for.
         :param resolution: Optional, interval to sample data by.
+        :param output_dir: Optional, directory to save data files to.
         """
         with requests.post(
             f"{self.base_url}/data",
@@ -400,16 +402,18 @@ class DatasetApiClient:
             )
             num_files = 0
             progress_in_bytes.set_postfix_str(f"{num_files:,} files", refresh=False)
+            root_dir = output_dir if output_dir is not None else datetime.now().strftime("data_%Y-%m-%d_%H-%M-%S")
             first = True
             for file_name, _, unzipped_chunks in stream_unzip(zipped_chunks):
                 file_path = Path(file_name.decode())
+                unique_root_dir = root_dir
                 if first:
-                    root_dir = datetime.now().strftime("data_%Y-%m-%d_%H-%M-%S")
                     unique_root_dir = root_dir
-                    suffix_num = 1
+                    # suffix_num = 1
                     while os.path.exists(unique_root_dir):
-                        unique_root_dir = f"{root_dir}_{suffix_num}"
-                        suffix_num += 1
+                        print('Directory already exists. Files may be overwritten.')
+                        # unique_root_dir = f"{root_dir}_{suffix_num}"
+                        # suffix_num += 1
                     first = False
                 unique_file_path = os.path.join(unique_root_dir, *file_path.parts[1:])
                 os.makedirs(os.path.dirname(unique_file_path), exist_ok=True)
