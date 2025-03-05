@@ -36,6 +36,21 @@ def raise_response_error(response: requests.Response) -> None:
     raise RuntimeError(f"{code} {name}: {description}")
 
 
+def make_unique_path(path: str) -> str:
+    """Return a unique version of the given path.
+
+    :param path: The desired path.
+    :returns: The desired path, with a number suffix added if ``path`` already exists.
+    """
+    root, ext = os.path.splitext(path)
+    suffix_num = 1
+    unique_path = path
+    while os.path.exists(unique_path):
+        unique_path = f"{root}_{suffix_num}{ext}"
+        suffix_num += 1
+    return unique_path
+
+
 @overload
 def github_login_request(
     url_path: str, args: dict[str, Any], expected_error: str
@@ -192,9 +207,7 @@ class GitHubTokens:
             return cls(**json.load(f))
 
     @classmethod
-    def request(
-        cls, client_id: str, device_code: str, credentials_file: str
-    ):
+    def request(cls, client_id: str, device_code: str, credentials_file: str):
         """
         Request access tokens after initiating device flow verification.
 
@@ -365,7 +378,7 @@ class DatasetApiClient:
         waveforms_for: list[str] | None = None,
         time_range: tuple[datetime | str | float, datetime | str | float],
         resolution: timedelta | str | float | None = None,
-        output_dir=None
+        output_dir: Path | str | None = None,
     ) -> None:
         """
         Download data files. Any data that does not exist for the given elements within
@@ -402,23 +415,20 @@ class DatasetApiClient:
             )
             num_files = 0
             progress_in_bytes.set_postfix_str(f"{num_files:,} files", refresh=False)
-            root_dir = output_dir if output_dir is not None else datetime.now().strftime("data_%Y-%m-%d_%H-%M-%S")
-            first = True
+            output_dir = (
+                make_unique_path(datetime.now().strftime("data_%Y-%m-%d_%H-%M-%S"))
+                if output_dir is None
+                else str(output_dir)
+            )
+            if os.path.exists(output_dir):
+                print(
+                    f"Directory '{output_dir}' already exists. Files may be overwritten."
+                )
             for file_name, _, unzipped_chunks in stream_unzip(zipped_chunks):
                 file_path = Path(file_name.decode())
-                unique_root_dir = root_dir
-                if first:
-                    unique_root_dir = root_dir
-                    if os.path.exists(unique_root_dir):
-                        print('Directory already exists. Files may be overwritten.')
-                    # suffix_num = 1
-                    # while os.path.exists(unique_root_dir):
-                        # unique_root_dir = f"{root_dir}_{suffix_num}"
-                        # suffix_num += 1
-                    first = False
-                unique_file_path = os.path.join(unique_root_dir, *file_path.parts[1:])
-                os.makedirs(os.path.dirname(unique_file_path), exist_ok=True)
-                with open(unique_file_path, "wb") as f:
+                output_file_path = os.path.join(output_dir, *file_path.parts[1:])
+                os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
+                with open(output_file_path, "wb") as f:
                     for chunk in unzipped_chunks:
                         bytes_written = f.write(chunk)
                         progress_in_bytes.update(bytes_written)
