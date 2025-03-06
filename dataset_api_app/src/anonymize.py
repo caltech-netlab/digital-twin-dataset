@@ -42,8 +42,13 @@ def deanonymize_elements(anon_elements: list[str] | None) -> list[str]:
     if anon_elements is None:
         return []
     try:
-        return [
-            reverse_replacement_lookup[anon_element] for anon_element in anon_elements
-        ]
+        out = []
+        for anon_element in anon_elements:
+            el_split = anon_element.split('-')
+            if len(el_split) > 1:
+                out.append(reverse_replacement_lookup[el_split[0]] + '-' + '-'.join(el_split[1:]))
+            else:
+                out.append(reverse_replacement_lookup[anon_element])
+        return out
     except KeyError as e:
         abort(HTTPStatus.BAD_REQUEST, description=f"element {e} does not exist")
