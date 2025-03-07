@@ -1,4 +1,5 @@
 # Third-party imports
+import re
 import sys
 import pathlib
 import json
@@ -44,8 +45,12 @@ def deanonymize_elements(anon_elements: list[str] | None) -> list[str]:
     try:
         out = []
         for anon_element in anon_elements:
+            # This checks that the given element name is safe for subsequent code to use
+            # in paths. For example, an element name of the form "element-A1/../" would
+            # not be safe because it could be used to access another path on the server.
+            safe_in_paths = re.fullmatch(r"^[a-zA-Z0-9-_]+$", anon_element) is not None
             el_split = anon_element.split('-')
-            if len(el_split) > 1:
+            if len(el_split) > 1 and safe_in_paths:
                 out.append(reverse_replacement_lookup[el_split[0]] + '-' + '-'.join(el_split[1:]))
             else:
                 out.append(reverse_replacement_lookup[anon_element])
