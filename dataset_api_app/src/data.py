@@ -131,7 +131,7 @@ def get_date_paths(
     :return: The list of date file paths.
     """
     if extensions is None:
-        extensions = []
+        extensions = [""]
     if alternative_dirs:
         alternative_dirs = [
             (alternative_dir, np.datetime64(cutoff, unit))
