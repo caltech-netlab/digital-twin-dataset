@@ -111,7 +111,7 @@ def get_date_paths(
     time_range: tuple[datetime, datetime],
     unit: str,
     directory: Path = Path(),
-    extension: str = "",
+    extensions: list[str] | None = None,
     alternative_dirs: list[tuple[Path, datetime]] | None = None,
 ) -> Iterator[Path]:
     """
@@ -123,12 +123,15 @@ def get_date_paths(
     :param unit: The NumPy datetime unit to increment by (see
         https://numpy.org/doc/stable/reference/arrays.datetime.html#datetime-units).
     :param directory: Base directory for output file paths.
-    :param extension: Extension for output file paths.
+    :param extensions: List of extension for output file paths. For each date, the
+        extensions will be tried in order and the first existing path will be used.
     :param alternative_dirs: Optional, a list of alternative directory and cutoff time
         pairs. If a a given time is before the cutoff time, the alternative directory
         will be used instead. Cutoff times later in the list take priority.
     :return: The list of date file paths.
     """
+    if extensions is None:
+        extensions = []
     if alternative_dirs:
         alternative_dirs = [
             (alternative_dir, np.datetime64(cutoff, unit))
@@ -143,40 +146,34 @@ def get_date_paths(
             for alternative_dir, cutoff in alternative_dirs:
                 if current_date < cutoff:
                     dir_to_use = alternative_dir
-        date_path = dir_to_use / f"{current_date}{extension}"
-        if date_path.exists():
-            yield date_path
+        for extension in extensions:
+            date_path = dir_to_use / f"{current_date}{extension}"
+            if date_path.exists():
+                yield date_path
+                break
         current_date += 1
 
 
-def read_csv_dataframes(files: Iterable[Path]) -> Iterator[pd.DataFrame]:
+def read_dataframes(files: Iterable[Path]) -> Iterator[pd.DataFrame]:
     """
-    Read the given CSV files into DataFrames. There may be multiple DataFrames returned
-    per file.
+    Read the given files into DataFrames. Note that the files are read in batches, so
+    there may be multiple DataFrames returned per file. CSV and Parquet files are
+    supported.
 
-    :param files: An iterable of paths to CSV files.
+    :param files: An iterable of paths to CSV and/or Parquet files.
     :returns: An iterable of DataFrames.
     """
     for file in files:
-        with csv.open_csv(file) as reader:
-            for batch in reader:
-                df = batch.to_pandas()
+        if file.suffix == ".csv":
+            with csv.open_csv(file) as reader:
+                for batch in reader:
+                    df = batch.to_pandas()
+                    yield df
+        elif file.suffix == ".parquet":
+            parquet_file = pq.ParquetFile(file)
+            for record_batch in parquet_file.iter_batches():
+                df = record_batch.to_pandas()
                 yield df
-
-
-def read_parquet_dataframes(files: Iterable[Path]) -> Iterator[pd.DataFrame]:
-    """
-    Read the given Parquet files into DataFrames. Note that there may be multiple
-    DataFrames returned per file.
-
-    :param files: An iterable of paths to Parquet files.
-    :returns: An iterable of DataFrames.
-    """
-    for file in files:
-        parquet_file = pq.ParquetFile(file)
-        for record_batch in parquet_file.iter_batches():
-            df = record_batch.to_pandas()
-            yield df
 
 
 def dataframes_to_csv(dataframes: Iterable[pd.DataFrame]) -> Iterator[bytes]:
@@ -283,9 +280,9 @@ def generate_magnitudes_files(
             time_range,
             unit="M",
             directory=MAGNITUDES_DIR / real_element,
-            extension=".parquet",
+            extensions=[".parquet"],
         )
-        dataframes = read_parquet_dataframes(file_paths)
+        dataframes = read_dataframes(file_paths)
         dataframes = select_dataframes(dataframes, time_range)
         if resolution_np is not None:
             # Adapted from data.copy_subset_data()
@@ -336,9 +333,9 @@ def generate_phasors_files(
             time_range,
             unit="M",
             directory=PHASORS_DIR / real_element,
-            extension=".csv",
+            extensions=[".csv", ".parquet"],
         )
-        dataframes = read_csv_dataframes(file_paths)
+        dataframes = read_dataframes(file_paths)
         dataframes = select_dataframes(dataframes, time_range)
         if time_column is not None and delta_t_threshold is not None:
             # This step loads all the data into memory at once, which gets rid of some

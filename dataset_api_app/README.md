@@ -92,3 +92,53 @@ To see what images are running, run `docker ps`.
 
 Run `docker logs gunicorn` to view the Gunicorn server logs and run `docker logs nginx`
 to view the nginx logs.
+
+## Running in Development Mode
+
+To run the server in development mode, follow these steps, similar to those in
+[Setup](#setup):
+
+1. Clone this repository to the server.
+
+2. Create a file in this directory called `replacement_lookup.json`, containing a
+   dictionary from real network element names to anonymized ones. This will be used by
+   the server to return data with anonymized element names.
+
+3. Create a file in this directory called `.env` containing the following (same as in
+   [Setup](#setup), but with `APP_ENV` set to `dev` and local paths):
+
+   ```env
+   APP_ENV=dev
+   MAGNITUDES_DIR=<path to magnitude data directory>
+   PHASORS_DIR=<path to phasor data directory>
+   WAVEFORMS_DIR=<path to waveform data directory>
+   WAVEFORMS_2024_10_DIR=<path to pre-11/01/2024 waveform data directory>
+   ```
+
+4. Change into this directory (e.g. `cd dataset_api_app`).
+
+5. Run the following commands to create a Python virtual environment and use it to
+   create the initial users.db file:
+
+   ```
+   python -m venv venv
+   venv/bin/pip install -r requirements.txt
+   venv/bin/python src/users.py
+   ```
+
+Then, to run the app in development mode, run:
+
+```
+venv/bin/python src/app.py
+```
+
+The development server has the address http://localhost:5050/api and will be updated
+when the code changes. You can pass this address to `DatasetApiClient`:
+
+```python
+data_api_client = DatasetApiClient(base_url="http://localhost:5050/api")
+```
+
+To test the Docker production server in development, follow the same instructions from
+the end of [Setup](#setup) (`docker compose build` and `docker compose up -d`). The
+API will then have the address http://localhost/api.
