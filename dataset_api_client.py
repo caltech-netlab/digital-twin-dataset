@@ -26,14 +26,16 @@ def raise_response_error(response: requests.Response) -> None:
     """
     if response.ok:
         return
-    response_json = response.json()
-    code = response_json["code"]
-    name = response_json["name"]
-    description = response_json["description"]
-    # Format Pydantic validation errors nicely.
-    if isinstance(description, list):
-        description = "\n" + "\n".join(f"  {row!r}" for row in description)
-    raise RuntimeError(f"{code} {name}: {description}")
+    if response.headers.get("Content-Type") == "application/json":
+        response_json = response.json()
+        code = response_json["code"]
+        name = response_json["name"]
+        description = response_json["description"]
+        # Format Pydantic validation errors nicely.
+        if isinstance(description, list):
+            description = "\n" + "\n".join(f"  {row!r}" for row in description)
+        raise RuntimeError(f"{code} {name}: {description}")
+    raise RuntimeError(response.text)
 
 
 def make_unique_path(path: str) -> str:

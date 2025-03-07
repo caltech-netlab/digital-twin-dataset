@@ -165,7 +165,10 @@ def read_dataframes(files: Iterable[Path]) -> Iterator[pd.DataFrame]:
     """
     for file in files:
         if file.suffix == ".csv":
-            with csv.open_csv(file) as reader:
+            with csv.open_csv(
+                file,
+                convert_options=csv.ConvertOptions(null_values=["NaT"]),
+            ) as reader:
                 for batch in reader:
                     df = batch.to_pandas()
                     yield df
