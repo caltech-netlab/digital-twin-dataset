@@ -1,5 +1,5 @@
 # Third-party imports
-from typing import Self, Any, overload
+from typing import Any, overload
 from dataclasses import dataclass, asdict
 import os
 from pathlib import Path
@@ -111,7 +111,7 @@ class GitHubVerification:
         return time.time() >= self.issued_at + self.expires_in - _EXPIRATION_TOLERANCE
 
     @classmethod
-    def request(cls, client_id: str) -> Self:
+    def request(cls, client_id: str):
         """
         Initiate device flow verification.
 
@@ -182,7 +182,7 @@ class GitHubTokens:
             print(json.dumps(asdict(self), indent=2), file=f)
 
     @classmethod
-    def load(cls, credentials_file: str) -> Self:
+    def load(cls, credentials_file: str):
         """
         Load tokens from the credentials file.
 
@@ -194,7 +194,7 @@ class GitHubTokens:
     @classmethod
     def request(
         cls, client_id: str, device_code: str, credentials_file: str
-    ) -> Self | None:
+    ):
         """
         Request access tokens after initiating device flow verification.
 
@@ -226,7 +226,7 @@ class GitHubTokens:
     @classmethod
     def poll(
         cls, client_id: str, verification: GitHubVerification, credentials_file: str
-    ) -> Self:
+    ):
         """
         Poll GitHub to request access tokens until the user has entered ``user_code``.
 
@@ -249,7 +249,7 @@ class GitHubTokens:
             time.sleep(verification.interval)
         raise RuntimeError("code expired")
 
-    def refresh(self, client_id: str, credentials_file: str) -> Self:
+    def refresh(self, client_id: str, credentials_file: str):
         """
         Request new tokens using the ``refresh_token``.
 
@@ -409,9 +409,10 @@ class DatasetApiClient:
                 unique_root_dir = root_dir
                 if first:
                     unique_root_dir = root_dir
-                    # suffix_num = 1
-                    while os.path.exists(unique_root_dir):
+                    if os.path.exists(unique_root_dir):
                         print('Directory already exists. Files may be overwritten.')
+                    # suffix_num = 1
+                    # while os.path.exists(unique_root_dir):
                         # unique_root_dir = f"{root_dir}_{suffix_num}"
                         # suffix_num += 1
                     first = False
