@@ -189,15 +189,9 @@ def dataframes_to_csv(dataframes: Iterable[pd.DataFrame]) -> Iterator[bytes]:
     """
     first = True
     for dataframe in dataframes:
-        f = io.BytesIO()
-        csv.write_csv(
-            data=pa.Table.from_pandas(dataframe),
-            output_file=f,
-            write_options=csv.WriteOptions(include_header=first),
-        )
+        yield dataframe.to_csv(index=False, header=first).encode()
         if first:
             first = False
-        yield f.getvalue()
 
 
 def select_dataframes(
@@ -445,17 +439,16 @@ def generate_waveforms_files(
                     waveforms_dir = WAVEFORMS_2024_10_DIR
                 day_dir_name = timestamp.strftime("%Y-%m-%d")
                 timestamp_str = timestamp.strftime(WAVEFORM_DATE_FORMAT)[:-3]
-                table = pq.read_table(
+                dataframe = pd.read_parquet(
                     waveforms_dir
                     / real_element
                     / day_dir_name
                     / f"{timestamp_str}.parquet"
                 )
-                f = io.BytesIO()
-                csv.write_csv(data=table, output_file=f)
+                csv_bytes = dataframe.to_csv(index=False).encode()
                 yield make_member_file(
                     f"{zip_root_dir}/waveforms/{anon_element}/{day_dir_name}/{timestamp_str}.csv",
-                    (f.getvalue(),),
+                    (csv_bytes,),
                 )
 
 
