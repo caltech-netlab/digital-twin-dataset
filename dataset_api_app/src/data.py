@@ -357,7 +357,8 @@ def generate_phasors_files(
                     delta_t_threshold=delta_t_threshold,
                 )
                 df_resampled_dict = df_resampled_dict["phasors"]
-                df_resampled_dict["t"] = resampled_time_column
+                del df_resampled_dict["t"]
+                df_resampled_dict = {"t": resampled_time_column, **df_resampled_dict}
                 df_resampled = pd.DataFrame(df_resampled_dict)
                 dataframes = rechunk_dataframe(df_resampled)
         yield make_member_file(
