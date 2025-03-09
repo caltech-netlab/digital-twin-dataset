@@ -316,6 +316,7 @@ def generate_phasors_files(
     """
     delta_t_threshold: float | None = None
     time_column: np.typing.NDArray[np.datetime64] | None = None
+    resampled_time_column: np.typing.NDArray[np.datetime64] | None = None
     if resolution is not None:
         resolution_seconds = resolution // timedelta(seconds=1)
         delta_t_threshold = resolution_seconds / 2
@@ -325,6 +326,12 @@ def generate_phasors_files(
             unit="s",
             inclusive="left",
         ).to_numpy()
+    else:
+        # If there is no resolution, also select and return time column data. This
+        # assumes a directory "t" exists on the server in the phasor data directory.
+        # This will return a t.csv file of times.
+        real_elements.append("t")
+        anon_elements.append("t")
     for real_element, anon_element in zip(real_elements, anon_elements):
         file_paths = get_date_paths(
             time_range,
@@ -340,7 +347,7 @@ def generate_phasors_files(
             # work on an iterable of DataFrame chunks to improve memory usage.
             df_dict = dataframes_to_dict(dataframes)
             if df_dict is not None:
-                time_column, df_resampled_dict = phasor_utils.align_phasors(
+                resampled_time_column, df_resampled_dict = phasor_utils.align_phasors(
                     {"phasors": df_dict},
                     time_column_file=time_column,
                     delta_t_threshold=delta_t_threshold,
@@ -352,6 +359,13 @@ def generate_phasors_files(
         yield make_member_file(
             f"{zip_root_dir}/phasors/{anon_element}.csv",
             dataframes_to_csv(dataframes),
+        )
+    if isinstance(resampled_time_column, np.ndarray):
+        # If a resolution was given, return the generated time column in a t.csv file.
+        time_dataframes = rechunk_dataframe(pd.DataFrame({"t": resampled_time_column}))
+        yield make_member_file(
+            f"{zip_root_dir}/phasors/t.csv",
+            dataframes_to_csv(time_dataframes),
         )
 
 
