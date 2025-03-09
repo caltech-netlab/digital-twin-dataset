@@ -269,6 +269,8 @@ def generate_magnitudes_files(
     :param resolution: Interval to sample data by.
     :returns: An iterable of ``MemberFiles`` to return in a streamed ZIP.
     """
+    if not real_elements:
+        return []
     resolution_np: np.timedelta64 | None = None
     if resolution is not None:
         resolution_np = np.timedelta64(resolution // timedelta(seconds=1), "s")
@@ -314,6 +316,8 @@ def generate_phasors_files(
     :param resolution: Interval to sample data by.
     :returns: An iterable of ``MemberFiles`` to return in a streamed ZIP.
     """
+    if not real_elements:
+        return []
     delta_t_threshold: float | None = None
     time_column: np.typing.NDArray[np.datetime64] | None = None
     resampled_time_column: np.typing.NDArray[np.datetime64] | None = None
@@ -387,6 +391,8 @@ def generate_waveforms_files(
     :param resolution: Interval to sample data by.
     :returns: An iterable of ``MemberFiles`` to return in a streamed ZIP.
     """
+    if not real_elements:
+        return []
     desired_timestamps: pd.DatetimeIndex | None = None
     delta_t_threshold: float | None = None
     if resolution is not None:
