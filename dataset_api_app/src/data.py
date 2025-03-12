@@ -2,7 +2,6 @@
 from typing import Annotated
 from collections.abc import Iterable, Iterator
 import os
-import io
 import sys
 import pathlib
 import stat
@@ -11,7 +10,6 @@ from pathlib import Path
 from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
-import pyarrow as pa
 import pyarrow.csv as csv
 import pyarrow.parquet as pq
 from pydantic import BaseModel, AfterValidator, Field
@@ -152,6 +150,21 @@ def get_date_paths(
                 yield date_path
                 break
         current_date += 1
+
+
+def read_file(path: Path, chunk_size: int = 65536) -> Iterable[bytes]:
+    """
+    Read the file at the given path as chunks of bytes.
+
+    :param path: Path to the file to read.
+    :returns: An iterable of bytes.
+    """
+    with open(path, "rb") as f:
+        while True:
+            data = f.read(chunk_size)
+            if not data:
+                break
+            yield data
 
 
 def read_dataframes(files: Iterable[Path]) -> Iterator[pd.DataFrame]:
@@ -460,16 +473,15 @@ def generate_waveforms_files(
                     waveforms_dir = WAVEFORMS_2024_10_DIR
                 day_dir_name = timestamp.strftime("%Y-%m-%d")
                 timestamp_str = timestamp.strftime(WAVEFORM_DATE_FORMAT)[:-3]
-                dataframe = pd.read_parquet(
+                waveform_bytes = read_file(
                     waveforms_dir
                     / real_element
                     / day_dir_name
                     / f"{timestamp_str}.parquet"
                 )
-                csv_bytes = dataframe.to_csv(index=False).encode()
                 yield make_member_file(
-                    f"{zip_root_dir}/waveforms/{anon_element}/{day_dir_name}/{timestamp_str}.csv",
-                    (csv_bytes,),
+                    f"{zip_root_dir}/waveforms/{anon_element}/{day_dir_name}/{timestamp_str}.parquet",
+                    waveform_bytes,
                 )
 
 
