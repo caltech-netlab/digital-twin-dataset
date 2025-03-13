@@ -2,7 +2,6 @@
 from typing import Annotated
 from collections.abc import Iterable, Iterator
 import os
-import io
 import sys
 import pathlib
 import stat
@@ -11,7 +10,6 @@ from pathlib import Path
 from datetime import datetime, timedelta
 import numpy as np
 import pandas as pd
-import pyarrow as pa
 import pyarrow.csv as csv
 import pyarrow.parquet as pq
 from pydantic import BaseModel, AfterValidator, Field
@@ -111,7 +109,7 @@ def get_date_paths(
     time_range: tuple[datetime, datetime],
     unit: str,
     directory: Path = Path(),
-    extension: str = "",
+    extensions: list[str] | None = None,
     alternative_dirs: list[tuple[Path, datetime]] | None = None,
 ) -> Iterator[Path]:
     """
@@ -123,12 +121,15 @@ def get_date_paths(
     :param unit: The NumPy datetime unit to increment by (see
         https://numpy.org/doc/stable/reference/arrays.datetime.html#datetime-units).
     :param directory: Base directory for output file paths.
-    :param extension: Extension for output file paths.
+    :param extensions: List of extension for output file paths. For each date, the
+        extensions will be tried in order and the first existing path will be used.
     :param alternative_dirs: Optional, a list of alternative directory and cutoff time
         pairs. If a a given time is before the cutoff time, the alternative directory
         will be used instead. Cutoff times later in the list take priority.
     :return: The list of date file paths.
     """
+    if extensions is None:
+        extensions = [""]
     if alternative_dirs:
         alternative_dirs = [
             (alternative_dir, np.datetime64(cutoff, unit))
@@ -143,40 +144,52 @@ def get_date_paths(
             for alternative_dir, cutoff in alternative_dirs:
                 if current_date < cutoff:
                     dir_to_use = alternative_dir
-        date_path = dir_to_use / f"{current_date}{extension}"
-        if date_path.exists():
-            yield date_path
+        for extension in extensions:
+            date_path = dir_to_use / f"{current_date}{extension}"
+            if date_path.exists():
+                yield date_path
+                break
         current_date += 1
 
 
-def read_csv_dataframes(files: Iterable[Path]) -> Iterator[pd.DataFrame]:
+def read_file(path: Path, chunk_size: int = 65536) -> Iterable[bytes]:
     """
-    Read the given CSV files into DataFrames. There may be multiple DataFrames returned
-    per file.
+    Read the file at the given path as chunks of bytes.
 
-    :param files: An iterable of paths to CSV files.
+    :param path: Path to the file to read.
+    :returns: An iterable of bytes.
+    """
+    with open(path, "rb") as f:
+        while True:
+            data = f.read(chunk_size)
+            if not data:
+                break
+            yield data
+
+
+def read_dataframes(files: Iterable[Path]) -> Iterator[pd.DataFrame]:
+    """
+    Read the given files into DataFrames. Note that the files are read in batches, so
+    there may be multiple DataFrames returned per file. CSV and Parquet files are
+    supported.
+
+    :param files: An iterable of paths to CSV and/or Parquet files.
     :returns: An iterable of DataFrames.
     """
     for file in files:
-        with csv.open_csv(file) as reader:
-            for batch in reader:
-                df = batch.to_pandas()
+        if file.suffix == ".csv":
+            with csv.open_csv(
+                file,
+                convert_options=csv.ConvertOptions(null_values=["NaT"]),
+            ) as reader:
+                for batch in reader:
+                    df = batch.to_pandas()
+                    yield df
+        elif file.suffix == ".parquet":
+            parquet_file = pq.ParquetFile(file)
+            for record_batch in parquet_file.iter_batches():
+                df = record_batch.to_pandas()
                 yield df
-
-
-def read_parquet_dataframes(files: Iterable[Path]) -> Iterator[pd.DataFrame]:
-    """
-    Read the given Parquet files into DataFrames. Note that there may be multiple
-    DataFrames returned per file.
-
-    :param files: An iterable of paths to Parquet files.
-    :returns: An iterable of DataFrames.
-    """
-    for file in files:
-        parquet_file = pq.ParquetFile(file)
-        for record_batch in parquet_file.iter_batches():
-            df = record_batch.to_pandas()
-            yield df
 
 
 def dataframes_to_csv(dataframes: Iterable[pd.DataFrame]) -> Iterator[bytes]:
@@ -189,15 +202,9 @@ def dataframes_to_csv(dataframes: Iterable[pd.DataFrame]) -> Iterator[bytes]:
     """
     first = True
     for dataframe in dataframes:
-        f = io.BytesIO()
-        csv.write_csv(
-            data=pa.Table.from_pandas(dataframe),
-            output_file=f,
-            write_options=csv.WriteOptions(include_header=first),
-        )
+        yield dataframe.to_csv(index=False, header=first).encode()
         if first:
             first = False
-        yield f.getvalue()
 
 
 def select_dataframes(
@@ -275,6 +282,8 @@ def generate_magnitudes_files(
     :param resolution: Interval to sample data by.
     :returns: An iterable of ``MemberFiles`` to return in a streamed ZIP.
     """
+    if not real_elements:
+        return []
     resolution_np: np.timedelta64 | None = None
     if resolution is not None:
         resolution_np = np.timedelta64(resolution // timedelta(seconds=1), "s")
@@ -283,9 +292,9 @@ def generate_magnitudes_files(
             time_range,
             unit="M",
             directory=MAGNITUDES_DIR / real_element,
-            extension=".parquet",
+            extensions=[".parquet"],
         )
-        dataframes = read_parquet_dataframes(file_paths)
+        dataframes = read_dataframes(file_paths)
         dataframes = select_dataframes(dataframes, time_range)
         if resolution_np is not None:
             # Adapted from data.copy_subset_data()
@@ -320,8 +329,11 @@ def generate_phasors_files(
     :param resolution: Interval to sample data by.
     :returns: An iterable of ``MemberFiles`` to return in a streamed ZIP.
     """
+    if not real_elements:
+        return []
     delta_t_threshold: float | None = None
     time_column: np.typing.NDArray[np.datetime64] | None = None
+    resampled_time_column: np.typing.NDArray[np.datetime64] | None = None
     if resolution is not None:
         resolution_seconds = resolution // timedelta(seconds=1)
         delta_t_threshold = resolution_seconds / 2
@@ -331,14 +343,20 @@ def generate_phasors_files(
             unit="s",
             inclusive="left",
         ).to_numpy()
+    else:
+        # If there is no resolution, also select and return time column data. This
+        # assumes a directory "t" exists on the server in the phasor data directory.
+        # This will return a t.csv file of times.
+        real_elements.append("t")
+        anon_elements.append("t")
     for real_element, anon_element in zip(real_elements, anon_elements):
         file_paths = get_date_paths(
             time_range,
             unit="M",
             directory=PHASORS_DIR / real_element,
-            extension=".csv",
+            extensions=[".csv", ".parquet"],
         )
-        dataframes = read_csv_dataframes(file_paths)
+        dataframes = read_dataframes(file_paths)
         dataframes = select_dataframes(dataframes, time_range)
         if time_column is not None and delta_t_threshold is not None:
             # This step loads all the data into memory at once, which gets rid of some
@@ -346,18 +364,26 @@ def generate_phasors_files(
             # work on an iterable of DataFrame chunks to improve memory usage.
             df_dict = dataframes_to_dict(dataframes)
             if df_dict is not None:
-                time_column, df_resampled_dict = phasor_utils.align_phasors(
+                resampled_time_column, df_resampled_dict = phasor_utils.align_phasors(
                     {"phasors": df_dict},
                     time_column_file=time_column,
                     delta_t_threshold=delta_t_threshold,
                 )
                 df_resampled_dict = df_resampled_dict["phasors"]
-                df_resampled_dict["t"] = time_column
+                del df_resampled_dict["t"]
+                df_resampled_dict = {"t": resampled_time_column, **df_resampled_dict}
                 df_resampled = pd.DataFrame(df_resampled_dict)
                 dataframes = rechunk_dataframe(df_resampled)
         yield make_member_file(
             f"{zip_root_dir}/phasors/{anon_element}.csv",
             dataframes_to_csv(dataframes),
+        )
+    if isinstance(resampled_time_column, np.ndarray):
+        # If a resolution was given, return the generated time column in a t.csv file.
+        time_dataframes = rechunk_dataframe(pd.DataFrame({"t": resampled_time_column}))
+        yield make_member_file(
+            f"{zip_root_dir}/phasors/t.csv",
+            dataframes_to_csv(time_dataframes),
         )
 
 
@@ -379,6 +405,8 @@ def generate_waveforms_files(
     :param resolution: Interval to sample data by.
     :returns: An iterable of ``MemberFiles`` to return in a streamed ZIP.
     """
+    if not real_elements:
+        return []
     desired_timestamps: pd.DatetimeIndex | None = None
     delta_t_threshold: float | None = None
     if resolution is not None:
@@ -445,17 +473,15 @@ def generate_waveforms_files(
                     waveforms_dir = WAVEFORMS_2024_10_DIR
                 day_dir_name = timestamp.strftime("%Y-%m-%d")
                 timestamp_str = timestamp.strftime(WAVEFORM_DATE_FORMAT)[:-3]
-                table = pq.read_table(
+                waveform_bytes = read_file(
                     waveforms_dir
                     / real_element
                     / day_dir_name
                     / f"{timestamp_str}.parquet"
                 )
-                f = io.BytesIO()
-                csv.write_csv(data=table, output_file=f)
                 yield make_member_file(
-                    f"{zip_root_dir}/waveforms/{anon_element}/{day_dir_name}/{timestamp_str}.csv",
-                    (f.getvalue(),),
+                    f"{zip_root_dir}/waveforms/{anon_element}/{day_dir_name}/{timestamp_str}.parquet",
+                    waveform_bytes,
                 )
 
 
