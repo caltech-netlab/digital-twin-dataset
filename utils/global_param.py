@@ -42,7 +42,7 @@ COLUMNS_ORDER = [
 F = 60.0
 LOCATION = "America/Los_Angeles"
 ISO_TIMESTAMP_FORMAT_MS = (
-    "[\d]{4}-[\d]{2}-[\d]{2}T[\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}[+-][\d]{2}:[\d]{2}"
+    r"[\d]{4}-[\d]{2}-[\d]{2}T[\d]{2}:[\d]{2}:[\d]{2}.[\d]{3}[+-][\d]{2}:[\d]{2}"
 )
 
 # Print options

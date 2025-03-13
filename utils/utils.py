@@ -3599,7 +3599,7 @@ def load_waveforms(path_waveforms, timestamp, meter_dirs, return_pandas=True, in
     input_time = datetime.datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S")
     input_date = input_time.strftime("%Y-%m-%d")
     result = {}
-    timestamp_pattern = re.compile(r"(\d{4}-\d{2}-\d{2})T(\d{2}-\d{2}-\d{2}\.\d+)\.parquet")
+    timestamp_pattern = re.compile(r"(\d{4}-\d{2}-\d{2})T(\d{2}-\d{2}-\d{2}\.\d+)\.(?:parquet|csv)")
 
     # YYYY-MM-DD folder
     def parse_folder_dates(base_path):
@@ -3611,15 +3611,15 @@ def load_waveforms(path_waveforms, timestamp, meter_dirs, return_pandas=True, in
             ]
         )
 
-    # get parquet files under specific path
-    def get_parquet_files(folder_path):
-        parquet_files = [
+    # get parquet/csv files under specific path
+    def get_filenames(folder_path):
+        file_paths = [
             os.path.join(folder_path, file)
             for file in os.listdir(folder_path)
-            if file.endswith(".parquet")
+            if file.endswith(".parquet") or file.endswith(".csv")
         ]
         parsed_files = []
-        for file_path in parquet_files:
+        for file_path in file_paths:
             match = timestamp_pattern.search(os.path.basename(file_path))
             if match:
                 file_date = match.group(1)
@@ -3642,7 +3642,6 @@ def load_waveforms(path_waveforms, timestamp, meter_dirs, return_pandas=True, in
 
     nearest_files = {}
     nearest2_files = {}
-
     for meter_dir in meter_dirs:
         base_path = os.path.join(path_waveforms, meter_dir)
         if not internal_call:
@@ -3662,7 +3661,7 @@ def load_waveforms(path_waveforms, timestamp, meter_dirs, return_pandas=True, in
                 target_folders = [closest_date]
                 idx = folder_dates.index(closest_date)
 
-                files_in_current = get_parquet_files(os.path.join(base_path, closest_date))
+                files_in_current = get_filenames(os.path.join(base_path, closest_date))
                 if files_in_current:
                     min_time = files_in_current[0][0]
                     max_time = files_in_current[-1][0]
@@ -3676,10 +3675,10 @@ def load_waveforms(path_waveforms, timestamp, meter_dirs, return_pandas=True, in
         all_files = []
         for folder in target_folders:
             folder_path = os.path.join(base_path, folder)
-            all_files += get_parquet_files(folder_path)
+            all_files += get_filenames(folder_path)
         nearest, second_nearest = find_nearest_files(all_files, input_time)
         if not nearest:
-            raise ValueError(f"No valid parquet files found near {timestamp} in {meter_dir}")
+            raise ValueError(f"No valid files found near {timestamp} in {meter_dir}")
         nearest_files[meter_dir] = nearest
         if second_nearest:
             nearest2_files[meter_dir] = second_nearest
@@ -3687,14 +3686,14 @@ def load_waveforms(path_waveforms, timestamp, meter_dirs, return_pandas=True, in
     # timestamps of the first meter
     base_meter, base_file_info = list(nearest_files.items())[0]
     _, _, base_file_path = base_file_info
-    base_df = pd.read_parquet(base_file_path)
+    base_df = pd.read_parquet(base_file_path) if base_file_path.endswith(".parquet") else pd.read_csv(base_file_path)
     base_min_time, base_max_time = pd.to_datetime(base_df['t']).agg(['min', 'max'])
     base_first_timestamp = pd.to_datetime(base_df.iloc[0]['t']).strftime('%Y-%m-%dT%H:%M:%S')
     result[base_first_timestamp] = {}
 
     file_cache = {}
     for meter_dir, (_, _, file_path) in nearest_files.items():
-        candidate_df = pd.read_parquet(file_path)
+        candidate_df = pd.read_parquet(file_path) if file_path.endswith(".parquet") else pd.read_csv(file_path)
         file_cache[file_path] = candidate_df
         candidate_min_time, candidate_max_time = pd.to_datetime(candidate_df['t']).agg(['min', 'max'])
         while not (candidate_max_time >= base_min_time and candidate_min_time <= base_max_time):
@@ -3702,7 +3701,7 @@ def load_waveforms(path_waveforms, timestamp, meter_dirs, return_pandas=True, in
                 print(f"Warning: No overlapping time range found between {base_meter} and {meter_dir}. Returning no data.")
                 return {}
             _, _, next_file_path = nearest2_files.pop(meter_dir)
-            candidate_df = pd.read_parquet(next_file_path)
+            candidate_df = pd.read_parquet(next_file_path) if next_file_path.endswith(".parquet") else pd.read_csv(next_file_path)
             file_cache[next_file_path] = candidate_df
             candidate_min_time, candidate_max_time = pd.to_datetime(candidate_df['t']).agg(['min', 'max'])
             nearest_files[meter_dir] = (_, _, next_file_path)
@@ -3742,7 +3741,7 @@ def load_waveforms_timerange(path_waveforms, timestamp_range, meter_dirs, return
     start_time = datetime.datetime.strptime(timestamp_range[0], "%Y-%m-%dT%H:%M:%S")
     end_time = datetime.datetime.strptime(timestamp_range[1], "%Y-%m-%dT%H:%M:%S")
 
-    timestamp_pattern = re.compile(r"(\d{4}-\d{2}-\d{2})T(\d{2}-\d{2}-\d{2})\.\d+\.parquet")
+    timestamp_pattern = re.compile(r"(\d{4}-\d{2}-\d{2})T(\d{2}-\d{2}-\d{2})\.\d+\.(?:parquet|csv)")
 
     # set the first meter as reference
     base_meter_dir = meter_dirs[0] # reference meter (can be replaced with others)
@@ -3759,11 +3758,11 @@ def load_waveforms_timerange(path_waveforms, timestamp_range, meter_dirs, return
         date_folder = os.path.join(base_path, date_str)
         if os.path.exists(date_folder) and os.path.isdir(date_folder):
             for root, _, files in os.walk(date_folder):
-                base_files.extend([os.path.join(root, f) for f in files if f.endswith(".parquet")])
+                base_files.extend([os.path.join(root, f) for f in files if f.endswith(".parquet") or f.endswith(".csv")])
         else:
             print(f"Skipping {date_str}: No data")
     if not base_files:
-        raise ValueError(f"No parquet files found in {base_meter_dir}")
+        raise ValueError(f"No files found in {base_meter_dir}")
 
     base_valid_files = []
     for file_path in base_files:
@@ -3779,7 +3778,7 @@ def load_waveforms_timerange(path_waveforms, timestamp_range, meter_dirs, return
             except ValueError as e:
                 raise ValueError(f"Error parsing timestamp from file {file_path}: {e}")
     if not base_valid_files:
-        raise ValueError(f"No valid parquet files found in {base_meter_dir} for the given timestamp range")
+        raise ValueError(f"No valid files found in {base_meter_dir} for the given timestamp range")
 
     base_valid_files.sort(key=lambda x: x[0])
     base_timestamps = list(dt for dt, _ in base_valid_files)

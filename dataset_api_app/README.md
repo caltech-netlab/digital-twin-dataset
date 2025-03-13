@@ -2,7 +2,7 @@
 
 This directory defines the API app that runs on the server.
 
-## Setup
+## Initial Setup
 
 1. Clone this repository to the server.
 
@@ -80,7 +80,7 @@ To confirm which users are authorized, run the following:
 venv/bin/python -c "from src.users import User; User.print_all()"
 ```
 
-## Server Maintenance
+## Server Maintenance, Updates
 
 If the code is updated, change in to this directory (e.g. `cd dataset_api_app`) and run
 `docker compose build`, followed by `docker compose up -d`.
