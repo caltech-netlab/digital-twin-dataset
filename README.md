@@ -1,17 +1,17 @@
 # A Real-World Dataset
-The dataset contains data collected from microgrids/distribution systems in California. The data has been anonymized to remove all geographical identifiers. Our [conference poster](assets/Poster.pdf) is available. Our paper will be available on arXiv soon.
+The dataset contains data collected from microgrids/distribution systems in California. The data has been anonymized to remove all geographical identifiers. Our [conference poster](assets/Poster.pdf) is available. A preprint is available on [arXiv](https://arxiv.org/abs/2504.06588).
 
 ## Sample dataset
 Download sample dataset from [here](https://caltech.box.com/s/5baxy2ogbalqohpidh1lyxgnnxmv5tuc) and place into sample_dataset folder. 
 Here, the data contains the same *types* of data in the complete dataset, but covering a very small time range of all availble data. This allows you to start developing your code for this dataset without dealing with the colossal full dataset (>10TB and growing). 
 
 ## Full dataset
-The full dataset is hosted at https://socal28bus.caltech.edu and can be accessed via a
+The full dataset is hosted at [https://socal28bus.caltech.edu](https://socal28bus.caltech.edu) and can be accessed via a
 REST API. Convenient access is provided by the Python class `DatasetApiClient` in
 [dataset_api_client.py](dataset_api_client.py). See [Downloading data](#downloading-data)
 for a code example.
 
-Requests are authenticated using GitHub. Please [submit a ticket here] to have your
+Dataset users are authenticated using GitHub. Please [submit a ticket here] to have your
 GitHub account added to the list of allowed users.
 
 ## Data types
@@ -109,7 +109,8 @@ An example implementation of Linear DistFLow (LinDistFlow) model with measured s
 ### MATPOWER Test Case
 A test case based on the A side sub-circuit in [MATPOWER format](https://matpower.org/docs/ref/matpower5.0/caseformat.html) is provided in [`case12dt.m`](code_examples/case12dt.m)
 
-If you think another example may be helpful here, consider contributing to this project via a pull request or [contact us](#contacts).
+### Support
+If you think another example may be helpful here, consider contributing to this project via a pull request or [contact us](#contacts). In certain cases, we may be able to provide example code for your particular usage scenario.
 
 
 ## Data quality
