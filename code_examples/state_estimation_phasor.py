@@ -103,7 +103,7 @@ class StateEstimator:
         we need to provide this (hardcoded) via measured_injections.
         To do so, first run the function with plot=True and examine the network graph.
         Then, provide the measured injections in the form of a dictionary.
-
+        
         :prune_nodes: list of nodes to prune from the electrical network
         :prune_edges: list of edges to prune from the electrical network
         :measured_injections: dictionary of measured injections, e.g.
@@ -197,7 +197,7 @@ class StateEstimator:
                 if len(measured_injections[node]) == 0:
                     # Option 1: Soft constraint
                     I_metered.append(np.zeros((3, len(time_col)), dtype=np.csingle))
-                    I_metered_nominal.append(np.ones(3))
+                    I_metered_nominal.append(1e-1 * np.ones(3))
                     I_metered_nodes.append(node)
                     # Option 2: Hard constraint
                     # constraints.append()
@@ -237,9 +237,10 @@ class StateEstimator:
             V_hat_t = cp.Variable(N*3, complex=True)
             # Objective function: minimize l2 distance between metered and computed I/V values
             # Here, we normalize by CT ratings and nominal bus voltages.
+            # I_residual: the first term is nonzero injections, the second term is zero injections
             I_residual = cp.abs(I_metered[:, t] - Y[:MI*3] @ V_hat_t)
             V_residual = cp.abs(V_metered[:, t] - V_hat_t[V_metered_idx])
-            obj_fxn = cp.sum(I_residual / I_metered_nominal) + cp.sum(V_residual / V_metered_nominal)
+            obj_fxn = 1e-1 * cp.sum(I_residual / I_metered_nominal) + cp.sum(V_residual / V_metered_nominal)
             obj = cp.Minimize(obj_fxn)
             prob = cp.Problem(obj, constraints)
             try:
