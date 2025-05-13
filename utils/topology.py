@@ -798,7 +798,7 @@ def get_transformer_parameters(element):
 
 def _transformer_Y_matrix(
     V_primary, V_secondary, VA_rating, percent_z, connection, conn_type, 
-    y_shunt=1e-7, returned_matrix='Y', flip_tbus_current_direction=True
+    y_shunt=1e-7, returned_matrix='Y', flip_tbus_current_direction=True, XR_ratio=6
 ):
     """
     Given transformer specs, output a 8x8 admittance matrix of a 3-phase transformer.
@@ -848,6 +848,8 @@ def _transformer_Y_matrix(
 
     # 1) Build primitive admittance matrix Y_P
     y_series_pu = (VA_rating / 3) / percent_z
+    if XR_ratio != 0:
+        y_series_pu *= np.exp(-1j * np.arctan(XR_ratio))
     # y1a, y1b, y1c, y2a, y2b, y2c, y0a, y0b, y0c
     admittances = [y_series_pu * 2 for _ in range(6)] + [y_shunt for _ in range(3)]
     Y_P = np.diag(admittances)
@@ -883,7 +885,9 @@ def _transformer_Y_matrix(
     if returned_matrix == "component Y":
         a_turns_ratio = np.ones(3) * (E_wc_pri / E_wc_sec)
         return np.ones(3) * y_series_pu / E_wc_pri ** 2, np.ones(3) * y_shunt, a_turns_ratio, connection
-
+    elif returned_matrix == "series Z":
+        return np.eye(3) * (E_wc_pri ** 2 / y_series_pu)
+        
     # 4) Finally, apply the port incidence matrix C to connect windings to external ports
     C = np.zeros((6, 8))
     port_idx = "ABCN"
@@ -933,12 +937,12 @@ def _transformer_Y_matrix(
         raise ValueError(f"Invalid argument for returned_matrix: {returned_matrix}")
 
 
-def transformer_Y_matrix(element, returned_matrix='Y', flip_tbus_current_direction=True):
+def transformer_Y_matrix(element, returned_matrix='Y', flip_tbus_current_direction=True, XR_ratio=6):
     V_primary, V_secondary, VA_rating, percent_z, connection, conn_type, y_shunt = \
         get_transformer_parameters(element)
     return _transformer_Y_matrix(
-        V_primary, V_secondary, VA_rating, percent_z, connection, conn_type, 
-        y_shunt=y_shunt, returned_matrix=returned_matrix, flip_tbus_current_direction=flip_tbus_current_direction
+        V_primary, V_secondary, VA_rating, percent_z, connection, conn_type, y_shunt=y_shunt, 
+        returned_matrix=returned_matrix, flip_tbus_current_direction=flip_tbus_current_direction, XR_ratio=XR_ratio
     )
 
 
@@ -1232,12 +1236,13 @@ def _line_Y_matrix(length, cable_locs, gmr, resistance, f=F, zero_shunt=False, r
             T_inv = np.diag([-1, -1, -1, -1, 1, 1, 1, 1]) @ T_inv
         return T_inv
     elif returned_matrix == 'Y':
-        # Requires c to be nonsingular
-        assert not zero_shunt, "Shunt admittance must be nonzero in order to calculate Y matrix."
-        c_inv = inv(c)
-        Y = np.block([[-c_inv @ d, c_inv], [b - a @ c_inv @ d, a @ c_inv]])
-        if not flip_tbus_current_direction:
-            Y = np.diag([1, 1, 1, 1, -1, -1, -1, -1]) @ Y
+        Y_series = np.linalg.inv(Z)
+        Y = np.block([
+            [Y_series + 0.5*Y_shunt, -Y_series], 
+            [-Y_series, Y_series + 0.5*Y_shunt]
+        ])
+        if flip_tbus_current_direction:
+            Y = np.diag([1] * W + [-1] * W) @ Y
         return Y
     elif returned_matrix == "component Y":
         # Equation 6.3 / Figure 6.1 in Kersting.
@@ -1289,7 +1294,11 @@ def network_Y_matrix(edges, node_list, net_data):
         else:
             # All other edge types (zero or infinite impedance) are not supported.
             raise ValueError(f"Unknown element type: {edge['element_type']}")
-        component_Y = math_utils.matrix2block(component_Y, 4)[:,:,:3,:3]
+        if component_Y.shape == (8, 8):
+            component_Y = math_utils.matrix2block(component_Y, 4)[:,:,:3,:3]
+            # component_Y = math_utils.kron_reduction(component_Y, [3])
+        else:
+            component_Y = math_utils.matrix2block(component_Y, 3)
         edge['component_Y'] = math_utils.block2matrix(component_Y)
         # This is paper equation (6).
         Y[j,j] += component_Y[0, 0]
