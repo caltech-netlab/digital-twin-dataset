@@ -36,6 +36,10 @@ We provide the most granular data which models the circuit down to individual co
 
 The system model varies depending on your application. Examples include bus injection and branch flow models in the phasor domain, dynamic circuit model in the time domain, and transfer matrix models in the Laplace or z domains. See paper Section V for more detailed discussion.
 
+<p align="center">
+  <img src="assets/data_topology_w_meter.jpg" alt="Data Topology with Meter" width="600">
+</p>
+
 ## Quickstart & code examples
 ### Setup
 First, clone and `cd` into this repository.
@@ -142,7 +146,15 @@ In practice, it is rare that distribution system operators maintain an error-fre
 ## Citation
 BibTex:
 ```
-(Coming soon)  
+@misc{xie2025dataset,
+      title={A Digital Twin of an Electrical Distribution Grid: SoCal 28-Bus Dataset}, 
+      author={Yiheng Xie and Lucien Werner and Kaibo Chen and Thuy-Linh Le and Christine Ortega and Steven Low},
+      year={2025},
+      eprint={2504.06588},
+      archivePrefix={arXiv},
+      primaryClass={eess.SY},
+      url={https://arxiv.org/abs/2504.06588}, 
+}
 ```
 <!-- IEEE:
 ```
