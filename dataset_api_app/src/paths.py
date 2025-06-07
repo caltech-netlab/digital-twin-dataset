@@ -9,6 +9,9 @@ load_dotenv()
 DATASET_API_APP_DIR = Path(__file__).parent.parent.resolve()
 """Root path for the Dataset API App."""
 
+LOGS_DIR = DATASET_API_APP_DIR / "logs"
+"""Directory to write log files to."""
+
 REPLACEMENT_LOOKUP_FILE = DATASET_API_APP_DIR / "replacement_lookup.json"
 """Path to the file containing a mapping from real to anonymized element names."""
 

@@ -12,6 +12,7 @@ services:
       dockerfile: dataset_api_app/Dockerfile
     restart: unless-stopped
     volumes:
+      - ./logs:/digital-twin-dataset/dataset_api_app/logs
       - ./users.db:/digital-twin-dataset/dataset_api_app/users.db:ro
       - ./replacement_lookup.json:/digital-twin-dataset/dataset_api_app/replacement_lookup.json:ro
       - ${MAGNITUDES_DIR:?error}:/data/magnitudes:ro

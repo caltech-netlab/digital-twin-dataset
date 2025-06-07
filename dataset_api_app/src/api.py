@@ -1,5 +1,6 @@
 # Third-party imports
 import sys
+import time
 import pathlib
 from functools import wraps
 from dataclasses import asdict
@@ -7,12 +8,13 @@ from datetime import datetime
 from pydantic import ValidationError
 from http import HTTPStatus
 from werkzeug.exceptions import HTTPException
-from flask import Flask, abort, request
+from flask import Flask, Response, abort, stream_with_context, request, g
 from stream_zip import stream_zip
 
 # First-party imports
 file = pathlib.Path(__file__).resolve()
 sys.path.append(str(file.parents[0]))
+from logs import api_usage_logger
 from github import request_github_authenticated_user
 from users import User
 from data import DataRequest, generate_files
@@ -42,6 +44,8 @@ def get_authenticated_user() -> User:
         response = request_github_authenticated_user(authorization_header)
         if response.ok:
             user = User.get(response.json()["id"])
+            g.github_id = user.github_id
+            g.github_username = user.github_username
             if user is not None:
                 return user
     abort(HTTPStatus.UNAUTHORIZED)
@@ -61,6 +65,9 @@ def protected(route):
 @api.errorhandler(HTTPException)
 def handle_exception(exception: HTTPException):
     """Return HTTP exceptions as JSON."""
+    api_usage_logger.error(
+        f"{exception.code} {exception.name} - {exception.description}"
+    )
     return (
         {
             "code": exception.code,
@@ -84,6 +91,7 @@ def data():
     Stream a ZIP file containing the requested data. If the request body cannot be
     parsed as a ``DataRequest``, an ``HTTPException`` will be raised.
     """
+    g.request_started = time.perf_counter()
     if not request.is_json:
         raise request.on_json_loading_failed(e=None)
     try:
@@ -97,7 +105,27 @@ def data():
         )
     zip_root_dir = datetime.now().strftime("data_%Y-%m-%d_%H-%M-%S")
     files = generate_files(zip_root_dir, data_request)
-    return stream_zip(files), {
+
+    def stream_zip_and_log():
+        g.num_bytes = 0
+        try:
+            for chunk in stream_zip(files):
+                g.num_bytes += len(chunk)
+                yield chunk
+        except Exception as exc:
+            print("Error occurred")
+            api_usage_logger.error(f"{type(exc).__name__}: {exc}")
+        else:
+            print("Done")
+            api_usage_logger.info("done streaming")
+
+    response = Response(stream_with_context(stream_zip_and_log()), headers={
         "Content-Type": "application/zip",
         "Content-Disposition": f'filename="{zip_root_dir}.zip"',
-    }
+    })
+
+    # @response.call_on_close
+    # def on_close():
+    #     print(response.stream)
+
+    return response
