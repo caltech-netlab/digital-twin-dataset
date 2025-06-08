@@ -17,20 +17,9 @@ sys.path.append(str(file.parents[0]))
 from paths import LOGS_DIR
 from data import DataRequest
 
-os.makedirs(LOGS_DIR, exist_ok=True)
-
 API_USAGE_LOG_PATH = LOGS_DIR / "api_usage.log"
-
+os.makedirs(LOGS_DIR, exist_ok=True)
 api_usage_lock = FileLock(f"{API_USAGE_LOG_PATH}.lock")
-
-
-def format_bytes(num_bytes: int) -> str:
-    num = num_bytes
-    for unit in ("B", "kB", "MB", "GB"):
-        if num < 1000:
-            break
-        num /= 1024
-    return f"{num:,.2f} {unit}"
 
 
 class WatchedFileHandlerLocking(WatchedFileHandler):
