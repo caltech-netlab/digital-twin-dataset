@@ -49,7 +49,7 @@ class AddRequestInfoFilter(logging.Filter):
             if isinstance(data_request, DataRequest)
             else None
         )
-        _, exc, exc_traceback = sys.exc_info()
+        _, exc, tb = sys.exc_info()
         log_dict = {
             "level": record.levelname,
             "created": created,
@@ -60,9 +60,7 @@ class AddRequestInfoFilter(logging.Filter):
             "num_bytes": g.get("num_bytes"),
             "data_request": data_request_dict,
             "exception": None if exc is None else traceback.format_exception_only(exc),
-            "traceback": (
-                None if exc_traceback is None else traceback.format_tb(exc_traceback)
-            ),
+            "traceback": None if tb is None else traceback.format_tb(tb),
         }
         record.json_str = json.dumps(log_dict)
         return True
