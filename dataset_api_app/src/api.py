@@ -8,7 +8,7 @@ from datetime import datetime
 from pydantic import ValidationError
 from http import HTTPStatus
 from werkzeug.exceptions import HTTPException
-from flask import Flask, Response, abort, stream_with_context, request, g
+from flask import Flask, abort, stream_with_context, request, g
 from stream_zip import stream_zip
 
 # First-party imports
@@ -43,9 +43,12 @@ def get_authenticated_user() -> User:
     if authorization_header:
         response = request_github_authenticated_user(authorization_header)
         if response.ok:
-            user = User.get(response.json()["id"])
-            g.github_id = user.github_id
-            g.github_username = user.github_username
+            user_info = response.json()
+            github_id = user_info["id"]
+            github_username = user_info["login"]
+            g.github_id = github_id
+            g.github_username = github_username
+            user = User.get(github_id)
             if user is not None:
                 return user
     abort(HTTPStatus.UNAUTHORIZED)
@@ -65,9 +68,7 @@ def protected(route):
 @api.errorhandler(HTTPException)
 def handle_exception(exception: HTTPException):
     """Return HTTP exceptions as JSON."""
-    api_usage_logger.error(
-        f"{exception.code} {exception.name} - {exception.description}"
-    )
+    api_usage_logger.error("")
     return (
         {
             "code": exception.code,
@@ -96,6 +97,7 @@ def data():
         raise request.on_json_loading_failed(e=None)
     try:
         data_request = DataRequest.model_validate_json(request.data)
+        g.data_request = data_request
     except ValidationError as validation_error:
         abort(
             HTTPStatus.BAD_REQUEST,
@@ -107,25 +109,18 @@ def data():
     files = generate_files(zip_root_dir, data_request)
 
     def stream_zip_and_log():
-        g.num_bytes = 0
         try:
-            for chunk in stream_zip(files):
-                g.num_bytes += len(chunk)
-                yield chunk
-        except Exception as exc:
-            print("Error occurred")
-            api_usage_logger.error(f"{type(exc).__name__}: {exc}")
+            yield from stream_zip(files)
+        except BaseException as exc:
+            message = str(exc)
+            if not message and isinstance(exc, GeneratorExit):
+                message = "connection was interrupted"
+            api_usage_logger.error("")
+            raise exc
         else:
-            print("Done")
-            api_usage_logger.info("done streaming")
+            api_usage_logger.info("")
 
-    response = Response(stream_with_context(stream_zip_and_log()), headers={
+    return stream_with_context(stream_zip_and_log()), {
         "Content-Type": "application/zip",
         "Content-Disposition": f'filename="{zip_root_dir}.zip"',
-    })
-
-    # @response.call_on_close
-    # def on_close():
-    #     print(response.stream)
-
-    return response
+    }
