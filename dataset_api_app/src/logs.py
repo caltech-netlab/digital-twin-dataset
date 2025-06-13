@@ -7,7 +7,7 @@ import logging
 import json
 import traceback
 from logging.handlers import WatchedFileHandler
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from filelock import FileLock
 from flask import has_request_context, request, g
 
@@ -22,9 +22,21 @@ os.makedirs(LOGS_DIR, exist_ok=True)
 api_usage_lock = FileLock(f"{API_USAGE_LOG_PATH}.lock")
 
 
-class WatchedFileHandlerLocking(WatchedFileHandler):
+class CustomWatchedFileHandler(WatchedFileHandler):
+    """Watched file handler with locking and monthly log rotation."""
     def emit(self, record: logging.LogRecord) -> None:
         with api_usage_lock:
+            # If the record was created in a new month from when the log file was
+            # created, start a new log file.
+            record_created = datetime.fromtimestamp(record.created)
+            file_created = datetime.fromtimestamp(os.path.getctime(self.baseFilename))
+            record_created_tuple = (record_created.year, record_created.month)
+            file_created_tuple = (file_created.year, file_created.month)
+            if record_created_tuple > file_created_tuple:
+                os.rename(
+                    self.baseFilename,
+                    f"{self.baseFilename}.{file_created.strftime('%Y-%m')}",
+                )
             super().emit(record)
 
 
@@ -68,7 +80,7 @@ class AddRequestInfoFilter(logging.Filter):
 
 api_usage_formatter = logging.Formatter("%(json_str)s")
 
-api_usage_file_handler = WatchedFileHandlerLocking(API_USAGE_LOG_PATH)
+api_usage_file_handler = CustomWatchedFileHandler(API_USAGE_LOG_PATH)
 api_usage_file_handler.setLevel(logging.DEBUG)
 api_usage_file_handler.setFormatter(api_usage_formatter)
 api_usage_file_handler.addFilter(AddRequestInfoFilter())
