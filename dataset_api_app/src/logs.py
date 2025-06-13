@@ -7,7 +7,7 @@ import logging
 import json
 import traceback
 from logging.handlers import WatchedFileHandler
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 from filelock import FileLock
 from flask import has_request_context, request, g
 
