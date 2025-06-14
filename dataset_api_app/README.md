@@ -93,6 +93,16 @@ To see what images are running, run `docker ps`.
 Run `docker logs gunicorn` to view the Gunicorn server logs and run `docker logs nginx`
 to view the nginx logs.
 
+### API Usage Logs
+
+Each time a request is made, a line will be added to the file
+`dataset_api_app/logs/api_usage.log` logging information including username, the data
+being request, and any error that occurred. These logs can help spot potential abuse,
+high-demand users, or bugs.
+
+Logs are rotated monthly (although the rotation will only happen when the first log
+comes in during a new month). Months with no requests will not have a log file.
+
 ## Running in Development Mode
 
 To run the server in development mode, follow these steps, similar to those in
