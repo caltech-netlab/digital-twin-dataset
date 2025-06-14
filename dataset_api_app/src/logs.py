@@ -1,4 +1,5 @@
 # Third-party imports
+from typing import Literal
 import os
 import sys
 import time
@@ -21,22 +22,61 @@ API_USAGE_LOG_PATH = LOGS_DIR / "api_usage.log"
 os.makedirs(LOGS_DIR, exist_ok=True)
 api_usage_lock = FileLock(f"{API_USAGE_LOG_PATH}.lock")
 
+Interval = Literal["month", "day", "hour", "minute", "second"]
+
 
 class CustomWatchedFileHandler(WatchedFileHandler):
     """Watched file handler with locking and monthly log rotation."""
+
+    def __init__(
+        self,
+        filename: str | pathlib.Path,
+        interval: Interval = "month",
+    ) -> None:
+        self.interval: Interval = interval
+        # Setting delay to True avoids opening the file until a log is about to be
+        # created, which avoids creating and potentially rotating an empty log file.
+        super().__init__(filename, delay=True)
+
+    def _interval_start(self, timestamp: float) -> datetime:
+        dt = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+        if self.interval == "month":
+            return dt.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        if self.interval == "day":
+            return dt.replace(hour=0, minute=0, second=0, microsecond=0)
+        if self.interval == "hour":
+            return dt.replace(minute=0, second=0, microsecond=0)
+        if self.interval == "minute":
+            return dt.replace(second=0, microsecond=0)
+        return dt.replace(microsecond=0)
+
+    def _format_interval_start(self, interval_start: datetime) -> datetime:
+        if self.interval == "month":
+            return interval_start.strftime("%Y-%m")
+        if self.interval == "day":
+            return interval_start.strftime("%Y-%m-%d")
+        if self.interval == "hour":
+            return interval_start.strftime("%Y-%m-%d-%H")
+        if self.interval == "minute":
+            return interval_start.strftime("%Y-%m-%d-%H-%M")
+        return interval_start.strftime("%Y-%m-%d-%H-%M-%S")
+
+    def _rotate(self, record_created: float) -> None:
+        if not os.path.isfile(self.baseFilename):
+            return
+        # If the record was created in a new interval from when the log file was
+        # created, start a new log file.
+        record_interval_start = self._interval_start(record_created)
+        file_interval_start = self._interval_start(os.path.getctime(self.baseFilename))
+        if record_interval_start > file_interval_start:
+            os.rename(
+                self.baseFilename,
+                f"{self.baseFilename}.{self._format_interval_start(file_interval_start)}",
+            )
+
     def emit(self, record: logging.LogRecord) -> None:
         with api_usage_lock:
-            # If the record was created in a new month from when the log file was
-            # created, start a new log file.
-            record_created = datetime.fromtimestamp(record.created)
-            file_created = datetime.fromtimestamp(os.path.getctime(self.baseFilename))
-            record_created_tuple = (record_created.year, record_created.month)
-            file_created_tuple = (file_created.year, file_created.month)
-            if record_created_tuple > file_created_tuple:
-                os.rename(
-                    self.baseFilename,
-                    f"{self.baseFilename}.{file_created.strftime('%Y-%m')}",
-                )
+            self._rotate(record.created)
             super().emit(record)
 
 
@@ -45,7 +85,8 @@ class AddRequestInfoFilter(logging.Filter):
         if not has_request_context():
             return False
         created = (
-            datetime.fromtimestamp(round(record.created), tz=timezone.utc)
+            datetime.fromtimestamp(record.created, tz=timezone.utc)
+            .replace(microsecond=0)
             .isoformat()
             .replace("+00:00", "Z")
         )
@@ -80,7 +121,7 @@ class AddRequestInfoFilter(logging.Filter):
 
 api_usage_formatter = logging.Formatter("%(json_str)s")
 
-api_usage_file_handler = CustomWatchedFileHandler(API_USAGE_LOG_PATH)
+api_usage_file_handler = CustomWatchedFileHandler(API_USAGE_LOG_PATH, interval="month")
 api_usage_file_handler.setLevel(logging.DEBUG)
 api_usage_file_handler.setFormatter(api_usage_formatter)
 api_usage_file_handler.addFilter(AddRequestInfoFilter())
