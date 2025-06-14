@@ -44,11 +44,9 @@ def get_authenticated_user() -> User:
         response = request_github_authenticated_user(authorization_header)
         if response.ok:
             user_info = response.json()
-            github_id = user_info["id"]
-            github_username = user_info["login"]
-            g.github_id = github_id
-            g.github_username = github_username
-            user = User.get(github_id)
+            g.github_id = user_info["id"]  # Saved for use in logs
+            g.github_username = user_info["login"]  # Saved for use in logs
+            user = User.get(g.github_id)
             if user is not None:
                 return user
     abort(HTTPStatus.UNAUTHORIZED)
@@ -68,7 +66,7 @@ def protected(route):
 @api.errorhandler(HTTPException)
 def handle_exception(exception: HTTPException):
     """Return HTTP exceptions as JSON."""
-    api_usage_logger.error("")
+    api_usage_logger.error("")  # Message field not used in logs
     return (
         {
             "code": exception.code,
@@ -92,12 +90,12 @@ def data():
     Stream a ZIP file containing the requested data. If the request body cannot be
     parsed as a ``DataRequest``, an ``HTTPException`` will be raised.
     """
-    g.request_started = time.perf_counter()
+    g.request_started = time.perf_counter()  # Used in logs
     if not request.is_json:
         raise request.on_json_loading_failed(e=None)
     try:
         data_request = DataRequest.model_validate_json(request.data)
-        g.data_request = data_request
+        g.data_request = data_request  # Used in logs
     except ValidationError as validation_error:
         abort(
             HTTPStatus.BAD_REQUEST,
@@ -109,17 +107,19 @@ def data():
     files = generate_files(zip_root_dir, data_request)
 
     def stream_zip_and_log():
+        """Generate ZIP file bytes and log on completion or if any exception occurs."""
         try:
             yield from stream_zip(files)
         except BaseException as exc:
             message = str(exc)
             if not message and isinstance(exc, GeneratorExit):
                 message = "connection was interrupted"
-            api_usage_logger.error("")
+            api_usage_logger.error("")  # Message field not used in logs
             raise exc
         else:
-            api_usage_logger.info("")
+            api_usage_logger.info("")  # Message field not used in logs
 
+    # `stream_with_context` allows us to access Flask `request` and `g` in logs.
     return stream_with_context(stream_zip_and_log()), {
         "Content-Type": "application/zip",
         "Content-Disposition": f'filename="{zip_root_dir}.zip"',

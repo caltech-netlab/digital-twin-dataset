@@ -97,8 +97,14 @@ class DataRequest(BaseModel):
 
 
 def count_bytes_of_contents(contents: Iterable[bytes]) -> Iterator[bytes]:
+    """
+    Keep a running count of the number of bytes of the given file contents in Flask `g`
+    for use in logs.
+
+    :param contents: Contents as an iterable of bytes.
+    """
     for chunk in contents:
-        g.num_bytes = g.get("num_bytes", 0) + len(chunk)
+        g.num_bytes = g.get("num_bytes", 0) + len(chunk)  # Used in logs
         yield chunk
 
 
