@@ -1,5 +1,5 @@
 # Third-party imports
-from typing import Any
+from typing import Any, Literal
 from collections.abc import Iterator
 import sys
 import pathlib
@@ -40,7 +40,9 @@ def get_log_paths(
             latest_existing_date = current_date
             yield log_path
         current_date += 1
-    if latest_existing_date and latest_existing_date < end_date and base.exists():
+    if (
+        latest_existing_date is None or latest_existing_date < end_date
+    ) and base.exists():
         yield base
 
 
@@ -51,8 +53,16 @@ def print_log_warning(log_path: Path, line_number: int, message: str) -> None:
 def get_logs(
     base: Path, start: datetime, stop: datetime, interval: IntervalStr
 ) -> Iterator[dict[str, Any]]:
-    start = start.astimezone(timezone.utc)
-    stop = stop.astimezone(timezone.utc)
+    start = (
+        start.replace(tzinfo=timezone.utc)
+        if start.tzinfo is None
+        else start.astimezone(timezone.utc)
+    )
+    stop = (
+        stop.replace(tzinfo=timezone.utc)
+        if stop.tzinfo is None
+        else stop.astimezone(timezone.utc)
+    )
     start_naive_utc = start.replace(tzinfo=None)
     stop_naive_utc = stop.replace(tzinfo=None)
     for log_path in get_log_paths(base, start_naive_utc, stop_naive_utc, interval):
@@ -100,27 +110,57 @@ def get_logs(
                     yield log
 
 
-def get_usage_by_user(
+def get_usage(
     start: datetime,
     stop: datetime,
     interval: IntervalStr = "month",
 ) -> dict[str, Any]:
     logs = get_logs(API_USAGE_LOG_PATH, start, stop, interval)
+    usage = {
+        "total_requests": 0,
+        "successful_requests": 0,
+        "failed_requests": 0,
+        "duration": 0,
+        "num_bytes": 0,
+    }
+    for log in logs:
+        usage["total_requests"] += 1
+        usage["successful_requests"] += log.get("level") == "INFO"
+        usage["failed_requests"] += log.get("level") == "ERROR"
+        usage["duration"] += log.get("duration") or 0
+        usage["num_bytes"] += log.get("num_bytes") or 0
+    return usage
+
+
+def get_usage_by_user(
+    start: datetime,
+    stop: datetime,
+    interval: IntervalStr = "month",
+    num_top_users: int | None = None,
+    sort_by: Literal["total_requests", "duration", "num_bytes"] = "total_requests",
+) -> dict[str, Any]:
+    logs = get_logs(API_USAGE_LOG_PATH, start, stop, interval)
     usage_by_user: dict[int, Any] = {}
     for log in logs:
         github_id = log.get("github_id")
-        if not isinstance(github_id, int):
-            continue
         if github_id not in usage_by_user:
             usage_by_user[github_id] = {
                 "github_username": log.get("github_username"),
-                "requests": 1,
-                "duration": log.get("duration", 0),
-                "num_bytes": log.get("num_bytes", 0),
+                "total_requests": 0,
+                "successful_requests": 0,
+                "failed_requests": 0,
+                "duration": 0,
+                "num_bytes": 0,
             }
-        else:
-            usage = usage_by_user[github_id]
-            usage["requests"] += 1
-            usage["duration"] += log.get("duration", 0)
-            usage["num_bytes"] += log.get("num_bytes", 0)
-    return usage_by_user
+        usage = usage_by_user[github_id]
+        usage["total_requests"] += 1
+        usage["successful_requests"] += log.get("level") == "INFO"
+        usage["failed_requests"] += log.get("level") == "ERROR"
+        usage["duration"] += log.get("duration") or 0
+        usage["num_bytes"] += log.get("num_bytes") or 0
+    top_users = sorted(
+        usage_by_user.keys(),
+        key=lambda user: usage_by_user[user][sort_by],
+        reverse=True,
+    )
+    return {user: usage_by_user[user] for user in top_users[:num_top_users]}
