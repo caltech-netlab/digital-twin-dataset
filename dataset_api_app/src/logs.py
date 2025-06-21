@@ -26,6 +26,24 @@ api_usage_log_lock = FileLock(f"{API_USAGE_LOG_PATH}.lock")
 IntervalStr = Literal["month", "day", "hour", "minute", "second"]
 
 
+def format_datetime(dt: datetime, interval: IntervalStr) -> str:
+    """
+    Format the given datetime as a string to the resolution of the given interval.
+
+    :param dt: Datetime to format.
+    :param interval: Resolution to format to.
+    """
+    if interval == "month":
+        return dt.strftime("%Y-%m")
+    if interval == "day":
+        return dt.strftime("%Y-%m-%d")
+    if interval == "hour":
+        return dt.strftime("%Y-%m-%d-%H")
+    if interval == "minute":
+        return dt.strftime("%Y-%m-%d-%H-%M")
+    return dt.strftime("%Y-%m-%d-%H-%M-%S")
+
+
 class CustomFileHandler(WatchedFileHandler):
     """
     Custom file handler with locking and timed log rotation, for use across multiple
@@ -54,23 +72,6 @@ class CustomFileHandler(WatchedFileHandler):
             return dt.replace(second=0, microsecond=0)
         return dt.replace(microsecond=0)
 
-    def _format_interval_start(self, interval_start: datetime) -> datetime:
-        """
-        Format the given interval start time as a string for use in the rotated file
-        name.
-
-        :param interval_start: Start time of an interval.
-        """
-        if self.interval == "month":
-            return interval_start.strftime("%Y-%m")
-        if self.interval == "day":
-            return interval_start.strftime("%Y-%m-%d")
-        if self.interval == "hour":
-            return interval_start.strftime("%Y-%m-%d-%H")
-        if self.interval == "minute":
-            return interval_start.strftime("%Y-%m-%d-%H-%M")
-        return interval_start.strftime("%Y-%m-%d-%H-%M-%S")
-
     def _rotate(self, record_created: float) -> None:
         """
         Rotate the current log file if needed via renaming. Note that a new log file
@@ -87,7 +88,7 @@ class CustomFileHandler(WatchedFileHandler):
         if record_interval_start > file_interval_start:
             os.rename(
                 self.baseFilename,
-                f"{self.baseFilename}.{self._format_interval_start(file_interval_start)}",
+                f"{self.baseFilename}.{format_datetime(file_interval_start, self.interval)}",
             )
 
     def emit(self, record: logging.LogRecord) -> None:
@@ -125,7 +126,7 @@ class ApiUsageFilter(logging.Filter):
         )
         request_started = g.get("request_started")
         duration = (
-            round(time.perf_counter() - request_started, 2)
+            time.perf_counter() - request_started
             if isinstance(request_started, float)
             else None
         )
