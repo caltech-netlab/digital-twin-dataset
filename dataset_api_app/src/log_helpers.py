@@ -130,7 +130,7 @@ def get_api_usage_logs(
 
 def get_usage(
     start: datetime,
-    stop: datetime,
+    end: datetime,
     interval: IntervalStr = "month",
 ) -> dict[str, Any]:
     """
@@ -149,7 +149,7 @@ def get_usage(
     :param end: End date to return logs to.
     :param interval: Interval logs were rotated at. Defaults to ``"month"``.
     """
-    logs = get_api_usage_logs(start, stop, interval)
+    logs = get_api_usage_logs(start, end, interval)
     usage = {
         "total_requests": 0,
         "successful_requests": 0,
@@ -168,7 +168,7 @@ def get_usage(
 
 def get_usage_by_user(
     start: datetime,
-    stop: datetime,
+    end: datetime,
     interval: IntervalStr = "month",
     num_top_users: int | None = None,
     sort_by: Literal["total_requests", "duration", "num_bytes"] = "total_requests",
@@ -194,7 +194,7 @@ def get_usage_by_user(
     :param num_top_users: If given, only this may top users will be included.
     :param sort_by: Field to sort users by, defaulting to ``"total_requests"``.
     """
-    logs = get_api_usage_logs(start, stop, interval)
+    logs = get_api_usage_logs(start, end, interval)
     usage_by_user: dict[int, Any] = {}
     for log in logs:
         if log.github_id not in usage_by_user:
@@ -222,7 +222,7 @@ def get_usage_by_user(
 
 def get_top_meters(
     start: datetime,
-    stop: datetime,
+    end: datetime,
     interval: IntervalStr = "month",
     num_top_elements: int | None = None,
 ) -> dict[str, dict[str, int]]:
@@ -243,7 +243,7 @@ def get_top_meters(
     :param num_top_elements: If given, only this may top elements will be included for
         each type of data.
     """
-    logs = get_api_usage_logs(start, stop, interval)
+    logs = get_api_usage_logs(start, end, interval)
     magnitudes_counter = Counter()
     waveforms_counter = Counter()
     phasors_counter = Counter()
