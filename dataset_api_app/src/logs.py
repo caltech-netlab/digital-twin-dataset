@@ -5,11 +5,11 @@ import sys
 import time
 import pathlib
 import logging
-import json
 import traceback
 from logging.handlers import WatchedFileHandler
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from filelock import FileLock
+from pydantic import BaseModel, ByteSize
 from flask import has_request_context, request, g
 
 # First-party imports
@@ -24,24 +24,56 @@ api_usage_log_lock = FileLock(f"{API_USAGE_LOG_PATH}.lock")
 """Lock for the API usage log file."""
 
 IntervalStr = Literal["month", "day", "hour", "minute", "second"]
+"""Type hint for interval string."""
+
+INTERVAL_FORMAT_STR: dict[IntervalStr, str] = {
+    "month": "%Y-%m",
+    "day": "%Y-%m-%d",
+    "hour": "%Y-%m-%d-%H",
+    "minute": "%Y-%m-%d-%H-%M",
+    "second": "%Y-%m-%d-%H-%M-%S",
+}
+"""Dictionary mapping interval strings to date format strings."""
 
 
-def format_datetime(dt: datetime, interval: IntervalStr) -> str:
+class APIUsageLog(BaseModel):
+    """Log corresponding to an API request."""
+
+    level: Literal["INFO", "ERROR"]
+    """Level of the log (e.g. `"INFO"` for success or `"ERROR"` for failure)."""
+
+    created: datetime
+    """When the log was created."""
+
+    path: str
+    """API path of the request (e.g. ``"/data"``)."""
+
+    github_username: str | None
+    """GitHub username of the user, or ``None`` if unauthenticated."""
+
+    github_id: int | None
+    """GitHub ID number of the user, or ``None`` if unauthenticated."""
+
+    duration: timedelta | None
     """
-    Format the given datetime as a string to the resolution of the given interval.
-
-    :param dt: Datetime to format.
-    :param interval: Resolution to format to.
+    Duration of the request, or ``None`` if an error occurred before duration started
+    being tracked.
     """
-    if interval == "month":
-        return dt.strftime("%Y-%m")
-    if interval == "day":
-        return dt.strftime("%Y-%m-%d")
-    if interval == "hour":
-        return dt.strftime("%Y-%m-%d-%H")
-    if interval == "minute":
-        return dt.strftime("%Y-%m-%d-%H-%M")
-    return dt.strftime("%Y-%m-%d-%H-%M-%S")
+
+    num_bytes: ByteSize | None
+    """
+    Number of bytes of data returned, or ``None`` if an error occurred before the number
+    of bytes started being tracked.
+    """
+
+    data_request: DataRequest | None
+    """Data requested, or ``None`` if the request was invalid."""
+
+    exception: list[str] | None
+    """Exception that occurred, if any."""
+
+    traceback: list[str] | None
+    """Traceback for the exception, if any."""
 
 
 class CustomFileHandler(WatchedFileHandler):
@@ -86,10 +118,8 @@ class CustomFileHandler(WatchedFileHandler):
         record_interval_start = self._interval_start(record_created)
         file_interval_start = self._interval_start(os.path.getctime(self.baseFilename))
         if record_interval_start > file_interval_start:
-            os.rename(
-                self.baseFilename,
-                f"{self.baseFilename}.{format_datetime(file_interval_start, self.interval)}",
-            )
+            date_str = file_interval_start.strftime(INTERVAL_FORMAT_STR[self.interval])
+            os.rename(self.baseFilename, f"{self.baseFilename}.{date_str}")
 
     def emit(self, record: logging.LogRecord) -> None:
         """
@@ -118,38 +148,26 @@ class ApiUsageFilter(logging.Filter):
         """
         if not has_request_context():
             return False
-        created = (
-            datetime.fromtimestamp(record.created, tz=timezone.utc)
-            .replace(microsecond=0)
-            .isoformat()
-            .replace("+00:00", "Z")
-        )
         request_started = g.get("request_started")
-        duration = (
+        duration_seconds = (
             time.perf_counter() - request_started
             if isinstance(request_started, float)
             else None
         )
-        data_request = g.get("data_request")
-        data_request_dict = (
-            data_request.model_dump(mode="json")
-            if isinstance(data_request, DataRequest)
-            else None
-        )
         _, exc, tb = sys.exc_info()
-        log_dict = {
-            "level": record.levelname,
-            "created": created,
-            "path": request.path,
-            "github_username": g.get("github_username"),
-            "github_id": g.get("github_id"),
-            "duration": duration,
-            "num_bytes": g.get("num_bytes"),
-            "data_request": data_request_dict,
-            "exception": None if exc is None else traceback.format_exception_only(exc),
-            "traceback": None if tb is None else traceback.format_tb(tb),
-        }
-        record.json_str = json.dumps(log_dict)
+        api_usage_log = APIUsageLog(
+            level=record.levelname,
+            created=record.created,
+            path=request.path,
+            github_username=g.get("github_username"),
+            github_id=g.get("github_id"),
+            duration=duration_seconds,
+            num_bytes=g.get("num_bytes"),
+            data_request=g.get("data_request"),
+            exception=None if exc is None else traceback.format_exception_only(exc),
+            traceback=None if tb is None else traceback.format_tb(tb),
+        )
+        record.json_str = api_usage_log.model_dump_json()
         return True
 
 
