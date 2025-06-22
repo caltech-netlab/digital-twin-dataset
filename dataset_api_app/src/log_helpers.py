@@ -45,6 +45,10 @@ def get_log_paths(
     :param end: End date for log paths.
     :param interval: Interval logs were rotated at.
     """
+    # Note that this function currently checks every possible date at the specified
+    # interval between the start and end dates. If a large date range or small interval
+    # is given, this can take a while. This could be made more efficient by listing the
+    # files that exist and only considering dates from those existing file paths.
     unit = NP_UNIT[interval]
     start_date = np.datetime64(start, unit)
     end_date = np.datetime64(end, unit)
