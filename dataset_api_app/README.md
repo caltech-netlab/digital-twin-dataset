@@ -103,6 +103,10 @@ high-demand users, or bugs.
 Logs are rotated monthly (although the rotation will only happen when the first log
 comes in during a new month). Months with no requests will not have a log file.
 
+There are also some helper functions defined in
+[`dataset_api_app/src/log_helpers.py`](src/log_helpers.py) to help with analyzing the
+logs. See file and corresponding docstrings for more details.
+
 ## Running in Development Mode
 
 To run the server in development mode, follow these steps, similar to those in
