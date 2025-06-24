@@ -10,17 +10,18 @@ This directory defines the API app that runs on the server.
    accessible ports 80 (for HTTP) and 443 (for HTTPS).
 
 3. Obtain one or more domain names pointing to the server's IP address, and update the
-   two `server_name` directives in [nginx.prod.conf](nginx.prod.conf) (one for port 80
+   two `server_name` directives in [`nginx.prod.conf`](nginx.prod.conf) (one for port 80
    and the other for port 443).
 
 4. Obtain a TLS/SSL certificate and place the certificate and key files a subdirectory
    of this directory called `certs`. Make sure the file names match the `ssl_certificate`
-   and `ssl_certificate_key` directives in [nginx.prod.conf](nginx.prod.conf), or update
-   the directives accordingly.
+   and `ssl_certificate_key` directives in [`nginx.prod.conf`](nginx.prod.conf), or
+   update the directives accordingly.
 
 5. If the private key file requires a password (set when creating the initial CSR), add
    that password to a file. Make sure the file name matches the `ssl_password_file`
-   directive in [nginx.prod.conf](nginx.prod.conf), or update the directives accordingly.
+   directive in [`nginx.prod.conf`](nginx.prod.conf), or update the directives
+   accordingly.
 
 6. Create a file in this directory called `replacement_lookup.json`, containing a
    dictionary from real network element names to anonymized ones. This will be used by
