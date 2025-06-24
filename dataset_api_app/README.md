@@ -106,7 +106,15 @@ comes in during a new month). Months with no requests will not have a log file.
 
 There are also some helper functions defined in
 [`dataset_api_app/src/log_helpers.py`](src/log_helpers.py) to help with analyzing the
-logs. See file and corresponding docstrings for more details.
+logs. See file and corresponding docstrings for more details. For example, the following
+can print the API usage by user between June and December of 2025:
+
+```python
+from datetime import datetime
+from src.log_helpers import get_usage_by_user
+
+print(get_usage_by_user(start=datetime(2025, 6, 1), end=datetime(2025, 12, 31)))
+```
 
 ## Running in Development Mode
 
