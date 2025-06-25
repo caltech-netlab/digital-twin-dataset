@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 import pyarrow.csv as csv
 import pyarrow.parquet as pq
-from pydantic import BaseModel, AfterValidator, Field
+from pydantic import BaseModel, AfterValidator, ByteSize, Field
 from stream_zip import MemberFile, ZIP_64
 from flask import g
 
@@ -41,6 +41,24 @@ Corresponds to a regular file (``S_IFREG``) with owner read (``S_IRUSR``) and wr
 
 WAVEFORM_DATE_FORMAT = "%Y-%m-%dT%H-%M-%S.%f"
 """Expected format of the date in waveform file names."""
+
+MAGNITUDES_DEFAULT_RESOLUTION = timedelta(seconds=1)
+"""Default resolution for magnitude data."""
+
+PHASORS_DEFAULT_RESOLUTION = timedelta(seconds=10)
+"""Default resolution for phasor data."""
+
+WAVEFORMS_DEFAULT_RESOLUTION = timedelta(seconds=10)
+"""Default resolution for waveform data."""
+
+MAGNITUDES_BYTES_PER_POINT = 34
+"""Estimated number of bytes per magnitude data point."""
+
+PHASORS_BYTES_PER_POINT = 192
+"""Estimated number of bytes per phasor data point."""
+
+WAVEFORMS_BYTES_PER_POINT = 31100
+"""Estimated number of bytes per phasor data point."""
 
 
 def validate_resolution(resolution: timedelta) -> timedelta:
@@ -94,6 +112,26 @@ class DataRequest(BaseModel):
 
     resolution: Annotated[timedelta, AfterValidator(validate_resolution)] | None = None
     """Interval to sample data by."""
+
+    @property
+    def estimated_bytes(self) -> ByteSize:
+        """
+        Estimate the size of the response for this request in bytes. This is done using
+        hardcoded estimates for the bytes per magnitude, phasor, and waveform data point.
+
+        Note that the true response size may be smaller due to missing data points or
+        slightly larger due to inaccuracy in the bytes per point estimates.
+        """
+        time_span = max(self.time_range[1] - self.time_range[0], timedelta(0))
+        resolution = self.resolution or timedelta(0)
+        magnitudes_points = time_span / max(resolution, MAGNITUDES_DEFAULT_RESOLUTION)
+        phasors_points = time_span / max(resolution, PHASORS_DEFAULT_RESOLUTION)
+        waveforms_points = time_span / max(resolution, WAVEFORMS_DEFAULT_RESOLUTION)
+        return ByteSize(
+            magnitudes_points * MAGNITUDES_BYTES_PER_POINT
+            + phasors_points * PHASORS_BYTES_PER_POINT
+            + waveforms_points * WAVEFORMS_BYTES_PER_POINT
+        )
 
 
 def count_bytes_of_contents(contents: Iterable[bytes]) -> Iterator[bytes]:
