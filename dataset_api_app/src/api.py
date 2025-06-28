@@ -5,7 +5,7 @@ import pathlib
 from functools import wraps
 from dataclasses import asdict
 from datetime import datetime
-from pydantic import ValidationError
+from pydantic import ValidationError, ByteSize
 from http import HTTPStatus
 from werkzeug.exceptions import HTTPException
 from flask import Flask, abort, stream_with_context, request, g
@@ -18,6 +18,9 @@ from logs import api_usage_logger
 from github import request_github_authenticated_user
 from users import User
 from data import DataRequest, generate_files
+
+MAX_REQUESTED_DATA_BYTES = ByteSize(1024**3)  # 1 GiB
+"""Maximum amount of bytes of data that are allowed to be requested."""
 
 api = Flask(__name__)
 """
@@ -101,6 +104,19 @@ def data():
             HTTPStatus.BAD_REQUEST,
             description=validation_error.errors(
                 include_url=False, include_context=False, include_input=False
+            ),
+        )
+    requested_data_bytes = data_request.estimated_bytes
+    if requested_data_bytes > MAX_REQUESTED_DATA_BYTES:
+        abort(
+            HTTPStatus.BAD_REQUEST,
+            description=(
+                "Requested data is estimated to be"
+                f" {requested_data_bytes.human_readable(separator=' ')}, which is larger"
+                " than the maximum allowed size of"
+                f" {MAX_REQUESTED_DATA_BYTES.human_readable(separator=' ')}. Please"
+                " break into multiple requests, or use a smaller time range, larger"
+                " resolution, or fewer elements."
             ),
         )
     zip_root_dir = datetime.now().strftime("data_%Y-%m-%d_%H-%M-%S")
