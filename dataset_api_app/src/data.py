@@ -124,9 +124,21 @@ class DataRequest(BaseModel):
         """
         time_span = max(self.time_range[1] - self.time_range[0], timedelta(0))
         resolution = self.resolution or timedelta(0)
-        magnitudes_points = time_span / max(resolution, MAGNITUDES_DEFAULT_RESOLUTION)
-        phasors_points = time_span / max(resolution, PHASORS_DEFAULT_RESOLUTION)
-        waveforms_points = time_span / max(resolution, WAVEFORMS_DEFAULT_RESOLUTION)
+        magnitudes_points = (
+            time_span
+            / max(resolution, MAGNITUDES_DEFAULT_RESOLUTION)
+            * len(self.magnitudes_for)
+        )
+        phasors_points = (
+            time_span
+            / max(resolution, PHASORS_DEFAULT_RESOLUTION)
+            * len(self.phasors_for)
+        )
+        waveforms_points = (
+            time_span
+            / max(resolution, WAVEFORMS_DEFAULT_RESOLUTION)
+            * len(self.waveforms_for)
+        )
         return ByteSize(
             magnitudes_points * MAGNITUDES_BYTES_PER_POINT
             + phasors_points * PHASORS_BYTES_PER_POINT
