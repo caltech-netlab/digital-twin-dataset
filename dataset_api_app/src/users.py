@@ -4,7 +4,7 @@ from __future__ import annotations
 import sys
 import pathlib
 from datetime import datetime, timedelta, timezone
-from sqlalchemy import create_engine, select, update, delete, and_, func
+from sqlalchemy import create_engine, select, update, delete, func
 from sqlalchemy.dialects.sqlite import insert
 from sqlalchemy.orm import (
     DeclarativeBase,
@@ -185,12 +185,10 @@ class RateLimit(Base):
             session.execute(
                 update(RateLimit)
                 .where(
-                    and_(
-                        RateLimit.key == key,
-                        RateLimit.github_id == github_id,
-                        SQLITE_UNIXEPOCH
-                        > RateLimit.interval_start + interval_length.total_seconds(),
-                    )
+                    RateLimit.key == key,
+                    RateLimit.github_id == github_id,
+                    SQLITE_UNIXEPOCH
+                    > RateLimit.interval_start + interval_length.total_seconds(),
                 )
                 .values(interval_start=SQLITE_UNIXEPOCH, interval_requests=0)
             )
