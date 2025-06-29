@@ -3,8 +3,9 @@ from __future__ import annotations
 # Third-party imports
 import sys
 import pathlib
-from datetime import datetime, timezone
-from sqlalchemy import create_engine, select, delete
+from datetime import datetime, timedelta, timezone
+from sqlalchemy import create_engine, select, update, delete, and_, func
+from sqlalchemy.dialects.sqlite import insert
 from sqlalchemy.orm import (
     DeclarativeBase,
     MappedAsDataclass,
@@ -23,6 +24,9 @@ from github import request_github_user
 # Create SQLAlchemy engine and session objects
 engine = create_engine(f"sqlite:///{USERS_DB_PATH}")
 Session = sessionmaker(engine, expire_on_commit=False)
+
+SQLITE_UNIXEPOCH = func.unixepoch("now", "subsec")
+"""SQLite ``unixepoch('now', 'subsec')`` function, for use in rate limiting."""
 
 
 class Base(DeclarativeBase, MappedAsDataclass):
@@ -143,6 +147,64 @@ class User(Base):
             print(
                 f"{user.name} ({user.github_username}): https://api.github.com/user/{user.github_id}"
             )
+
+
+class RateLimit(Base):
+    __tablename__ = "rate_limit"
+
+    key: Mapped[str] = mapped_column(primary_key=True)
+    github_id: Mapped[int] = mapped_column(primary_key=True)
+    interval_start: Mapped[float] = mapped_column(server_default=SQLITE_UNIXEPOCH)
+    interval_requests: Mapped[int] = mapped_column(default=0)
+
+    @staticmethod
+    def update_and_check(
+        key: str, github_id: int, interval_length: timedelta, requests_per_interval: int
+    ) -> bool:
+        """
+        Update the rate limit corresponding to the given key and user, and check if the
+        limit has been reached.
+
+        :param key: Key corresponding to a particular rate limit.
+        :param github_id: GitHub ID of the user making the request.
+        :param interval_length: Length of the interval for the rate limit in question.
+        :param requests_per_interval: Number of requests per interval allowed for the
+            rate limit in question.
+        """
+        with Session.begin() as session:
+            # Create a new `RateLimit` entry if one does not already exist for the
+            # current key and GitHub ID.
+            session.execute(
+                insert(RateLimit)
+                .values(key=key, github_id=github_id)
+                .on_conflict_do_nothing()
+            )
+
+            # Reset the `RateLimit` entry if the `interval_length` has passed. We do
+            # this in a single UPDATE command to avoid race conditions.
+            session.execute(
+                update(RateLimit)
+                .where(
+                    and_(
+                        RateLimit.key == key,
+                        RateLimit.github_id == github_id,
+                        SQLITE_UNIXEPOCH
+                        > RateLimit.interval_start + interval_length.total_seconds(),
+                    )
+                )
+                .values(interval_start=SQLITE_UNIXEPOCH, interval_requests=0)
+            )
+
+            # Increment and return the number of requests. We do this in a single UPDATE
+            # command to avoid race conditions.
+            interval_requests = session.scalar(
+                update(RateLimit)
+                .where(RateLimit.key == key, RateLimit.github_id == github_id)
+                .values(interval_requests=RateLimit.interval_requests + 1)
+                .returning(RateLimit.interval_requests)
+            )
+
+            return interval_requests > requests_per_interval
 
 
 # Create all tables if they do not already exist

@@ -4,7 +4,7 @@ import time
 import pathlib
 from functools import wraps
 from dataclasses import asdict
-from datetime import datetime
+from datetime import datetime, timedelta
 from pydantic import ValidationError, ByteSize
 from http import HTTPStatus
 from werkzeug.exceptions import HTTPException
@@ -16,7 +16,7 @@ file = pathlib.Path(__file__).resolve()
 sys.path.append(str(file.parents[0]))
 from logs import api_usage_logger
 from github import request_github_authenticated_user
-from users import User
+from users import User, RateLimit
 from data import DataRequest, generate_files
 
 MAX_REQUESTED_DATA_BYTES = ByteSize(1024**3)  # 1 GiB
@@ -47,7 +47,7 @@ def get_authenticated_user() -> User:
         response = request_github_authenticated_user(authorization_header)
         if response.ok:
             user_info = response.json()
-            g.github_id = user_info["id"]  # Saved for use in logs
+            g.github_id = user_info["id"]  # Saved for use in logs and rate limiting
             g.github_username = user_info["login"]  # Saved for use in logs
             user = User.get(g.github_id)
             if user is not None:
@@ -64,6 +64,44 @@ def protected(route):
         return route(*args, **kwargs)
 
     return wrapper
+
+
+def rate_limited(key: str, interval_length: timedelta, requests_per_interval: int):
+    """
+    Decorator that marks a rate-limited route.
+
+    :param key: Rate limits are tracked per user, per key string.
+    :param interval_length: Length of the interval for the rate limit in question.
+    :param requests_per_interval: Number of requests per interval allowed for the rate
+        limit in question.
+    """
+
+    def decorator(route):
+        @wraps(route)
+        def wrapper(*args, **kwargs):
+            rate_limit_reached = RateLimit.update_and_check(
+                key=key,
+                github_id=g.github_id,
+                interval_length=interval_length,
+                requests_per_interval=requests_per_interval,
+            )
+            if rate_limit_reached:
+                if interval_length == timedelta(minutes=1):
+                    interval_str = "minute"
+                elif interval_length == timedelta(hours=1):
+                    interval_str = "hour"
+                else:
+                    interval_str = f"{interval_length.total_seconds()} seconds"
+                abort(
+                    HTTPStatus.TOO_MANY_REQUESTS,
+                    description=f"Limit of {requests_per_interval} requests per"
+                    f" {interval_str} was exceeded.",
+                )
+            return route(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
 
 
 @api.errorhandler(HTTPException)
@@ -88,6 +126,12 @@ def user():
 
 @api.post("/data")
 @protected
+@rate_limited(
+    "data_long", interval_length=timedelta(hours=1), requests_per_interval=1000
+)
+@rate_limited(
+    "data_short", interval_length=timedelta(minutes=1), requests_per_interval=100
+)
 def data():
     """
     Stream a ZIP file containing the requested data. If the request body cannot be
