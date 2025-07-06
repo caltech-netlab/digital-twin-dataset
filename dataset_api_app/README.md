@@ -89,6 +89,20 @@ To confirm which users are authorized, run the following:
 venv/bin/python -c "from src.users import User; User.print_all()"
 ```
 
+## Request Limits
+
+### Size Limit
+
+For each request to the `/data` API route, we estimate the size of the data being
+requested, and refuse to return data if the estimated size is greater than 1 GiB. This
+size estimate depends on estimates for the number of bytes for each magnitude, phasor,
+and waveform data point, which are set in [`src/data.py`](src/data.py). These constants
+can be adjusted to refine the size estimate.
+
+The estimate is calculated by `DataRequest.estimated_bytes`, which can also be used to
+get the estimate from the `data_request` key of rehydrated API usage logs (see
+[API Usage Logs](#api-usage-logs) below for more information).
+
 ### Rate Limits
 
 Rate limits are tracked and enforced for each user. Currently, the `/data` API route has
