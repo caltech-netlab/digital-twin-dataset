@@ -1,4 +1,4 @@
-FROM python:3.13-slim
+FROM python:3.13
 
 # Change into a new directory /digital-twin-dataset
 WORKDIR /digital-twin-dataset

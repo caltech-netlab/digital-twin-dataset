@@ -10,17 +10,18 @@ This directory defines the API app that runs on the server.
    accessible ports 80 (for HTTP) and 443 (for HTTPS).
 
 3. Obtain one or more domain names pointing to the server's IP address, and update the
-   two `server_name` directives in [nginx.prod.conf](nginx.prod.conf) (one for port 80
+   two `server_name` directives in [`nginx.prod.conf`](nginx.prod.conf) (one for port 80
    and the other for port 443).
 
 4. Obtain a TLS/SSL certificate and place the certificate and key files a subdirectory
    of this directory called `certs`. Make sure the file names match the `ssl_certificate`
-   and `ssl_certificate_key` directives in [nginx.prod.conf](nginx.prod.conf), or update
-   the directives accordingly.
+   and `ssl_certificate_key` directives in [`nginx.prod.conf`](nginx.prod.conf), or
+   update the directives accordingly.
 
 5. If the private key file requires a password (set when creating the initial CSR), add
    that password to a file. Make sure the file name matches the `ssl_password_file`
-   directive in [nginx.prod.conf](nginx.prod.conf), or update the directives accordingly.
+   directive in [`nginx.prod.conf`](nginx.prod.conf), or update the directives
+   accordingly.
 
 6. Create a file in this directory called `replacement_lookup.json`, containing a
    dictionary from real network element names to anonymized ones. This will be used by
@@ -92,6 +93,28 @@ To see what images are running, run `docker ps`.
 
 Run `docker logs gunicorn` to view the Gunicorn server logs and run `docker logs nginx`
 to view the nginx logs.
+
+### API Usage Logs
+
+Each time a request is made, a line will be added to the file
+`dataset_api_app/logs/api_usage.log` logging information including username, the data
+being request, and any error that occurred. These logs can help spot potential abuse,
+high-demand users, or bugs.
+
+Logs are rotated monthly (although the rotation will only happen when the first log
+comes in during a new month). Months with no requests will not have a log file.
+
+There are also some helper functions defined in
+[`dataset_api_app/src/log_helpers.py`](src/log_helpers.py) to help with analyzing the
+logs. See file and corresponding docstrings for more details. For example, the following
+can print the API usage by user between June and December of 2025:
+
+```python
+from datetime import datetime
+from src.log_helpers import get_usage_by_user
+
+print(get_usage_by_user(start=datetime(2025, 6, 1), end=datetime(2025, 12, 31)))
+```
 
 ## Running in Development Mode
 

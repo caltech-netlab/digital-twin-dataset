@@ -1,5 +1,6 @@
 # Third-party imports
 import sys
+import time
 import pathlib
 from functools import wraps
 from dataclasses import asdict
@@ -7,12 +8,13 @@ from datetime import datetime
 from pydantic import ValidationError
 from http import HTTPStatus
 from werkzeug.exceptions import HTTPException
-from flask import Flask, abort, request
+from flask import Flask, abort, stream_with_context, request, g
 from stream_zip import stream_zip
 
 # First-party imports
 file = pathlib.Path(__file__).resolve()
 sys.path.append(str(file.parents[0]))
+from logs import api_usage_logger
 from github import request_github_authenticated_user
 from users import User
 from data import DataRequest, generate_files
@@ -41,7 +43,10 @@ def get_authenticated_user() -> User:
     if authorization_header:
         response = request_github_authenticated_user(authorization_header)
         if response.ok:
-            user = User.get(response.json()["id"])
+            user_info = response.json()
+            g.github_id = user_info["id"]  # Saved for use in logs
+            g.github_username = user_info["login"]  # Saved for use in logs
+            user = User.get(g.github_id)
             if user is not None:
                 return user
     abort(HTTPStatus.UNAUTHORIZED)
@@ -61,6 +66,7 @@ def protected(route):
 @api.errorhandler(HTTPException)
 def handle_exception(exception: HTTPException):
     """Return HTTP exceptions as JSON."""
+    api_usage_logger.error("")  # Message field not used in logs
     return (
         {
             "code": exception.code,
@@ -84,10 +90,12 @@ def data():
     Stream a ZIP file containing the requested data. If the request body cannot be
     parsed as a ``DataRequest``, an ``HTTPException`` will be raised.
     """
+    g.request_started = time.perf_counter()  # Used in logs
     if not request.is_json:
         raise request.on_json_loading_failed(e=None)
     try:
         data_request = DataRequest.model_validate_json(request.data)
+        g.data_request = data_request  # Used in logs
     except ValidationError as validation_error:
         abort(
             HTTPStatus.BAD_REQUEST,
@@ -97,7 +105,22 @@ def data():
         )
     zip_root_dir = datetime.now().strftime("data_%Y-%m-%d_%H-%M-%S")
     files = generate_files(zip_root_dir, data_request)
-    return stream_zip(files), {
+
+    def stream_zip_and_log():
+        """Generate ZIP file bytes and log on completion or if any exception occurs."""
+        try:
+            yield from stream_zip(files)
+        except BaseException as exc:
+            message = str(exc)
+            if not message and isinstance(exc, GeneratorExit):
+                message = "connection was interrupted"
+            api_usage_logger.error("")  # Message field not used in logs
+            raise exc
+        else:
+            api_usage_logger.info("")  # Message field not used in logs
+
+    # `stream_with_context` allows us to access Flask `request` and `g` in logs.
+    return stream_with_context(stream_zip_and_log()), {
         "Content-Type": "application/zip",
         "Content-Disposition": f'filename="{zip_root_dir}.zip"',
     }

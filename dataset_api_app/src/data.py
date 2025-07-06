@@ -14,6 +14,7 @@ import pyarrow.csv as csv
 import pyarrow.parquet as pq
 from pydantic import BaseModel, AfterValidator, Field
 from stream_zip import MemberFile, ZIP_64
+from flask import g
 
 # First-party imports
 file = pathlib.Path(__file__).resolve()
@@ -95,6 +96,18 @@ class DataRequest(BaseModel):
     """Interval to sample data by."""
 
 
+def count_bytes_of_contents(contents: Iterable[bytes]) -> Iterator[bytes]:
+    """
+    Keep a running count of the number of bytes of the given file contents in Flask `g`
+    for use in logs.
+
+    :param contents: Contents as an iterable of bytes.
+    """
+    for chunk in contents:
+        g.num_bytes = g.get("num_bytes", 0) + len(chunk)  # Used in logs
+        yield chunk
+
+
 def make_member_file(path: str, contents: Iterable[bytes]) -> MemberFile:
     """
     Create a ``MemberFile`` tuple to pass to ``stream_zip()``.
@@ -102,7 +115,7 @@ def make_member_file(path: str, contents: Iterable[bytes]) -> MemberFile:
     :param path: File path within the ZIP.
     :param contents: Contents of the file as an iterable of bytes.
     """
-    return (path, datetime.now(), FILE_MODE, ZIP_64, contents)
+    return (path, datetime.now(), FILE_MODE, ZIP_64, count_bytes_of_contents(contents))
 
 
 def get_date_paths(
