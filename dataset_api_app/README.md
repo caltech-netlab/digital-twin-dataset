@@ -59,7 +59,15 @@ This directory defines the API app that runs on the server.
 12. Visit your domain in the browser. You should see a page called "Digital Twin Dataset
     API".
 
-## Adding and Removing Users
+## Users Database
+
+Users are stored in a [SQLite](https://www.sqlite.org) database called `users.db`, which
+will be automatically created the first time the code runs. Within `users.db`, users are
+stored in the `user` table, and rate limits are tracked in a separate table `rate_limit`.
+These  tables have corresponding [SQLAlchemy](https://www.sqlalchemy.org)
+object–relational mapping (ORM) classes defined in [`src/users.py`](src/users.py).
+
+### Adding and Removing Users
 
 To add a user to the database, run the following from within this directory on the
 server, using the desired user's actual GitHub username. This assumes that the Python
@@ -80,6 +88,13 @@ To confirm which users are authorized, run the following:
 ```
 venv/bin/python -c "from src.users import User; User.print_all()"
 ```
+
+### Rate Limits
+
+Rate limits are tracked and enforced for each user. Currently, the `/data` API route has
+per-user limits of 100 requests per minute and 1000 requests per hour. See the `RateLimit`
+ORM class in [`src/users.py`](src/users.py) and the `@rate_limited` decorator in
+[`src/api.py`](src/api.py) for more information on how rate limits are implemented.
 
 ## Server Maintenance, Updates
 
