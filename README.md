@@ -136,6 +136,8 @@ Sensor error from meters as well as current and potential transformers are gener
 ### Gaps
 Occasional gaps in data are present due to network and power outages, system maintenance. See section [Quickstart](#quickstart) for example code on handling data gaps.
 
+For waveform data, having no data downloaded without an error message indicates the request data in date range does not exist.
+
 ### Circuit topology and parameter 
 In practice, it is rare that distribution system operators maintain an error-free record of the system. 
 - Lines: For distribution lines, the conductor thickness and material are obtained from engineering drawings and are generally correct, but the insulation material and thickness are estimated from popular cable types given the voltage level. Line lengths are estimated as the Manhattan (taxicab) distance between the two terminals. The lengths of short lines (within the same building structure) are assumed to be zero. Lines are generally underground, un-transposed with unknown cable arrangement (e.g. on a cable tray).

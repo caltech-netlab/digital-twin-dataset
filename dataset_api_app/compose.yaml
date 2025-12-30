@@ -19,6 +19,7 @@ services:
       - ${PHASORS_DIR:?error}:/data/phasors:ro
       - ${WAVEFORMS_DIR:?error}:/data/waveforms:ro
       - ${WAVEFORMS_2024_10_DIR:?error}:/data/waveforms_2024_10:ro
+      - ${WAVEFORMS_2025_03_DIR:?error}:/data/waveforms_2025_03:ro
   nginx:
     container_name: nginx
     image: nginx

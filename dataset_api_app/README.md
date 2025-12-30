@@ -33,8 +33,9 @@ This directory defines the API app that runs on the server.
    APP_ENV=prod
    MAGNITUDES_DIR=<path to magnitude data directory>
    PHASORS_DIR=<path to phasor data directory>
-   WAVEFORMS_DIR=<path to waveform data directory>
+   WAVEFORMS_DIR=<path to waveform data directory (04/01/2025 onwards)>
    WAVEFORMS_2024_10_DIR=<path to pre-11/01/2024 waveform data directory>
+   WAVEFORMS_2025_03_DIR=<path to 11/01/2024-04/01/2025 waveform data directory>
    ```
 
 8. Change into this directory (e.g. `cd dataset_api_app`).
@@ -58,6 +59,8 @@ This directory defines the API app that runs on the server.
 
 12. Visit your domain in the browser. You should see a page called "Digital Twin Dataset
     API".
+
+Note: If re-starting, mount NAS and then start from step 10.
 
 ## Users Database
 
@@ -163,8 +166,9 @@ To run the server in development mode, follow these steps, similar to those in
    APP_ENV=dev
    MAGNITUDES_DIR=<path to magnitude data directory>
    PHASORS_DIR=<path to phasor data directory>
-   WAVEFORMS_DIR=<path to waveform data directory>
+   WAVEFORMS_DIR=<path to waveform data directory (04/01/2025 onwards)>
    WAVEFORMS_2024_10_DIR=<path to pre-11/01/2024 waveform data directory>
+   WAVEFORMS_2025_03_DIR=<path to 11/01/2024-04/01/2025 waveform data directory>
    ```
 
 4. Change into this directory (e.g. `cd dataset_api_app`).

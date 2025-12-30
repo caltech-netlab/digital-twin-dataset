@@ -26,6 +26,8 @@ from paths import (
     WAVEFORMS_DIR,
     WAVEFORMS_2024_10_DIR,
     WAVEFORMS_2024_10_CUTOFF,
+    WAVEFORMS_2025_03_DIR,
+    WAVEFORMS_2025_03_CUTOFF,
 )
 from anonymize import deanonymize_elements
 import utils
@@ -487,7 +489,8 @@ def generate_waveforms_files(
             unit="D",
             directory=WAVEFORMS_DIR / real_element,
             alternative_dirs=[
-                (WAVEFORMS_2024_10_DIR / real_element, WAVEFORMS_2024_10_CUTOFF)
+                (WAVEFORMS_2025_03_DIR / real_element, WAVEFORMS_2025_03_CUTOFF),
+                (WAVEFORMS_2024_10_DIR / real_element, WAVEFORMS_2024_10_CUTOFF),
             ],
         )
         timestamp_dataframes: Iterator[pd.DataFrame] = (
@@ -534,6 +537,8 @@ def generate_waveforms_files(
                 waveforms_dir = WAVEFORMS_DIR
                 if timestamp < WAVEFORMS_2024_10_CUTOFF:
                     waveforms_dir = WAVEFORMS_2024_10_DIR
+                if timestamp < WAVEFORMS_2025_03_CUTOFF:
+                    waveforms_dir = WAVEFORMS_2025_03_DIR
                 day_dir_name = timestamp.strftime("%Y-%m-%d")
                 timestamp_str = timestamp.strftime(WAVEFORM_DATE_FORMAT)[:-3]
                 waveform_bytes = read_file(

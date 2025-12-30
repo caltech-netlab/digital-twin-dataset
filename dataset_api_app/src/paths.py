@@ -38,5 +38,13 @@ WAVEFORMS_2024_10_DIR = Path(
 )
 """Path to the directory containing raw waveform data before 11/01/2024."""
 
-WAVEFORMS_2024_10_CUTOFF = datetime(11, 1, 1)
+WAVEFORMS_2024_10_CUTOFF = datetime(2024, 11, 1)
 """Use `WAVEFORMS_2024_10_DIR` for waveforms before this date."""
+
+WAVEFORMS_2025_03_DIR = Path(
+    os.environ.get("WAVEFORMS_2025_03_DIR", "/data/waveforms_2025_03")
+)
+"""Path to the directory containing raw waveform data from 11/01/2024 to 04/01/2025."""
+
+WAVEFORMS_2025_03_CUTOFF = datetime(2025, 4, 1)
+"""Use `WAVEFORMS_2025_03_DIR` for waveforms before this date (and after `WAVEFORMS_2024_10_CUTOFF`)."""
