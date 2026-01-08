@@ -234,6 +234,12 @@ class StateEstimator:
         V_hat = np.empty((N*3, T), dtype=np.csingle)
         I_hat = np.empty((N*3, T), dtype=np.csingle)
         for t in tqdm(range(T)):
+            # Check measurement Jacobian rank
+            S = np.zeros((len(V_metered_idx), N*3), dtype=Y.dtype)
+            for i, mi in enumerate(V_metered_idx):
+                S[i, mi] = 1
+            assert np.linalg.matrix_rank(np.concatenate([Y[:MI*3], S])) == N*3, f"Measurement Jacobian is not full rank at time {time_col[t]}"
+            # Formulate the optimization problem            
             V_hat_t = cp.Variable(N*3, complex=True)
             # Objective function: minimize l2 distance between metered and computed I/V values
             # Here, we normalize by CT ratings and nominal bus voltages.
@@ -1165,6 +1171,10 @@ def compute_error(data_dir, datetimespan, zero_threshold=1e-2):
         if metered_name is None: continue
         df, err = utils.read_ts(os.path.join(data_dir, name), datetimespan)
         df_metered, err = utils.read_ts(os.path.join(data_dir, metered_name), datetimespan)
+        T = min(len(df['t']), len(df_metered['t']))
+        df = utils.slice_df(df, 0, T)
+        df_metered = utils.slice_df(df_metered, 0, T)
+        assert np.all(df['t'] == df_metered['t']), f"Time columns do not match for {name} and {metered_name}"        
         not_nan = ~np.isnan(df['a']) & ~np.isnan(df['b']) & ~np.isnan(df['c'])
         not_large = (np.abs(df['a']) < 1e10) & (np.abs(df['b']) < 1e10) & (np.abs(df['c']) < 1e10)
         valid = not_nan & not_large
@@ -1200,6 +1210,19 @@ def compute_error(data_dir, datetimespan, zero_threshold=1e-2):
 
 if __name__ == "__main__":
     input_data_dir = FILE_PATHS['phasors']
+
+    # """Download necessary data"""
+    # from dataset_api_client import DatasetApiClient
+    # data_api_client = DatasetApiClient()
+    # files = []
+    # for meter_num in [21, 7, 9, 13, 3, 11]:
+    #     files += [f'egauge_{meter_num}-L{p}' for p in [1, 2, 3]] + [f'egauge_{meter_num}-S{p}' for p in [1, 2, 3]]
+    # data_api_client.download_data(
+    #     phasors_for=files,
+    #     time_range=('2024-11-14T07:00:00', '2024-11-14T07:05:00'),
+    #     output_dir='../sample_dataset'
+    # )
+    
     """State estimation (bus injection model: V-I)"""
     output_data_dir = 'temp/state_estimation_BIM'
     measured_injections = {

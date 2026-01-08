@@ -364,7 +364,7 @@ def align_phasors(
         df_dict = {}
         for name, f in input_data.items():
             df, err = utils.read_ts(f, datetimespan=datetimespan, usecols=columns_to_read, mode=t_mode)
-            # Ignore missing data
+            # Ignore/throw out missing data
             if (not err) and df and utils.df_len(df):
                 df_dict[name] = df
     else:
