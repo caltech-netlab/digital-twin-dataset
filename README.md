@@ -12,7 +12,8 @@ REST API. Convenient access is provided by the Python class `DatasetApiClient` i
 for a code example.
 
 Dataset users are authenticated using GitHub. Please [submit a ticket here] to have your
-GitHub account added to the list of allowed users.
+GitHub account added to the list of allowed users. There is a learning curve to using the dataset 
+so that we can expose all granularities to the user for maximum flexibility.
 
 ## Data types
 
@@ -48,6 +49,7 @@ Next, to run the following code examples, install the required Python packages i
 [requirements.txt](requirements.txt) (e.g. `pip install -r requirements.txt`).
 
 ### Downloading data
+See example code in [`data_IO.ipynb`](code_examples/data_IO.ipynb).
 The following Python code downloads the data, where:
 
 - For `magnitudes_for`, `phasors_for`, and `waveforms_for`, `<element names>` should be
@@ -97,9 +99,6 @@ data_api_client.download_data(
 
 Please [submit a ticket here] to have your GitHub account added to the list of allowed
 users.
-
-### Loading data
-See example code in [`data_IO.ipynb`](code_examples/data_IO.ipynb).
 
 ### State estimation (synchro-phasor)
 Given phasor measurements on a subset of nodes, we can recover the phasors for all network elements. This is described in paper Sections V (a) and VI (a). See example implementation in [`state_estimation_phasor.ipynb`](code_examples/state_estimation_phasor.ipynb).
