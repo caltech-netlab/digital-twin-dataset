@@ -163,7 +163,7 @@ BibTex:
 ``` -->
 
 ## Contacts
-We welcome your comments and suggestions at `digitaltwin@caltech.edu`. For discussions and improvements specific to code and data release, you may also use [GitHub Issues](https://github.com/caltech-netlab/digital-twin-dataset/issues) or [Pull requests](https://github.com/caltech-netlab/digital-twin-dataset/pulls).
+We welcome your comments and suggestions via [GitHub Issues](https://github.com/caltech-netlab/digital-twin-dataset/issues).
 
 ## Disclaimer
 The accuracy or reliability of the data is not guaranteed or warranted in any way and the providers disclaim liability of any kind whatsoever, including, without limitation, liability for quality, performance, merchantability and fitness for a particular purpose arising out of the use, or inability to use the data.
