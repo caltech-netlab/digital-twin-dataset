@@ -15,6 +15,8 @@ Dataset users are authenticated using GitHub. Please [submit a ticket here] to h
 GitHub account added to the list of allowed users. There is a learning curve to using the dataset 
 so that we can expose all granularities to the user for maximum flexibility.
 
+For best quality data (most coverage), use data between September 2024 and September 2025.
+
 ## Data types
 
 In the following, we explain the 3 types of time-series data as well as circuit topology data in [`sample_dataset`](sample_dataset) folder:
