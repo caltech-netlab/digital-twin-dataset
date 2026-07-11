@@ -3,7 +3,7 @@ The dataset contains data collected from microgrids/distribution systems in Cali
 
 ## Sample dataset
 Download sample dataset from [here](https://caltech.box.com/s/5baxy2ogbalqohpidh1lyxgnnxmv5tuc) and place into sample_dataset folder. 
-Here, the data contains the same *types* of data in the complete dataset, but covering a very small time range of all availble data. This allows you to start developing your code for this dataset without dealing with the colossal full dataset (>10TB and growing). 
+Here, the data contains the same *types* of data in the complete dataset, but covering a very small time range of all availble data. This allows you to start developing your code for this dataset without dealing with the colossal full dataset (>10TB). 
 
 ## Full dataset
 The full dataset is hosted at [https://socal28bus.caltech.edu](https://socal28bus.caltech.edu) and can be accessed via a
