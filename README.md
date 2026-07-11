@@ -6,6 +6,8 @@ Download sample dataset from [here](https://caltech.box.com/s/5baxy2ogbalqohpidh
 Here, the data contains the same *types* of data in the complete dataset, but covering a very small time range of all availble data. This allows you to start developing your code for this dataset without dealing with the colossal full dataset (>10TB). 
 
 ## Full dataset
+**The data server is down currently. We are working on repairing the server and we expect it to be back online later next week.**
+
 The full dataset is hosted at [https://socal28bus.caltech.edu](https://socal28bus.caltech.edu) and can be accessed via a
 REST API. Convenient access is provided by the Python class `DatasetApiClient` in
 [dataset_api_client.py](dataset_api_client.py). See [Downloading data](#downloading-data)
