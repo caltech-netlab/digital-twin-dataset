@@ -6,6 +6,7 @@ pandas
 pyarrow
 pydantic
 python-dotenv
+pytz
 requests
 stream-zip
 sqlalchemy
